@@ -29,7 +29,6 @@ public class Main extends Application {
 			window.show();
 		} catch (Exception e) {
 			e.printStackTrace();
-			//lll
 		}
 	}
 	

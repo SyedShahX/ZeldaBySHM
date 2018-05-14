@@ -1,7 +1,10 @@
 package modele;
 
+import javafx.scene.image.ImageView;
+
 public class Personnage {
 	
+	private ImageView img;
 	private String nom;
 	private int ptVie;
 	private int posX;
@@ -9,6 +12,7 @@ public class Personnage {
 //	private Arme arme;
 	
 	public Personnage(String nom, int ptVie, int posX, int posY) {
+		super();
 		this.nom = nom;
 		this.ptVie = ptVie;
 		this.posX = posX;

@@ -1,5 +1,6 @@
 package modele;
 
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 
 
