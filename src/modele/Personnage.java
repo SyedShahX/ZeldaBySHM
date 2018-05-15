@@ -1,15 +1,12 @@
 package modele;
 
-import javafx.scene.image.ImageView;
 
-public class Personnage {
+public abstract class Personnage {
 	
-	private ImageView img;
-	private String nom;
-	private int ptVie;
-	private int posX;
-	private int posY;
-//	private Arme arme;
+	protected String nom;
+	protected int ptVie;
+	protected int posX;
+	protected int posY;
 	
 	public Personnage(String nom, int ptVie, int posX, int posY) {
 		super();
@@ -20,26 +17,13 @@ public class Personnage {
 		
 	}
 
-	public void seDeplacer() {
-		
-	}
+	public abstract void seDeplacer();
 	
-	public void lancer() {
-		
-	}
+	public abstract void attaquer(Personnage perso);
 	
-	public void pousser() {
-		
-	}
 	
-	public void seBattre() {
-		
-	}
 	
-	public void parler() {
-		
-	}
-	
+//	GETTER ET SETTER NOM
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
@@ -48,10 +32,16 @@ public class Personnage {
 		return nom;
 	}
 
+//	GETTER ET SETTER POINT DE VIE
 	public int getPtVie() {
 		return ptVie;
 	}
 	
+	public void setPtVie(int ptVie) {
+		this.ptVie = ptVie;
+	}
+	
+//	GETTER ET SETTER POSITION
 	public int getPosX() {
 		return posX;
 	}
@@ -60,9 +50,14 @@ public class Personnage {
 		return posY;
 	}
 
-	public void setPtVie(int ptVie) {
-		this.ptVie = ptVie;
+	public void setPosX(int posX) {
+		this.posX = posX;
 	}
+
+	public void setPosY(int posY) {
+		this.posY = posY;
+	}
+
 
 
 	

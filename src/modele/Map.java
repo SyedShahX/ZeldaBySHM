@@ -11,7 +11,6 @@ public class Map {
 		if (tile == number) {
 			image = new ImageView(urlImage);
 			tilePane.getChildren().add(image);
-			System.out.println(image.getX());
 		}
 		return image;
 	}
