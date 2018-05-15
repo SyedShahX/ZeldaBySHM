@@ -1,19 +1,21 @@
 package modele;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Personnage {
 	
 	protected String nom;
 	protected int ptVie;
-	protected int posX;
-	protected int posY;
+	protected IntegerProperty posX;
+	protected IntegerProperty posY;
 	
 	public Personnage(String nom, int ptVie, int posX, int posY) {
 		super();
 		this.nom = nom;
 		this.ptVie = ptVie;
-		this.posX = posX;
-		this.posY = posY;
+		this.posX = new SimpleIntegerProperty(posX);
+		this.posY = new SimpleIntegerProperty(posY);
 		
 	}
 
@@ -40,23 +42,33 @@ public abstract class Personnage {
 	public void setPtVie(int ptVie) {
 		this.ptVie = ptVie;
 	}
-	
+
 //	GETTER ET SETTER POSITION
-	public int getPosX() {
+	public IntegerProperty PosXProperty() {
 		return posX;
 	}
 	
-	public int getPosY() {
-		return posY;
+	public int getPosX() {
+		return this.posX.getValue();
 	}
 
-	public void setPosX(int posX) {
+	public void setPosX(IntegerProperty posX) {
 		this.posX = posX;
 	}
 
-	public void setPosY(int posY) {
+	public IntegerProperty PosYProperty() {
+		return posY;
+	}
+
+	public int getPosY() {
+		return this.posY.getValue();
+	}
+
+	public void setPosY(IntegerProperty posY) {
 		this.posY = posY;
 	}
+	
+	
 
 
 

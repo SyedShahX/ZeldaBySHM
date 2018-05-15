@@ -1,8 +1,5 @@
-/App/
-/assets/
-/controller/
 /modele/
+/controller/
 /vue/
-/zeldaProject
-/tileSet32x32/
-/Zelda
+/assets/
+/App/

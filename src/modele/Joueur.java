@@ -4,14 +4,14 @@ public class Joueur extends Personnage {
 	
 	private Arme arme;
 	
-	public Joueur(String nom, int ptVie, int posX, int posY,Arme arme) {
+	public Joueur(String nom, int ptVie, int posX, int posY) {
 		super(nom, ptVie, posX, posY);
 		this.arme = arme;
 	}
 
 	@Override
 	public void seDeplacer() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	
