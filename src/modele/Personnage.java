@@ -10,13 +10,15 @@ public abstract class Personnage {
 	protected int ptVie;
 	protected IntegerProperty posX;
 	protected IntegerProperty posY;
+	protected int vitesse;
 	
-	public Personnage(String nom, int ptVie, int posX, int posY) {
+	public Personnage(String nom, int ptVie, int posX, int posY,int vit) {
 		super();
 		this.nom = nom;
 		this.ptVie = ptVie;
 		this.posX = new SimpleIntegerProperty(posX);
 		this.posY = new SimpleIntegerProperty(posY);
+		this.vitesse=vit;
 		
 	}
 	
@@ -27,6 +29,12 @@ public abstract class Personnage {
 //	GETTER ET SETTER NOM
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+	public int getVitesse() {
+		return this.vitesse;
+	}
+	public void setVitesse(int vitesse) {
+		this.vitesse=vitesse;
 	}
 
 	public String getNom() {

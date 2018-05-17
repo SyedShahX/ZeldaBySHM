@@ -14,7 +14,7 @@ public class ImageViewPerso {
 		this.imgDefaut = img;
 	}
 	
-	public void setImage(ImageView img) {
-		imgDefaut.setImage(img);
-	}
+//	public void setImage(ImageView img) {
+//		imgDefaut.setImage(img);
+//	}
 }

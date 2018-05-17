@@ -17,8 +17,8 @@ public class Controleur implements Initializable {
 	
 	@FXML Pane pane;
 	@FXML TilePane layout;
-	Joueur link = new Joueur("Link", 100, 120, 820);
-	ImageViewPerso imgLink = new ImageViewPerso("assets/images/ImagesLink/joueur.png");
+	Joueur link = new Joueur("Link", 100, 120, 820,0);
+	ImageView imgLink = new ImageView("assets/images/ImagesLink/joueur.png");
 	
 	
 	public void seDeplacer(KeyEvent e) {
