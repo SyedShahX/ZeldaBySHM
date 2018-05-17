@@ -18,8 +18,8 @@ public class Controleur implements Initializable {
 	@FXML Pane pane;
 	@FXML TilePane layout;
 	Joueur link = new Joueur("Link", 100, 120, 820);
-	ImageViewPerso imgLink = new ImageViewPerso("assets/images/ImagesLink/joueur.png");
-	
+	ImageView imgLink = new ImageView("assets/images/ImagesLink/joueur.png");
+	ImageView imgTonneau = new ImageView("assets/images/tonneau.png");
 	
 	public void seDeplacer(KeyEvent e) {
 		link.seDeplacer(e);
@@ -41,7 +41,9 @@ public class Controleur implements Initializable {
 		// Affichage de link
 		imgLink.setLayoutX(120);
 		imgLink.setLayoutY(100);
-		pane.getChildren().add(imgLink);
+		imgTonneau.setLayoutX(1287);
+		imgTonneau.setLayoutY(770);
+		pane.getChildren().addAll(imgTonneau, imgLink);
 	}
 	
 	
