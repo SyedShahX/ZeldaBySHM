@@ -3,6 +3,7 @@ package App;
 import java.io.File;
 import java.net.URL;
 
+import controller.Controleur;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,7 +13,6 @@ import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	
 	Pane pane;
 	
 	@Override
@@ -27,6 +27,9 @@ public class Main extends Application {
 			pane = new Pane();
 			pane = loader.load();
 			Scene scene = new Scene(pane,1600,960);
+			Controleur c=loader.getController();
+			scene.setOnKeyPressed(e ->
+			c.seDeplacer(e));
 			window.setScene(scene);
 			window.show();
 		} catch (Exception e) {

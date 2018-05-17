@@ -9,7 +9,6 @@ public abstract class Ennemi extends Personnage {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
 	public void seDeplacer() {
 		// TODO Auto-generated method stub
 		

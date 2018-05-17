@@ -1,5 +1,7 @@
 package modele;
 
+import java.awt.Rectangle;
+
 import javafx.scene.layout.TilePane;
 
 
@@ -52,6 +54,21 @@ public class Map1 extends Map {
 				setTile(tile,tilePane,3, "assets/images/roche.png");
 			}
 		}
+	}
+	public static void collisions(int posX,int posY) {
+		Rectangle playershape=new Rectangle(posX,posY,22,28);
+		for(int i =0;i<tab.length;i++) {
+			for(int j=0;j<tab[i].length;j++) {
+				if(tab[i][j]==2) {
+					int iPx=i*32;
+					int jPx=j*32;
+					Rectangle arbre=new Rectangle(jPx,iPx,32,32);
+					if(arbre.intersects(playershape))
+						System.out.println("collisions");
+				}
+			}
+		}
+		//return false;
 	}
 
 } 
