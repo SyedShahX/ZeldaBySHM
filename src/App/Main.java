@@ -13,6 +13,7 @@ import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+	
 	Pane pane;
 	
 	@Override
@@ -26,10 +27,9 @@ public class Main extends Application {
 			window.setTitle("jeu Zelda");
 			pane = new Pane();
 			pane = loader.load();
+			Controleur c = loader.getController();
 			Scene scene = new Scene(pane,1600,960);
-			Controleur c=loader.getController();
-			scene.setOnKeyPressed(e ->
-			c.seDeplacer(e));
+			scene.setOnKeyPressed(e -> c.seDeplacer(e));
 			window.setScene(scene);
 			window.show();
 		} catch (Exception e) {

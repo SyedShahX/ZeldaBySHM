@@ -19,7 +19,6 @@ public abstract class Personnage {
 		this.posY = new SimpleIntegerProperty(posY);
 		
 	}
-
 	
 	public abstract void attaquer(Personnage perso);
 	
@@ -52,7 +51,7 @@ public abstract class Personnage {
 		return this.posX.getValue();
 	}
 
-	public void setPosX(Integer posX) {
+	public void setPosX(int posX) {
 		this.posX.set(posX);
 	}
 
@@ -64,16 +63,8 @@ public abstract class Personnage {
 		return this.posY.getValue();
 	}
 
-	public void setPosY(Integer posY) {
+	public void setPosY(int posY) {
 		this.posY.set(posY);;
 	}
-
-	public abstract void seDeplacer(KeyEvent e);
-	
-	
-
-
-
-	
 	
 }
