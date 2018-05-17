@@ -3,7 +3,6 @@ package App;
 import java.io.File;
 import java.net.URL;
 
-import controller.Controleur;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -27,11 +26,7 @@ public class Main extends Application {
 			window.setTitle("jeu Zelda");
 			pane = new Pane();
 			pane = loader.load();
-			Controleur c = loader.getController();
 			Scene scene = new Scene(pane,1600,960);
-			scene.setOnKeyPressed(e ->
-				c.seDeplacer(e)
-			);
 			window.setScene(scene);
 			window.show();
 		} catch (Exception e) {

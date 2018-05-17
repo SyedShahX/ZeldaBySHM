@@ -6,9 +6,6 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import modele.Joueur;
@@ -20,27 +17,21 @@ public class Controleur implements Initializable {
 	@FXML TilePane layout;
 	Joueur link = new Joueur("Link", 100, 120, 820);
 	ImageView imgLink = new ImageView("assets/images/joueur.png");
-	
-	public void seDeplacer(KeyEvent e) {
-		link.seDeplacer(e);
-	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initializeMap();
-		imgLink.layoutXProperty().bind(link.PosXProperty());
-		imgLink.layoutYProperty().bind(link.PosYProperty());
-		
+		imgLink.accessibleTextProperty().bind(link.PosXProperty().asString());
+		imgLink.accessibleTextProperty().bind(link.PosYProperty().asString());
 		
 	}
-	
 
 	public void initializeMap() {
 		// Affichage de la map
 		Map1.map(layout);
 		// Affichage de link
 		imgLink.setLayoutX(120);
-		imgLink.setLayoutY(100);
+		imgLink.setLayoutY(820);
 		pane.getChildren().add(imgLink);
 		
 	}

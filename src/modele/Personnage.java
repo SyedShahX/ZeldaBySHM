@@ -2,7 +2,6 @@ package modele;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.input.KeyEvent;
 
 public abstract class Personnage {
 	
@@ -19,6 +18,8 @@ public abstract class Personnage {
 		this.posY = new SimpleIntegerProperty(posY);
 		
 	}
+
+	public abstract void seDeplacer();
 	
 	public abstract void attaquer(Personnage perso);
 	
@@ -51,8 +52,8 @@ public abstract class Personnage {
 		return this.posX.getValue();
 	}
 
-	public void setPosX(int posX) {
-		this.posX.set(posX);
+	public void setPosX(IntegerProperty posX) {
+		this.posX = posX;
 	}
 
 	public IntegerProperty PosYProperty() {
@@ -63,8 +64,8 @@ public abstract class Personnage {
 		return this.posY.getValue();
 	}
 
-	public void setPosY(int posY) {
-		this.posY.set(posY);;
+	public void setPosY(IntegerProperty posY) {
+		this.posY = posY;
 	}
 	
 	

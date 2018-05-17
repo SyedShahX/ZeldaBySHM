@@ -1,8 +1,5 @@
 package modele;
 
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-
 public class Joueur extends Personnage {
 	
 	private Arme arme;
@@ -12,38 +9,9 @@ public class Joueur extends Personnage {
 		this.arme = arme;
 	}
 
-	public void seDeplacer(KeyEvent e) {
-		int posX = getPosX();
-		int posY = getPosY();
-
-//		if (e.getCode() == KeyCode.UP) {
-//			setPosY(posY - 5);
-//		} else if(e.getCode() == KeyCode.DOWN) {
-//			setPosY(posY + 5);
-//		} else if (e.getCode() == KeyCode.LEFT) {
-//			setPosX(posX - 5);
-//		} else if (e.getCode() == KeyCode.RIGHT) {
-//			setPosX(posX + 5);
-//			
-//		}
-		fixerToucheY(e,KeyCode.UP,posY,-8);
-		fixerToucheY(e,KeyCode.DOWN,posY,8);
+	@Override
+	public void seDeplacer() {
 		
-		fixerToucheX(e,KeyCode.LEFT,posX,-8);
-		fixerToucheX(e,KeyCode.RIGHT,posX,8);
-	}
-	
-	public void fixerToucheX(KeyEvent e,KeyCode touche,int positionActuelle,int nouvellePosition) {			
-		if (e.getCode() == touche) {
-			setPosX(positionActuelle + nouvellePosition);
-		} 
-		
-	}
-	
-	public void fixerToucheY(KeyEvent e,KeyCode touche,int positionActuelle,int nouvellePosition) {			
-		if (e.getCode() == touche) {
-			setPosY(positionActuelle + nouvellePosition);
-		} 
 		
 	}
 	
@@ -73,6 +41,5 @@ public class Joueur extends Personnage {
 	public void setArme(Arme arme) {
 		this.arme = arme;
 	}
-
 
 }
