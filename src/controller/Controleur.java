@@ -9,9 +9,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import modele.ImageViewPerso;
 import modele.Joueur;
 import modele.Map1;
+import modele.VuePerso;
 
 public class Controleur implements Initializable {
 	
@@ -31,6 +31,11 @@ public class Controleur implements Initializable {
 		imgLink.layoutXProperty().bind(link.PosXProperty());
 		imgLink.layoutYProperty().bind(link.PosYProperty());
 		
+		ImageView bas = new ImageView("assets/images/ImagesLink/bas.png");
+		VuePerso imgBas = new VuePerso(bas);
+		
+		imgLink.layoutXProperty().bind(imgBas.getImageView().layoutXProperty());
+		imgLink.layoutYProperty().bind(imgBas.getImageView().layoutYProperty());
 		
 	}
 	

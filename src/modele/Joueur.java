@@ -16,22 +16,23 @@ public class Joueur extends Personnage {
 		int posY = getPosY();
 		int ajoutDistance = 8;
 		
-		if (Map1.collision(posX, posY) == true) {
-
-		}
-		
 		fixerToucheY(e,KeyCode.UP,posY,-ajoutDistance,"haut");
 		fixerToucheY(e,KeyCode.DOWN,posY,ajoutDistance,"bas");
 		
 		fixerToucheX(e,KeyCode.LEFT,posX,-ajoutDistance,"gauche");
 		fixerToucheX(e,KeyCode.RIGHT,posX,ajoutDistance,"droite");
+		
+		if (Map1.collision(getPosX(), getPosY()) == true) {
+			setPosX(posX);
+			setPosY(posY);
+		}	
+
 	
 	}
 	
 	public void fixerToucheX(KeyEvent e,KeyCode touche,int positionActuelle,
 							int nouvellePosition,String nomPerso) {			
 		if (e.getCode() == touche) {
-			
 			setPosX(positionActuelle + nouvellePosition);
 		} 
 		

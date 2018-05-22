@@ -69,7 +69,7 @@ public class Map1 extends Map {
 				if (tab[i][j] == 2 || tab[i][j] == 1) {
 					int iPx = i*32;
 					int jPx = j*32;
-					Rectangle arbre = new Rectangle(jPx,iPx,32,32);
+					Rectangle arbre = new Rectangle(jPx,iPx,20,26);
 					if (joueur.intersects(arbre)) {
 						return true;
 					}
