@@ -29,7 +29,7 @@ public class Main extends Application {
 			pane = loader.load();
 			Controleur c = loader.getController();
 			Scene scene = new Scene(pane,1600,960);
-			scene.setOnKeyPressed(e -> c.seDeplacer(e));
+			scene.setOnKeyPressed(e -> c.gererTouche(e));
 			window.setScene(scene);
 			window.show();
 		} catch (Exception e) {

@@ -5,7 +5,9 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
@@ -19,11 +21,44 @@ public class Controleur implements Initializable {
 	@FXML TilePane layout;
 	Joueur link = new Joueur("Link", 100, 120, 820);
 	ImageView imgLink = new ImageView("assets/images/ImagesLink/joueur.png");
+	VuePerso img = new VuePerso(imgLink);
+
 	ImageView imgTonneau = new ImageView("assets/images/tonneau.png");
+	Image haut = new Image("assets/images/ImagesLink/haut.png");
+	Image gauche = new Image("assets/images/ImagesLink/gauche.png");
+	Image basdroit = new Image("assets/images/ImagesLink/basdroit.png");
+	Image droite = new Image("assets/images/ImagesLink/droite.png");
 	
-	public void seDeplacer(KeyEvent e) {
+	public void gererTouche(KeyEvent e) {
+//		Ici on doit gerer les touches puis appeler la classe joueur qui va
+//		s'occuper de faire le déplacement et de changer l'image.
+		
+		int posY = link.getPosY();
+		int posX = link.getPosX();
+		int ajoutDistance = 8;
+		
 		link.seDeplacer(e);
+		if (e.getCode() == KeyCode.UP) {
+			imgLink.setImage(haut);
+			link.setPosY( posY - ajoutDistance);
+		} else if (e.getCode() == KeyCode.DOWN) {
+			img.setImage(basdroit);
+			link.setPosY( posY + ajoutDistance);
+		} else if (e.getCode() == KeyCode.LEFT) {
+			img.setImage(gauche);
+			link.setPosX( posX - ajoutDistance);
+		} else {
+			img.setImage(droite);
+			link.setPosX( posX + ajoutDistance);
+			
+		}
+		
+		if (Map1.collision(link.getPosX(), link.getPosY()) == true) {
+			link.setPosX(posX);
+			link.setPosY(posY);
+		}
 	}
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -31,11 +66,9 @@ public class Controleur implements Initializable {
 		imgLink.layoutXProperty().bind(link.PosXProperty());
 		imgLink.layoutYProperty().bind(link.PosYProperty());
 		
-		ImageView bas = new ImageView("assets/images/ImagesLink/bas.png");
-		VuePerso imgBas = new VuePerso(bas);
 		
-		imgLink.layoutXProperty().bind(imgBas.getImageView().layoutXProperty());
-		imgLink.layoutYProperty().bind(imgBas.getImageView().layoutYProperty());
+//		imgLink.layoutXProperty().bind(img.getImageView().layoutXProperty());
+//		imgLink.layoutYProperty().bind(img.getImageView().layoutYProperty());
 		
 	}
 	
