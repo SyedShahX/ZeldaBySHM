@@ -6,12 +6,12 @@ import javafx.scene.input.KeyEvent;
 public class Joueur extends Personnage {
 
 	private Arme arme;
-	public Joueur(String nom, int ptVie, int posX, int posY,int vit) {
-		super(nom, ptVie, posX, posY,vit);
+	public Joueur(String nom,int ptVie,Position position,int vit) {
+		super(nom, ptVie,position,vit);
 		this.arme = arme;
 	}
 	public int reglerVitesse() {
-		if(Map1.persoRalenti(getPosX(),getPosY())==true) {
+		if(Map1.persoRalenti(position)==true) {
 			setVitesse(3);
 		}
 		else {
@@ -21,8 +21,8 @@ public class Joueur extends Personnage {
 	}
 
 	public void seDeplacer(KeyEvent e) {
-		int posX = getPosX();
-		int posY = getPosY();
+		int posX = position.getPosX();
+		int posY = position.getPosY();
 		int ajoutDistance = reglerVitesse();
 
 		if (Map1.collision(posX, posY) == true) {
@@ -41,7 +41,7 @@ public class Joueur extends Personnage {
 			int nouvellePosition,String nomPerso) {			
 		if (e.getCode() == touche) {
 
-			setPosX(positionActuelle + nouvellePosition);
+			position.setPosX(positionActuelle + nouvellePosition);
 		} 
 
 	}
@@ -49,7 +49,7 @@ public class Joueur extends Personnage {
 	public void fixerToucheY(KeyEvent e,KeyCode touche,int positionActuelle,
 			int nouvellePosition,String nomPerso) {			
 		if (e.getCode() == touche) {
-			setPosY(positionActuelle + nouvellePosition);
+			position.setPosY(positionActuelle + nouvellePosition);
 		} 
 
 	}

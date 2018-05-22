@@ -12,12 +12,14 @@ import javafx.scene.layout.TilePane;
 import modele.ImageViewPerso;
 import modele.Joueur;
 import modele.Map1;
+import modele.Position;
 
 public class Controleur implements Initializable {
 	
 	@FXML Pane pane;
 	@FXML TilePane layout;
-	Joueur link = new Joueur("Link", 100, 120, 820,0);
+	Position positionLink=new Position(120,820);
+	Joueur link = new Joueur("Link", 100, positionLink,0);
 	ImageView imgLink = new ImageView("assets/images/ImagesLink/joueur.png");
 	
 	
@@ -28,8 +30,8 @@ public class Controleur implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initializeMap();
-		imgLink.layoutXProperty().bind(link.PosXProperty());
-		imgLink.layoutYProperty().bind(link.PosYProperty());
+		imgLink.layoutXProperty().bind(link.getPosition().getPosXProperty());
+		imgLink.layoutYProperty().bind(link.getPosition().getPosYProperty());
 		
 		
 	}

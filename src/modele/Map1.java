@@ -58,20 +58,16 @@ public class Map1 extends Map {
 			}
 		}
 	}
-	public static boolean estcollision() {
-		for (int i = 0; i < tab.length; i++) {
-			for (int j = 0; j < tab[i].length; j++) {
-				if(tab[i][j]==2||tab[i][j]==1 ||tab[i][j]==3) {
-					return true;
-				}
-			}
-
-		}
+	public static boolean estcollision(int valtab) {
+		if(valtab==2||valtab==3||valtab==1)
+			return true;
+		else {
 		return false;
+		}
 	}
 
-	public static boolean persoRalenti(int posX,int posY) {
-		Rectangle joueur = new Rectangle(posX,posY,20,20);
+	public static boolean persoRalenti(Position position) {
+		Rectangle joueur = new Rectangle(position.getPosX(),position.getPosY(),20,20);
 
 		for(int i=0;i<tab.length;i++) {
 			for (int j = 0; j < tab[i].length; j++) {
@@ -95,7 +91,7 @@ public class Map1 extends Map {
 
 		for (int i = 0; i < tab.length; i++) {
 			for (int j = 0; j < tab[i].length; j++) {
-				if (estcollision()==true) {
+				if (estcollision(tab[i][j])==true) {
 					int iPx = i*32;
 					int jPx = j*32;
 					Rectangle arbre = new Rectangle(jPx,iPx,32,32);

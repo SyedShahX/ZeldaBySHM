@@ -8,16 +8,16 @@ public abstract class Personnage {
 	
 	protected String nom;
 	protected int ptVie;
-	protected IntegerProperty posX;
-	protected IntegerProperty posY;
+	//protected IntegerProperty posX;
+	//protected IntegerProperty posY;
 	protected int vitesse;
+	protected Position position;
 	
-	public Personnage(String nom, int ptVie, int posX, int posY,int vit) {
+	public Personnage(String nom, int ptVie,Position position,int vit) {
 		super();
 		this.nom = nom;
 		this.ptVie = ptVie;
-		this.posX = new SimpleIntegerProperty(posX);
-		this.posY = new SimpleIntegerProperty(posY);
+		this.position=position;
 		this.vitesse=vit;
 		
 	}
@@ -51,7 +51,7 @@ public abstract class Personnage {
 	}
 
 //	GETTER ET SETTER POSITION
-	public IntegerProperty PosXProperty() {
+	/*public IntegerProperty PosXProperty() {
 		return posX;
 	}
 	
@@ -73,6 +73,13 @@ public abstract class Personnage {
 
 	public void setPosY(int posY) {
 		this.posY.set(posY);;
+	}*/
+	public Position getPosition() {
+		return this.position;
+	}
+	public void setPosition(int posX,int posY) {
+		this.position.setPosX(posX);
+		this.position.setPosY(posY);
 	}
 	
 }
