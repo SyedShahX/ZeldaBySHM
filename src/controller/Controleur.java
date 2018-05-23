@@ -24,6 +24,9 @@ public class Controleur implements Initializable {
 	VuePerso img = new VuePerso(imgLink);
 
 	ImageView imgTonneau = new ImageView("assets/images/tonneau.png");
+	// TODO CLASSE TONNEAU Tonneau tonneau = new Tonneau();
+	
+	ImageView epee = new ImageView("assets/images/épée.png");
 	Image haut = new Image("assets/images/ImagesLink/haut.png");
 	Image gauche = new Image("assets/images/ImagesLink/gauche.png");
 	Image basdroit = new Image("assets/images/ImagesLink/basdroit.png");
@@ -37,23 +40,25 @@ public class Controleur implements Initializable {
 		int posX = link.getPosX();
 		int ajoutDistance = 8;
 		
-		link.seDeplacer(e);
 		if (e.getCode() == KeyCode.UP) {
 			imgLink.setImage(haut);
 			link.setPosY( posY - ajoutDistance);
+			
 		} else if (e.getCode() == KeyCode.DOWN) {
 			img.setImage(basdroit);
 			link.setPosY( posY + ajoutDistance);
+			
 		} else if (e.getCode() == KeyCode.LEFT) {
 			img.setImage(gauche);
 			link.setPosX( posX - ajoutDistance);
+			
 		} else {
 			img.setImage(droite);
 			link.setPosX( posX + ajoutDistance);
 			
 		}
 		
-		if (Map1.collision(link.getPosX(), link.getPosY()) == true) {
+		if (Map1.collision(link.getPosX(), link.getPosY())) {
 			link.setPosX(posX);
 			link.setPosY(posY);
 		}
@@ -66,10 +71,9 @@ public class Controleur implements Initializable {
 		imgLink.layoutXProperty().bind(link.PosXProperty());
 		imgLink.layoutYProperty().bind(link.PosYProperty());
 		
-		
-//		imgLink.layoutXProperty().bind(img.getImageView().layoutXProperty());
-//		imgLink.layoutYProperty().bind(img.getImageView().layoutYProperty());
-		
+		// TODO bind tonneau
+//		imgLink.layoutXProperty().bind(tonneau.PosXProperty());
+//		imgLink.layoutYProperty().bind(tonneau.PosYProperty());
 	}
 	
 
@@ -81,7 +85,7 @@ public class Controleur implements Initializable {
 		imgLink.setLayoutY(100);
 		imgTonneau.setLayoutX(1287);
 		imgTonneau.setLayoutY(770);
-		pane.getChildren().addAll(imgTonneau, imgLink);
+		pane.getChildren().addAll(imgTonneau,imgLink);
 	}
 	
 	
