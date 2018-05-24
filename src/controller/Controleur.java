@@ -3,6 +3,8 @@ package controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -31,28 +33,20 @@ public class Controleur implements Initializable {
 	Image basdroit = new Image("assets/images/ImagesLink/basdroit.png");
 	Image droite = new Image("assets/images/ImagesLink/droite.png");
 	
-	public void gererTouche(KeyEvent e) {
-//		Ici on doit gerer les touches puis appeler la classe joueur qui va
-//		s'occuper de faire le déplacement et de changer l'image.
-		
+	public void gererTouche(KeyEvent e) {	
 		int posY = link.getPosY();
 		int posX = link.getPosX();
 		
 		if (e.getCode() == KeyCode.UP) {
-			imgLink.setImage(haut); // ne pas dupliquer (créer un listener)
 			link.seDeplacer(KeyCode.UP);
-			// appeler seDéplacer(KeyCode) de la classe Link 
 			
 		} else if (e.getCode() == KeyCode.DOWN) {
-			imgLink.setImage(basdroit);
 			link.seDeplacer(KeyCode.DOWN);
 			
 		} else if (e.getCode() == KeyCode.LEFT) {
-			imgLink.setImage(gauche);
 			link.seDeplacer(KeyCode.LEFT);
 			
-		} else {
-			imgLink.setImage(droite);
+		} else if(e.getCode() == KeyCode.RIGHT){
 			link.seDeplacer(KeyCode.RIGHT);
 			
 		}
@@ -68,14 +62,37 @@ public class Controleur implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initializeMap();
+		
+		// Bind entre l'image Link et sa position x et y
 		imgLink.layoutXProperty().bind(link.PosXProperty());
 		imgLink.layoutYProperty().bind(link.PosYProperty());
 		
-		// TODO bind tonneau
+		// Bind entre l'image Tonneau et sa position x et y
 		imgTonneau.layoutXProperty().bind(tonneau.PosXProperty());
 		imgTonneau.layoutYProperty().bind(tonneau.PosYProperty());
+		
+		link.OrientationProperty().addListener(
+				(obs,ancienneValeur,nouvelleValeur) -> {
+					changerImageLink(nouvelleValeur);
+				}
+		);
+		
+		
 	}
 	
+
+	private void changerImageLink(String nouveau) {
+		if (nouveau == "haut") {
+			imgLink.setImage(haut);
+		} else if (nouveau == "bas") {
+			imgLink.setImage(basdroit);
+		} else if (nouveau == "gauche") {
+			imgLink.setImage(gauche);
+		} else if (nouveau == "droite") {
+			imgLink.setImage(droite);
+		}
+	}
+
 
 	public void initializeMap() {
 		// Affichage de la map

@@ -13,21 +13,13 @@ public class Tonneau {
 		this.posY = new SimpleIntegerProperty(positionY);
 	}
 
-	// GETTER AND SETTER
+	// GETTER
 	public IntegerProperty PosXProperty() {
 		return posX;
 	}
 
-	public void setPosX(IntegerProperty posX) {
-		this.posX = posX;
-	}
-
 	public IntegerProperty PosYProperty() {
 		return posY;
-	}
-
-	public void setPosY(IntegerProperty posY) {
-		this.posY = posY;
 	}
 
 }
