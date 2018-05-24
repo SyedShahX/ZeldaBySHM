@@ -13,7 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import modele.Joueur;
 import modele.Map1;
-import modele.VuePerso;
+import modele.Tonneau;
 
 public class Controleur implements Initializable {
 	
@@ -21,10 +21,9 @@ public class Controleur implements Initializable {
 	@FXML TilePane layout;
 	Joueur link = new Joueur("Link", 100, 120, 820);
 	ImageView imgLink = new ImageView("assets/images/ImagesLink/joueur.png");
-	VuePerso img = new VuePerso(imgLink);
 
 	ImageView imgTonneau = new ImageView("assets/images/tonneau.png");
-	// TODO CLASSE TONNEAU Tonneau tonneau = new Tonneau();
+	Tonneau tonneau = new Tonneau(1287,770);
 	
 	ImageView epee = new ImageView("assets/images/épée.png");
 	Image haut = new Image("assets/images/ImagesLink/haut.png");
@@ -38,25 +37,26 @@ public class Controleur implements Initializable {
 		
 		int posY = link.getPosY();
 		int posX = link.getPosX();
-		int ajoutDistance = 8;
 		
 		if (e.getCode() == KeyCode.UP) {
-			imgLink.setImage(haut);
-			link.setPosY( posY - ajoutDistance);
+			imgLink.setImage(haut); // ne pas dupliquer (créer un listener)
+			link.seDeplacer(KeyCode.UP);
+			// appeler seDéplacer(KeyCode) de la classe Link 
 			
 		} else if (e.getCode() == KeyCode.DOWN) {
-			img.setImage(basdroit);
-			link.setPosY( posY + ajoutDistance);
+			imgLink.setImage(basdroit);
+			link.seDeplacer(KeyCode.DOWN);
 			
 		} else if (e.getCode() == KeyCode.LEFT) {
-			img.setImage(gauche);
-			link.setPosX( posX - ajoutDistance);
+			imgLink.setImage(gauche);
+			link.seDeplacer(KeyCode.LEFT);
 			
 		} else {
-			img.setImage(droite);
-			link.setPosX( posX + ajoutDistance);
+			imgLink.setImage(droite);
+			link.seDeplacer(KeyCode.RIGHT);
 			
 		}
+		
 		
 		if (Map1.collision(link.getPosX(), link.getPosY())) {
 			link.setPosX(posX);
@@ -72,19 +72,15 @@ public class Controleur implements Initializable {
 		imgLink.layoutYProperty().bind(link.PosYProperty());
 		
 		// TODO bind tonneau
-//		imgLink.layoutXProperty().bind(tonneau.PosXProperty());
-//		imgLink.layoutYProperty().bind(tonneau.PosYProperty());
+		imgTonneau.layoutXProperty().bind(tonneau.PosXProperty());
+		imgTonneau.layoutYProperty().bind(tonneau.PosYProperty());
 	}
 	
 
 	public void initializeMap() {
 		// Affichage de la map
 		Map1.map(layout);
-		// Affichage de link
-		imgLink.setLayoutX(120);
-		imgLink.setLayoutY(100);
-		imgTonneau.setLayoutX(1287);
-		imgTonneau.setLayoutY(770);
+		// Affichage de link et du tonneau
 		pane.getChildren().addAll(imgTonneau,imgLink);
 	}
 	
