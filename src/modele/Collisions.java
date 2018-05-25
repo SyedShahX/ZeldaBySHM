@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import vue.Map1;
 
 public class Collisions {
 

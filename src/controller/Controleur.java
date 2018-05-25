@@ -13,8 +13,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import modele.Collisions;
 import modele.Joueur;
-import modele.Map1;
 import modele.Tonneau;
+import vue.Map1;
 
 public class Controleur implements Initializable {
 
