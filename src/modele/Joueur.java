@@ -1,17 +1,19 @@
 package modele;
 
+import java.awt.Rectangle;
+
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 public class Joueur extends Personnage {
 
 	private Arme arme;
-	public Joueur(String nom,int ptVie,Position position,int vit) {
-		super(nom, ptVie,position,vit);
+	public Joueur(String nom, int ptVie, int posX, int posY,int vit) {
+		super(nom, ptVie, posX, posY,vit);
 		this.arme = arme;
 	}
+	
 	public int reglerVitesse() {
-		if(Map1.persoRalenti(position)==true) {
+		if(Collisions.persoRalenti(getPosX(),getPosY())==true) {
 			setVitesse(3);
 		}
 		else {
@@ -20,38 +22,28 @@ public class Joueur extends Personnage {
 		return getVitesse();
 	}
 
-	public void seDeplacer(KeyEvent e) {
-		int posX = position.getPosX();
-		int posY = position.getPosY();
-		int ajoutDistance = reglerVitesse();
+	public boolean collision(Rectangle rect) {
+		if(rect.intersects(this.getBounds())) {
+			//System.out.println("tonneau");
+		return true;
+	}else
+		return false;
+	}
 
-		if (Map1.collision(posX, posY) == true) {
-			System.out.println("collisions");
+	public void seDeplacer(KeyCode key) {
+		int posY = getPosY();
+		int posX = getPosX();
+		int ajoutDistance=reglerVitesse();
+
+		if (key.equals(KeyCode.UP)) {
+			setPosY( posY - ajoutDistance);
+		} else if(key.equals(KeyCode.DOWN)) {
+			setPosY( posY + ajoutDistance);
+		} else if(key.equals(KeyCode.LEFT)) {
+			setPosX( posX - ajoutDistance);
+		} else {
+			setPosX( posX + ajoutDistance);
 		}
-
-		fixerToucheY(e,KeyCode.UP,posY,-ajoutDistance,"haut");
-		fixerToucheY(e,KeyCode.DOWN,posY,ajoutDistance,"bas");
-
-		fixerToucheX(e,KeyCode.LEFT,posX,-ajoutDistance,"gauche");
-		fixerToucheX(e,KeyCode.RIGHT,posX,ajoutDistance,"droite");
-
-	}
-
-	public void fixerToucheX(KeyEvent e,KeyCode touche,int positionActuelle,
-			int nouvellePosition,String nomPerso) {			
-		if (e.getCode() == touche) {
-
-			position.setPosX(positionActuelle + nouvellePosition);
-		} 
-
-	}
-
-	public void fixerToucheY(KeyEvent e,KeyCode touche,int positionActuelle,
-			int nouvellePosition,String nomPerso) {			
-		if (e.getCode() == touche) {
-			position.setPosY(positionActuelle + nouvellePosition);
-		} 
-
 	}
 
 	@Override
