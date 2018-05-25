@@ -1,5 +1,7 @@
 package modele;
 
+import java.awt.Rectangle;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.input.KeyEvent;
@@ -10,13 +12,16 @@ public abstract class Personnage {
 	protected int ptVie;
 	protected IntegerProperty posX;
 	protected IntegerProperty posY;
+	protected int vitesse;
+
 	
-	public Personnage(String nom, int ptVie, int posX, int posY) {
+	public Personnage(String nom, int ptVie, int posX, int posY,int vit) {
 		super();
 		this.nom = nom;
 		this.ptVie = ptVie;
 		this.posX = new SimpleIntegerProperty(posX);
 		this.posY = new SimpleIntegerProperty(posY);
+		this.vitesse=vit;
 		
 	}
 	
@@ -65,6 +70,20 @@ public abstract class Personnage {
 
 	public void setPosY(int posY) {
 		this.posY.set(posY);;
+	}
+	
+//  GETTER ET SETTER VITESSE
+	public int getVitesse() {
+		return this.vitesse;
+	}
+	public void setVitesse(int vitesse) {
+		this.vitesse=vitesse;
+	}
+	
+	//renvoye un rectangle
+	public Rectangle getBounds() {
+		Rectangle recPerso=new Rectangle(getPosX(),getPosY(),30,30);
+		return recPerso;
 	}
 	
 }

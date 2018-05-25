@@ -3,8 +3,6 @@ package controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -13,65 +11,66 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import modele.Joueur;
-import modele.Map1;
-import modele.Tonneau;
+import modele.Collisions;
+import modele.Monde;
+import vue.Map1;
 
 public class Controleur implements Initializable {
-	
+
 	@FXML Pane pane;
 	@FXML TilePane layout;
-	Joueur link = new Joueur("Link", 100, 120, 820);
 	ImageView imgLink = new ImageView("assets/images/ImagesLink/joueur.png");
+	Monde monde=new Monde();
 
 	ImageView imgTonneau = new ImageView("assets/images/tonneau.png");
-	Tonneau tonneau = new Tonneau(1287,770);
-	
-	ImageView epee = new ImageView("assets/images/Ã©pÃ©e.png");
+
+	Image epee = new Image("assets/images/épée.png");
 	Image haut = new Image("assets/images/ImagesLink/haut.png");
 	Image gauche = new Image("assets/images/ImagesLink/gauche.png");
 	Image basdroit = new Image("assets/images/ImagesLink/basdroit.png");
 	Image droite = new Image("assets/images/ImagesLink/droite.png");
-	
-	public void gererTouche(KeyEvent e) {	
-		int posY = link.getPosY();
-		int posX = link.getPosX();
+
+	public void gererTouche(KeyEvent e) {
+		int posY = monde.getLink().getPosY();
+		int posX = monde.getLink().getPosX();
 		
 		if (e.getCode() == KeyCode.UP) {
-			link.seDeplacer(KeyCode.UP);
-			
+			monde.getLink().seDeplacer(KeyCode.UP);
 		} else if (e.getCode() == KeyCode.DOWN) {
-			link.seDeplacer(KeyCode.DOWN);
-			
+			monde.getLink().seDeplacer(KeyCode.DOWN);
+
 		} else if (e.getCode() == KeyCode.LEFT) {
-			link.seDeplacer(KeyCode.LEFT);
-			
+			monde.getLink().seDeplacer(KeyCode.LEFT);
 		} else if(e.getCode() == KeyCode.RIGHT){
-			link.seDeplacer(KeyCode.RIGHT);
-			
+			monde.getLink().seDeplacer(KeyCode.RIGHT);
 		}
-		
-		
-		if (Map1.collision(link.getPosX(), link.getPosY())) {
-			link.setPosX(posX);
-			link.setPosY(posY);
+
+
+		if (Collisions.collision(monde.getLink().getPosX(), monde.getLink().getPosY()) == true ||  monde.getLink().collision(monde.getTonneau().getBoundsCollisions())) {
+			monde.getLink().setPosX(posX); 
+			monde.getLink().setPosY(posY);
+		}
+		collisiontest(e);
+	}
+	public void collisiontest(KeyEvent e) {
+		if(monde.getLink().collision(monde.getTonneau().getBounds()) == true && e.getCode() == KeyCode.A) {
+			imgTonneau.setImage(epee);
 		}
 	}
-	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		initializeMap();
+initializeMap();
 		
 		// Bind entre l'image Link et sa position x et y
-		imgLink.layoutXProperty().bind(link.PosXProperty());
-		imgLink.layoutYProperty().bind(link.PosYProperty());
+		imgLink.layoutXProperty().bind(monde.getLink().PosXProperty());
+		imgLink.layoutYProperty().bind(monde.getLink().PosYProperty());
 		
 		// Bind entre l'image Tonneau et sa position x et y
-		imgTonneau.layoutXProperty().bind(tonneau.PosXProperty());
-		imgTonneau.layoutYProperty().bind(tonneau.PosYProperty());
+		imgTonneau.layoutXProperty().bind(monde.getTonneau().PosXProperty());
+		imgTonneau.layoutYProperty().bind(monde.getTonneau().PosYProperty());
 		
-		link.OrientationProperty().addListener(
+		monde.getLink().OrientationProperty().addListener(
 				(obs,ancienneValeur,nouvelleValeur) -> {
 					changerImageLink(nouvelleValeur);
 				}
@@ -100,7 +99,6 @@ public class Controleur implements Initializable {
 		// Affichage de link et du tonneau
 		pane.getChildren().addAll(imgTonneau,imgLink);
 	}
-	
-	
-	
+
+
 }
