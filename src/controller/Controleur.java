@@ -24,7 +24,7 @@ public class Controleur implements Initializable {
 
 	ImageView imgTonneau = new ImageView("assets/images/tonneau.png");
 
-	Image epee = new Image("assets/images/épée.png");
+	Image epee = new Image("assets/images/Ã©pÃ©e.png");
 	Image haut = new Image("assets/images/ImagesLink/haut.png");
 	Image gauche = new Image("assets/images/ImagesLink/gauche.png");
 	Image basdroit = new Image("assets/images/ImagesLink/basdroit.png");

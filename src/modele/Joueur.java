@@ -42,7 +42,6 @@ public class Joueur extends Personnage {
 
 		if (key.equals(KeyCode.UP)) {
 			setOrientation("haut");
-			System.out.println("haut");
 			setPosY( posY - ajoutDistance);
 		} else if(key.equals(KeyCode.DOWN)) {
 			setOrientation("bas");

@@ -1,7 +1,5 @@
 package modele;
 
-import java.awt.Rectangle;
-
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 

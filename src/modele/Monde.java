@@ -4,29 +4,59 @@ import java.util.ArrayList;
 
 public class Monde {
 	
-	private ArrayList<Objet> ListeObstacles;
-	private ArrayList<Arme> ListeArme;
+	private ArrayList<Objet> listeObstacles;
+	private ArrayList<Arme> listeArme;
 	private Tonneau tonneau;
-	private Joueur Link;
+	private Joueur link;
 	
 	public Monde() {
-		this.ListeObstacles=new ArrayList<Objet>(); 
-		this.Link=new Joueur("Link", 100, 1200, 820,0);
-		this.tonneau=new Tonneau(1287,770);
+		this.listeObstacles=new ArrayList<Objet>(); 
+		this.link = new Joueur("Link", 100, 1200, 820,0);
+		this.tonneau = new Tonneau(1287,770);
 	}
-	public void ajouterObjet() {
-		
+	
+//	AJOUTER OBJET
+	public void ajouterObjet(Objet obj) {
+		listeObstacles.add(obj);
 	}
-	public ArrayList<Objet> getListeObstacles() {
-		return ListeObstacles;
+	
+//	AJOUTER ARME
+	public void ajouterArme(Arme arme) {
+		listeArme.add(arme);
 	}
+	
+//	GETTER OBJET
 	public Joueur getLink() {
-		return this.Link;
+		return this.link;
 	}
 	public Tonneau getTonneau() {
-		// TODO Auto-generated method stub
 		return this.tonneau;
 	}
 	
+//	SUPPRIMER OBJET
+	public void SupprimerObjet(Object objet) {
+		for (Object obj : listeObstacles) {
+			if (obj == objet) {
+				listeObstacles.remove(obj);
+			}
+		}
+	}
+//	SUPPRIMER ARME
+	public void SupprimerArme(Arme arme) {
+		for (Arme obj : listeArme) {
+			if (obj == arme) {
+				listeArme.remove(arme);
+			}
+		}
+	}
+	
+//	GETTER LISTE 
+	public ArrayList<Objet> getListeObstacles() {
+		return this.listeObstacles;
+	}
+	
+	public ArrayList<Arme> getListeArme() {
+		return listeArme;
+	}
 
 }
