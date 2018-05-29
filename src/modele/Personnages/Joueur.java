@@ -1,10 +1,13 @@
-package modele;
+package modele.Personnages;
 
 import java.awt.Rectangle;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
+import modele.Arme;
+import modele.Collisions;
+import modele.Personnage;
 
 public class Joueur extends Personnage {
 
@@ -20,8 +23,7 @@ public class Joueur extends Personnage {
 	public int reglerVitesse() {
 		if(Collisions.persoRalenti(getPosX(),getPosY())==true) {
 			setVitesse(3);
-		}
-		else {
+		} else {
 			setVitesse(8);
 		}
 		return getVitesse();
@@ -29,12 +31,16 @@ public class Joueur extends Personnage {
 
 	public boolean collision(Rectangle rect) {
 		if(rect.intersects(this.getBounds())) {
-			//System.out.println("tonneau");
 		return true;
 	}else
 		return false;
 	}
-
+	
+	public void setPositionFixe(int positionX,int positionY) {
+		setPosX(positionX); 
+		setPosY(positionY);
+	}
+	
 	public void seDeplacer(KeyCode key) {
 		int posY = getPosY();
 		int posX = getPosX();

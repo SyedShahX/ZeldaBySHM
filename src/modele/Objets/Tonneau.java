@@ -1,4 +1,4 @@
-package modele;
+package modele.Objets;
 
 
 
@@ -6,11 +6,12 @@ import java.awt.Rectangle;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import modele.Objet;
 
 public class Tonneau extends Objet {
 	
-	private IntegerProperty posX;
-	private IntegerProperty posY;
 	
 	public Tonneau(int positionX, int positionY) {
 		super(positionX,positionY);
@@ -27,5 +28,4 @@ public class Tonneau extends Objet {
 		return recTonneau;
 		
 	}
-
 }

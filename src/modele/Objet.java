@@ -4,8 +4,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Objet {
-	private IntegerProperty posX;
-	private IntegerProperty posY;
+	protected IntegerProperty posX;
+	protected IntegerProperty posY;
 	
 	public Objet(int positionX, int positionY) {
 		super();

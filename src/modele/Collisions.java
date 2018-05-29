@@ -28,16 +28,16 @@ public class Collisions {
 		return false;
 		
 	}
-	public static boolean estcollision(int valtab) {
-		if(valtab==2||valtab==3||valtab==1)
+	public static boolean estcollision(int valTab) {
+		if(valTab==2||valTab==3||valTab==1)
 			return true;
 		else {
 		return false;
 		}
 	}
 
-	public static boolean persoRalenti(int PosX,int PosY) {
-		Rectangle joueur = new Rectangle(PosX,PosY,20,20);
+	public static boolean persoRalenti(int posX,int posY) {
+		Rectangle joueur = new Rectangle(posX,posY,20,20);
 		int[][] tab=Map1.getTab();
 		for(int i=0;i<tab.length;i++) {
 			for (int j = 0; j < tab[i].length; j++) {
