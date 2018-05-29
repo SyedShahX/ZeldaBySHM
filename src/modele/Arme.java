@@ -1,5 +1,7 @@
 package modele;
 
+import java.awt.Rectangle;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -18,6 +20,10 @@ public class Arme {
 		this.pvArme=pvArme;
 		this.posX = new SimpleIntegerProperty(positionX);
 		this.posY = new SimpleIntegerProperty(positionY);
+	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle(getPosX(),getPosY(),12,12);
 	}
 
 //	Nom
@@ -55,6 +61,8 @@ public class Arme {
 	public int getPosX() {
 		return this.posX.getValue();
 	}
+	
+	
 	
 	
 	

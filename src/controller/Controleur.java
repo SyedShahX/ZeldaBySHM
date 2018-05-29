@@ -1,8 +1,12 @@
 package controller;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
+
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -11,13 +15,16 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import modele.Arme;
 import modele.Collisions;
 import modele.Monde;
+import modele.Objet;
 import vue.Map1;
 
 public class Controleur implements Initializable {
 
 	@FXML Pane pane;
+	@FXML Pane paneArmes;
 	@FXML TilePane layout;
 	ImageView imgLink = new ImageView("assets/images/ImagesLink/joueur.png");
 	Monde monde = new Monde();
@@ -29,9 +36,13 @@ public class Controleur implements Initializable {
 	Image gauche = new Image("assets/images/ImagesLink/gauche.png");
 	Image basdroit = new Image("assets/images/ImagesLink/basdroit.png");
 	Image droite = new Image("assets/images/ImagesLink/droite.png");
-
+	
+	Map<Objet,ImageView> mapObjetImg = new HashMap<>();
+	Map<Arme,ImageView> mapArmeImg = new HashMap<>();
+	
 	public Controleur() {
-		monde.getListeObstacles().add(monde.getTonneau());
+		mapObjetImg.put(monde.getTonneau(), imgTonneau);
+		mapArmeImg.put(monde.getEpee(), imgEpee);
 		System.out.println(monde.getTonneau());
 	}
 	
@@ -58,6 +69,18 @@ public class Controleur implements Initializable {
 			collisionObjet(e,posX,posY);
 			
 		}
+		
+		recupererArme();
+	}
+	
+	public void recupererArme() {
+		if (monde.getListeArme().contains(monde.getEpee())) {
+			if (monde.getLink().getBounds().intersects(monde.getEpee().getBounds())) {
+				monde.getListeArme().remove(monde.getEpee());
+				monde.getLink().setArme(monde.getEpee());
+				System.out.println(monde.getLink());
+			}
+		}
 	}
 	
 	public void collisionObstacleMap(KeyEvent e,int positionX,int positionY) {
@@ -73,7 +96,7 @@ public class Controleur implements Initializable {
 		if(monde.getLink().collision(monde.getTonneau().getBounds()) == true &&
 		   e.getCode() == KeyCode.A) {
 				monde.getListeObstacles().remove(monde.getTonneau());
-				pane.getChildren().remove(imgTonneau);
+				monde.getListeArme().add(monde.getEpee());
 				System.out.println(monde.getListeObstacles());
 					
 		}
@@ -91,6 +114,7 @@ public class Controleur implements Initializable {
 	
 
 	public void initializeMap() {
+		monde.getListeObstacles().add(monde.getTonneau());
 		// Affichage de la map
 		Map1.map(layout);
 		// Affichage de link et du tonneau
@@ -106,9 +130,9 @@ public class Controleur implements Initializable {
 		imgLink.layoutYProperty().bind(monde.getLink().PosYProperty());
 		
 		// Bind entre l'image Tonneau et sa position x et y
+		
 		imgTonneau.layoutXProperty().bind(monde.getTonneau().PosXProperty());
 		imgTonneau.layoutYProperty().bind(monde.getTonneau().PosYProperty());
-		
 		
 		// Bind entre l'image Tonneau et sa position x et y
 		imgEpee.layoutXProperty().bind(monde.getEpee().PosXProperty());
@@ -120,6 +144,47 @@ public class Controleur implements Initializable {
 					changerImageLink(nouvelleValeur);
 				}
 		);
+		
+		// ObservableList listeObstacles écoute ListChangeListener
+		monde.getListeObstacles().addListener(new ListChangeListener<Objet>() {
+			
+			@Override
+			public void onChanged(Change<? extends Objet> c) {
+				while(c.next()) {
+					if (c.wasAdded()) {
+						for (Objet obj : c.getAddedSubList()) {
+							pane.getChildren().add(mapObjetImg.get(obj));
+						}
+					} else  if(c.wasRemoved()) {
+						for (Objet obj : c.getRemoved()) {
+							pane.getChildren().remove(mapObjetImg.get(obj));
+							
+						}
+					}
+				}
+			}
+			
+		});
+		
+		monde.getListeArme().addListener(new ListChangeListener<Arme>() {
+
+			@Override
+			public void onChanged(Change<? extends Arme> c) {
+				while(c.next()) {
+					if (c.wasAdded()) {
+						for (Arme arme : c.getAddedSubList()) {
+							paneArmes.getChildren().add(mapArmeImg.get(arme));
+						}
+					} else  if(c.wasRemoved()) {
+						for (Arme arme : c.getRemoved()) {
+							paneArmes.getChildren().remove(mapArmeImg.get(arme));
+							
+						}
+					}
+				}
+			}
+			
+		});
 		
 		
 	}

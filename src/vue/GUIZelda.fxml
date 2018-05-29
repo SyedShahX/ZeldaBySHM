@@ -7,5 +7,6 @@
 <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controleur">
    <children>
       <TilePane fx:id="layout" prefHeight="962.0" prefWidth="1601.0" />
+      <Pane fx:id="paneArmes" prefHeight="960.0" prefWidth="1600.0" />
    </children>
 </Pane>

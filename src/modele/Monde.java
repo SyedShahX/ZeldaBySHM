@@ -17,7 +17,7 @@ public class Monde {
 	public Monde() {
 		this.listeObstacles = FXCollections.observableArrayList();
 		this.listeArme = FXCollections.observableArrayList();
-		this.link = new Joueur("Link", 100, 1200, 820,0);
+		this.link = new Joueur("Link", 100, 1200, 820,0,null);
 		this.tonneau = new Tonneau(1287,770);
 		this.epee = new Epee("épée", 20, 80, 1287, 770);
 	}

@@ -14,8 +14,8 @@ public class Joueur extends Personnage {
 	private Arme arme;
 	private StringProperty orientation;
 
-	public Joueur(String nom, int ptVie, int posX, int posY,int vit) {
-		super(nom, ptVie, posX, posY,vit);
+	public Joueur(String nom, int ptVie, int posX, int posY,int vitesse,Arme arme) {
+		super(nom, ptVie, posX, posY,vitesse);
 		this.orientation = new SimpleStringProperty();
 		this.arme = arme;
 	}
@@ -99,6 +99,5 @@ public class Joueur extends Personnage {
 	public String getOrientation() {
 		return this.orientation.getValue();
 	}
-
 
 }
