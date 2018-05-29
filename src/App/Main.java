@@ -21,7 +21,7 @@ public class Main extends Application {
 		
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			URL url = new File("src/vue/GUIZelda.fxml").toURI().toURL();
+			URL url = new File("ZeldaBySHM-master/src/vue/GUIZelda.fxml").toURI().toURL();
 			loader.setLocation(url);
 			System.out.println(loader.getLocation());
 			window.setTitle("jeu Zelda");

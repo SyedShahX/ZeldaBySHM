@@ -80,7 +80,7 @@ public abstract class Personnage {
 		this.vitesse=vitesse;
 	}
 	
-	//renvoye un rectangle
+//	Renvoye un rectangle
 	public Rectangle getBounds() {
 		Rectangle recPerso=new Rectangle(getPosX(),getPosY(),30,30);
 		return recPerso;
