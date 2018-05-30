@@ -1,5 +1,7 @@
 package modele;
 
+import java.awt.Rectangle;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -13,6 +15,17 @@ public class Objet {
 		this.posY = new SimpleIntegerProperty(positionY);
 	}
 
+	public Rectangle getBoundsCollisions() {
+		Rectangle recTonneau = new Rectangle(this.getPosX(),this.getPosY(),15,15);
+		return recTonneau;
+		
+	}
+	
+	public Rectangle getBounds() {
+		Rectangle recTonneau = new Rectangle(this.getPosX(),this.getPosY(),30,30);
+		return recTonneau;
+		
+	}
 	// GETTER AND SETTER
 	public IntegerProperty PosXProperty() {
 		return posX;

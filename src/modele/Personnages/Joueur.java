@@ -44,7 +44,7 @@ public class Joueur extends Personnage {
 	public void seDeplacer(KeyCode key) {
 		int posY = getPosY();
 		int posX = getPosX();
-		int ajoutDistance=reglerVitesse();
+		int ajoutDistance = reglerVitesse();
 
 		if (key.equals(KeyCode.UP)) {
 			setOrientation("haut");
@@ -62,15 +62,10 @@ public class Joueur extends Personnage {
 	}
 
 	@Override
-	public void attaquer(Personnage perso) {
-		// TODO Auto-generated method stub
+	public void attaquer() {
+		System.out.println("attaque");
 
 	}
-
-	public void lancer() {
-
-	}
-
 	public void parler() {
 
 	}
@@ -78,6 +73,13 @@ public class Joueur extends Personnage {
 	public void pousser() {
 
 	}
+	
+//	CHANGER ARME
+	public void changerArmeJoueur(Arme arme) {
+		setArme(arme);
+		
+	}
+	
 
 	//	GETTER ET SETTER ARME
 	public Arme getArme() {
@@ -99,5 +101,4 @@ public class Joueur extends Personnage {
 	public String getOrientation() {
 		return this.orientation.getValue();
 	}
-
 }

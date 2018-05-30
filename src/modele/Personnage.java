@@ -4,7 +4,6 @@ import java.awt.Rectangle;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.input.KeyEvent;
 
 public abstract class Personnage {
 	
@@ -25,7 +24,7 @@ public abstract class Personnage {
 		
 	}
 	
-	public abstract void attaquer(Personnage perso);
+	public abstract void attaquer();
 	
 	
 	

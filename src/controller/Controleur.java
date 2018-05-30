@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +18,7 @@ import modele.Arme;
 import modele.Collisions;
 import modele.Monde;
 import modele.Objet;
+import modele.Personnages.Joueur;
 import vue.Map1;
 
 public class Controleur implements Initializable {
@@ -36,6 +36,7 @@ public class Controleur implements Initializable {
 	Image gauche = new Image("assets/images/ImagesLink/gauche.png");
 	Image basdroit = new Image("assets/images/ImagesLink/basdroit.png");
 	Image droite = new Image("assets/images/ImagesLink/droite.png");
+	Joueur link = monde.getLink();
 	
 	Map<Objet,ImageView> mapObjetImg = new HashMap<>();
 	Map<Arme,ImageView> mapArmeImg = new HashMap<>();
@@ -43,12 +44,22 @@ public class Controleur implements Initializable {
 	public Controleur() {
 		mapObjetImg.put(monde.getTonneau(), imgTonneau);
 		mapArmeImg.put(monde.getEpee(), imgEpee);
-		System.out.println(monde.getTonneau());
 	}
 	
 	public void gererTouche(KeyEvent e) {
 		int posY = monde.getLink().getPosY();
 		int posX = monde.getLink().getPosX();
+		
+		deplacements(e);
+		collisionObstacleMap(e,posX,posY);
+		collisionObjet(e,monde.getTonneau(), posX, posY);
+		casserTonneau(e);
+		recupererArme();
+		attaquer(e);
+	}
+	
+//	Déplacements du joueur
+	public void deplacements(KeyEvent e) {
 		
 		if (e.getCode() == KeyCode.UP) {
 			monde.getLink().seDeplacer(KeyCode.UP);
@@ -62,25 +73,26 @@ public class Controleur implements Initializable {
 		} else if(e.getCode() == KeyCode.RIGHT){
 			monde.getLink().seDeplacer(KeyCode.RIGHT);
 		}
-		
-		collisionObstacleMap(e,posX,posY);
-		
-		if (monde.getListeObstacles().contains(monde.getTonneau())) {
-			collisionObjet(e,posX,posY);
-			
-		}
-		
-		recupererArme();
 	}
 	
-	public void recupererArme() {
-		if (monde.getListeArme().contains(monde.getEpee())) {
-			if (monde.getLink().getBounds().intersects(monde.getEpee().getBounds())) {
-				monde.getListeArme().remove(monde.getEpee());
-				monde.getLink().setArme(monde.getEpee());
-				System.out.println(monde.getLink());
+	public void attaquer(KeyEvent e) {
+		if (e.getCode() == KeyCode.SPACE) {
+			if (monde.getLink().getArme() != null) {
+				monde.getLink().attaquer();				
+			} else {
+				System.out.println("Le joueur n'a aucune armes pour attaquer");
 			}
 		}
+	}
+
+	public void recupererArme() {
+			if (monde.getListeArme().contains(monde.getEpee())) {
+				if (monde.getLink().getBounds().intersects(monde.getEpee().getBounds())) {
+					monde.supprimerArme(monde.getEpee());
+					monde.getLink().changerArmeJoueur(monde.getEpee());
+					System.out.println(monde.getLink());
+				}
+			}
 	}
 	
 	public void collisionObstacleMap(KeyEvent e,int positionX,int positionY) {
@@ -95,19 +107,20 @@ public class Controleur implements Initializable {
 	public void casserTonneau(KeyEvent e) {
 		if(monde.getLink().collision(monde.getTonneau().getBounds()) == true &&
 		   e.getCode() == KeyCode.A) {
-				monde.getListeObstacles().remove(monde.getTonneau());
-				monde.getListeArme().add(monde.getEpee());
-				System.out.println(monde.getListeObstacles());
+				monde.supprimerObjet(monde.getTonneau());
+				monde.ajouterArme(monde.getEpee());
+				System.out.println(monde.getListeArme());
 					
 		}
 	}
 	
-	public void collisionObjet(KeyEvent e,int positionX,int positionY) {
-		if (monde.getLink().collision(monde.getTonneau().getBoundsCollisions()) == true) {
-			monde.getLink().setPositionFixe(positionX,positionY);
+	public void collisionObjet(KeyEvent e,Objet obj,int positionX,int positionY) {
+		if (monde.getListeObstacles().contains(obj)) {
+			if (monde.getLink().collision(obj.getBoundsCollisions()) == true) {
+				monde.getLink().setPositionFixe(positionX,positionY);
+			}
+			
 		}
-		
-		casserTonneau(e);
 			
 	} 
 		
@@ -130,7 +143,6 @@ public class Controleur implements Initializable {
 		imgLink.layoutYProperty().bind(monde.getLink().PosYProperty());
 		
 		// Bind entre l'image Tonneau et sa position x et y
-		
 		imgTonneau.layoutXProperty().bind(monde.getTonneau().PosXProperty());
 		imgTonneau.layoutYProperty().bind(monde.getTonneau().PosYProperty());
 		
@@ -145,7 +157,6 @@ public class Controleur implements Initializable {
 				}
 		);
 		
-		// ObservableList listeObstacles écoute ListChangeListener
 		monde.getListeObstacles().addListener(new ListChangeListener<Objet>() {
 			
 			@Override

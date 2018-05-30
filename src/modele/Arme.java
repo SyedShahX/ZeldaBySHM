@@ -63,9 +63,6 @@ public class Arme {
 	}
 	
 	
-	
-	
-	
 //	positionY
 	public IntegerProperty PosYProperty() {
 		return this.posY;
