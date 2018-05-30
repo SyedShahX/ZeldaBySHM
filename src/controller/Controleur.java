@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import modele.Arme;
 import modele.Collisions;
+import modele.Ennemi;
 import modele.Monde;
 import modele.Objet;
 import modele.Personnages.Joueur;
@@ -26,24 +27,30 @@ public class Controleur implements Initializable {
 	@FXML Pane pane;
 	@FXML Pane paneArmes;
 	@FXML TilePane layout;
-	ImageView imgLink = new ImageView("assets/images/ImagesLink/joueur.png");
 	Monde monde = new Monde();
 
+//	ImageView Objets
 	ImageView imgTonneau = new ImageView("assets/images/tonneau.png");
 
-	ImageView imgEpee = new ImageView("assets/images/épée.png");
+//	ImageView Armes
+	ImageView imgEpee = new ImageView("assets/images/ImagesArmes/épée.png");
+	ImageView imgOursGauche = new ImageView("assets/images/ImageEnnemis/oursGrisGauche.png");
+	
+//	Images déplacements Link
+	ImageView imgLink = new ImageView("assets/images/ImagesLink/joueur.png");
 	Image haut = new Image("assets/images/ImagesLink/haut.png");
 	Image gauche = new Image("assets/images/ImagesLink/gauche.png");
 	Image basdroit = new Image("assets/images/ImagesLink/basdroit.png");
 	Image droite = new Image("assets/images/ImagesLink/droite.png");
-	Joueur link = monde.getLink();
 	
 	Map<Objet,ImageView> mapObjetImg = new HashMap<>();
+	Map<Ennemi,ImageView> mapEnnemisImg = new HashMap<>();
 	Map<Arme,ImageView> mapArmeImg = new HashMap<>();
 	
 	public Controleur() {
 		mapObjetImg.put(monde.getTonneau(), imgTonneau);
 		mapArmeImg.put(monde.getEpee(), imgEpee);
+		mapEnnemisImg.put(monde.getEnnemiOurs(), imgOursGauche);
 	}
 	
 	public void gererTouche(KeyEvent e) {
@@ -131,7 +138,7 @@ public class Controleur implements Initializable {
 		// Affichage de la map
 		Map1.map(layout);
 		// Affichage de link et du tonneau
-		pane.getChildren().addAll(imgTonneau,imgLink);
+		pane.getChildren().addAll(imgTonneau,imgLink,imgOursGauche);
 	}
 	
 	@Override
@@ -149,6 +156,10 @@ public class Controleur implements Initializable {
 		// Bind entre l'image Tonneau et sa position x et y
 		imgEpee.layoutXProperty().bind(monde.getEpee().PosXProperty());
 		imgEpee.layoutYProperty().bind(monde.getEpee().PosYProperty());
+		
+		// Bind entre l'image Ours et sa position x et y
+		imgOursGauche.layoutXProperty().bind(monde.getEnnemiOurs().PosXProperty());
+		imgOursGauche.layoutYProperty().bind(monde.getEnnemiOurs().PosYProperty());
 		
 		// Changement position Link
 		monde.getLink().OrientationProperty().addListener(
@@ -197,6 +208,25 @@ public class Controleur implements Initializable {
 			
 		});
 		
+		monde.getListeEnnemis().addListener(new ListChangeListener<Ennemi>() {
+			
+			@Override
+			public void onChanged(Change<? extends Ennemi> c) {
+				while(c.next()) {
+					if (c.wasAdded()) {
+						for (Ennemi obj : c.getAddedSubList()) {
+							pane.getChildren().add(mapEnnemisImg.get(obj));
+						}
+					} else  if(c.wasRemoved()) {
+						for (Ennemi obj : c.getRemoved()) {
+							pane.getChildren().remove(mapEnnemisImg.get(obj));
+							
+						}
+					}
+				}
+			}
+			
+		});
 		
 	}
 

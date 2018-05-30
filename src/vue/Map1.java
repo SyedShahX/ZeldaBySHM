@@ -1,9 +1,6 @@
 package vue;
 
 
-import java.awt.Rectangle;
-
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 
 
