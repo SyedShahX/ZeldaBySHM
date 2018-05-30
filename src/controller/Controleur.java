@@ -17,9 +17,9 @@ import javafx.scene.layout.TilePane;
 import modele.Arme;
 import modele.Collisions;
 import modele.Ennemi;
+import modele.GameLoop;
 import modele.Monde;
 import modele.Objet;
-import modele.Personnages.Joueur;
 import vue.Map1;
 
 public class Controleur implements Initializable {
@@ -27,6 +27,8 @@ public class Controleur implements Initializable {
 	@FXML Pane pane;
 	@FXML Pane paneArmes;
 	@FXML TilePane layout;
+	GameLoop gl = new GameLoop();
+	
 	Monde monde = new Monde();
 
 //	ImageView Objets
@@ -34,7 +36,6 @@ public class Controleur implements Initializable {
 
 //	ImageView Armes
 	ImageView imgEpee = new ImageView("assets/images/ImagesArmes/épée.png");
-	ImageView imgOursGauche = new ImageView("assets/images/ImageEnnemis/oursGrisGauche.png");
 	
 //	Images déplacements Link
 	ImageView imgLink = new ImageView("assets/images/ImagesLink/joueur.png");
@@ -43,6 +44,12 @@ public class Controleur implements Initializable {
 	Image basdroit = new Image("assets/images/ImagesLink/basdroit.png");
 	Image droite = new Image("assets/images/ImagesLink/droite.png");
 	
+//	Images Déplacements Ours
+	ImageView imgOursGauche = new ImageView("assets/images/ImageEnnemis/oursGrisGauche.png");
+	Image imgOursHaut = new Image("assets/images/ImagesLink/haut.png");
+	Image imgOursBas = new Image("assets/images/ImagesLink/gauche.png");
+	Image imgOursDroit = new Image("assets/images/ImageEnnemis/oursGrisGauche.png");
+
 	Map<Objet,ImageView> mapObjetImg = new HashMap<>();
 	Map<Ennemi,ImageView> mapEnnemisImg = new HashMap<>();
 	Map<Arme,ImageView> mapArmeImg = new HashMap<>();
@@ -79,7 +86,7 @@ public class Controleur implements Initializable {
 			
 		} else if(e.getCode() == KeyCode.RIGHT){
 			monde.getLink().seDeplacer(KeyCode.RIGHT);
-		}
+		} 
 	}
 	
 	public void attaquer(KeyEvent e) {
@@ -116,7 +123,6 @@ public class Controleur implements Initializable {
 		   e.getCode() == KeyCode.A) {
 				monde.supprimerObjet(monde.getTonneau());
 				monde.ajouterArme(monde.getEpee());
-				System.out.println(monde.getListeArme());
 					
 		}
 	}
@@ -130,20 +136,20 @@ public class Controleur implements Initializable {
 		}
 			
 	} 
-		
 	
 
 	public void initializeMap() {
-		monde.getListeObstacles().add(monde.getTonneau());
-		// Affichage de la map
 		Map1.map(layout);
+		monde.getListeObstacles().add(monde.getTonneau());
+		monde.getListeEnnemis().add(monde.getEnnemiOurs());
+		// Affichage de la map
 		// Affichage de link et du tonneau
-		pane.getChildren().addAll(imgTonneau,imgLink,imgOursGauche);
+		pane.getChildren().addAll(imgLink);
 	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		initializeMap();
+		
 		
 		// Bind entre l'image Link et sa position x et y
 		imgLink.layoutXProperty().bind(monde.getLink().PosXProperty());
@@ -165,6 +171,19 @@ public class Controleur implements Initializable {
 		monde.getLink().OrientationProperty().addListener(
 				(obs,ancienneValeur,nouvelleValeur) -> {
 					changerImageLink(nouvelleValeur);
+				}
+		);
+		
+		// Animation Ennemi Ours
+		gl.initAnimation(monde.getEnnemiOurs(),0.017,265,-5,0);
+		
+		// demarre l'animation
+		gl.gameLoop.play();
+		
+		// Changement position Ours
+		monde.getEnnemiOurs().OrientationProperty().addListener(
+				(obs,ancienneValeur,nouvelleValeur) -> {
+					changerImageOurs(nouvelleValeur);
 				}
 		);
 		
@@ -228,16 +247,29 @@ public class Controleur implements Initializable {
 			
 		});
 		
+		initializeMap();
+		
 	}
 
-	private void changerImageLink(String nouveau) {
-		if (nouveau == "haut") {
+	public void changerImageOurs(String nouvelleValeur) {
+		if (nouvelleValeur == "haut") {
+			imgOursGauche.setImage(imgOursHaut);
+		} else if (nouvelleValeur == "bas") {
+			imgOursGauche.setImage(imgOursBas);
+		} else if (nouvelleValeur == "droite") {
+			imgOursGauche.setImage(imgOursDroit);
+		}
+		
+	}
+
+	public void changerImageLink(String nouvelleValeur) {
+		if (nouvelleValeur == "haut") {
 			imgLink.setImage(haut);
-		} else if (nouveau == "bas") {
+		} else if (nouvelleValeur == "bas") {
 			imgLink.setImage(basdroit);
-		} else if (nouveau == "gauche") {
+		} else if (nouvelleValeur == "gauche") {
 			imgLink.setImage(gauche);
-		} else if (nouveau == "droite") {
+		} else if (nouvelleValeur == "droite") {
 			imgLink.setImage(droite);
 		}
 	}

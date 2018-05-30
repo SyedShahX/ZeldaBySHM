@@ -21,7 +21,7 @@ public class Joueur extends Personnage {
 	}
 	
 	public int reglerVitesse() {
-		if(Collisions.persoRalenti(getPosX(),getPosY())==true) {
+		if(Collisions.persoRalenti(getPosX(),getPosY()) == true) {
 			setVitesse(3);
 		} else {
 			setVitesse(8);
@@ -63,7 +63,7 @@ public class Joueur extends Personnage {
 
 	@Override
 	public void attaquer() {
-		System.out.println("attaque");
+		
 
 	}
 	public void parler() {

@@ -24,7 +24,7 @@ public class Monde {
 		this.link = new Joueur("Link", 100, 1200, 820,0,null);
 		this.tonneau = new Tonneau(1287,770);
 		this.epee = new Epee("épée", 30, 80, 1287, 770);
-		this.ours = new Ours("Mr.Ours",200,800,538,0);
+		this.ours = new Ours("Ours tueur",200,800,538,0);
 	}
 	
 //	AJOUTER OBJET

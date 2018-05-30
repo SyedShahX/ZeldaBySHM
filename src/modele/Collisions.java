@@ -11,7 +11,7 @@ public class Collisions {
 
 	public static boolean collision(int posX,int posY) {
 		Rectangle joueur = new Rectangle(posX,posY,20,25);
-		int[][] tab=Map1.getTab();
+		int[][] tab = Map1.getTab();
 		for (int i = 0; i < tab.length; i++) {
 			for (int j = 0; j < tab[i].length; j++) {
 				if (estcollision(tab[i][j]) == true) {
@@ -29,7 +29,7 @@ public class Collisions {
 		
 	}
 	public static boolean estcollision(int valTab) {
-		if(valTab==2||valTab==3||valTab==1)
+		if(valTab == 2 || valTab == 3 || valTab == 1)
 			return true;
 		else {
 		return false;
