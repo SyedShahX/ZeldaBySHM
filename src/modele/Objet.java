@@ -14,14 +14,9 @@ public class Objet {
 		this.posX = new SimpleIntegerProperty(positionX);
 		this.posY = new SimpleIntegerProperty(positionY);
 	}
-
-	public Rectangle getBoundsCollisions() {
-		return new Rectangle(this.getPosX(),this.getPosY(),30,30);
-		
-	}
 	
-	public Rectangle getBounds() {
-		return new Rectangle(this.getPosX(),this.getPosY(),15,15);
+	public Rectangle getBounds(int width, int height) {
+		return new Rectangle(this.getPosX(),this.getPosY(),width,height);
 	}
 	// GETTER AND SETTER
 	public IntegerProperty PosXProperty() {

@@ -22,8 +22,8 @@ public class Arme {
 		this.posY = new SimpleIntegerProperty(positionY);
 	}
 	
-	public Rectangle getBounds() {
-		return new Rectangle(getPosX(),getPosY(),12,12);
+	public Rectangle getBounds(int width, int height) {
+		return new Rectangle(getPosX(),getPosY(),width,height);
 	}
 
 //	Nom

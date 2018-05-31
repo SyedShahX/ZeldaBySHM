@@ -44,7 +44,33 @@ public class Collisions {
 		} else
 			return false;
 	}
-
+	
+	public static void collisionMap(int positionX,int positionY,Monde monde) {
+		if (collisionObstacleMap(monde.getLink().getPosX(), monde.getLink().getPosY())) {
+			monde.getLink().setPositionFixe(positionX,positionY);
+		}
+			
+	} 
+	public static void collisionObjet(Objet obj,int positionX,int positionY,Monde monde) {
+		if (monde.getListeObstacles().contains(obj)) {
+			if (Collisions.collision(monde.getLink().getBounds(28,28),obj.getBounds(15,15))) {
+				monde.getLink().setPositionFixe(positionX,positionY);
+			}
+			
+		}
+			
+	} 
+	
+	public static void collisionEnnemi(Personnage perso,int positionX,int positionY,Monde monde) {
+		if (monde.getListeEnnemis().contains(perso)) {
+			if (Collisions.collision(monde.getLink().getBounds(28,28),perso.getBounds(15,15))) {
+				monde.getLink().setPositionFixe(positionX,positionY);
+			}
+			
+		}
+		
+	} 
+	
 	public static boolean persoRalenti(int posX,int posY) {
 		Rectangle joueur = new Rectangle(posX,posY,20,20);
 		int[][] tab = Map1.getTab();

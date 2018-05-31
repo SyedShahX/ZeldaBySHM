@@ -67,9 +67,9 @@ public class Controleur implements Initializable {
 		int posX = monde.getLink().getPosX();
 		
 		deplacements(e);
-		collisionObstacleMap(e,posX,posY);
-		collisionObjet(e,monde.getTonneau(), posX, posY);
-		collisionEnnemi(e, monde.getEnnemiOurs(), posX, posX);
+		collisionObstacleMap(posX,posY,monde);
+		collisionObjet(monde.getTonneau(), posX, posY,monde);
+		collisionEnnemi(monde.getEnnemiOurs(), posX, posX,monde);
 		casserTonneau(e);
 		recupererArme();
 		attaquer(e,monde.getEnnemiOurs());
@@ -92,71 +92,47 @@ public class Controleur implements Initializable {
 	}
 	
 	public void attaquer(KeyEvent e,Personnage perso) {
-//		if(monde.getLink().getBounds().intersects(perso.getBounds())) {
-			if (e.getCode() == KeyCode.SPACE) {
-				if (monde.getLink().getArme() != null) {
-//					monde.getLink().attaquer(monde.getEnnemiOurs());	
-					System.out.println("attaquer");
-				} else {
-					System.out.println("Le joueur n'a aucune armes pour attaquer");
-				}
+		if (e.getCode() == KeyCode.SPACE) {
+			if(monde.getLink().getArme() != null) {
+				monde.getLink().attaquer(perso);
+			} else {
+				System.out.println("Vous n'avez aucune armes.");
 			}
-//		}
+		}
 	}
 
 	public void recupererArme() {
-			if (monde.getListeArme().contains(monde.getEpee())) {
-				if (Collisions.collision(monde.getLink().getBounds(), monde.getEpee().getBounds())) {
-					monde.supprimerArme(monde.getEpee());
-					monde.getLink().changerArmeJoueur(monde.getEpee());
-				}
-			}
+			monde.getLink().recupererArme();
 	}
 	
-	public void collisionObstacleMap(KeyEvent e,int positionX,int positionY) {
-		if (Collisions.collisionObstacleMap(monde.getLink().getPosX(), monde.getLink().getPosY())) {
-			monde.getLink().setPositionFixe(positionX,positionY);
+	public void collisionObstacleMap(int positionX,int positionY,Monde monde) {
+		Collisions.collisionMap(positionX, positionY, monde);
 			
-		}
+	} 
+	
+	
+	public void collisionObjet(Objet obj,int positionX,int positionY,Monde monde) {
+		Collisions.collisionObjet(obj,positionX,positionY,monde);
 			
+	} 
+	
+	public void collisionEnnemi(Personnage perso,int positionX,int positionY,Monde monde) {
+		Collisions.collisionEnnemi(perso, positionX, positionY, monde);
+		
 	} 
 	
 //	CASSER TONNEAU
 	public void casserTonneau(KeyEvent e) {
-		if(Collisions.collision(monde.getLink().getBounds(),monde.getTonneau().getBoundsCollisions())) {
-		   if(e.getCode() == KeyCode.A) {
-				monde.supprimerObjet(monde.getTonneau());
-				monde.ajouterArme(monde.getEpee());
-				System.out.println(monde.getListeObstacles());
-			}
-		}
+		monde.getLink().casserTonneau(e);
 	}
-	
-	public void collisionObjet(KeyEvent e,Objet obj,int positionX,int positionY) {
-		if (monde.getListeObstacles().contains(obj)) {
-			if (Collisions.collision(monde.getLink().getBounds(),obj.getBounds())) {
-				monde.getLink().setPositionFixe(positionX,positionY);
-			}
-			
-		}
-			
-	} 
-	public void collisionEnnemi(KeyEvent e,Personnage obj,int positionX,int positionY) {
-		if (monde.getListeEnnemis().contains(obj)) {
-			if (Collisions.collision(monde.getLink().getBounds(),obj.getBounds())) {
-				monde.getLink().setPositionFixe(positionX,positionY);
-			}
-			
-		}
-		
-	} 
 	
 
 	public void initializeMap() {
+		// Affichage de la map
 		Map1.map(layout);
+		// Ajout des obstacles et ennemis dans les listes
 		monde.getListeObstacles().add(monde.getTonneau());
 		monde.getListeEnnemis().add(monde.getEnnemiOurs());
-		// Affichage de la map
 		// Affichage de link et du tonneau
 		pane.getChildren().addAll(imgLink);
 	}

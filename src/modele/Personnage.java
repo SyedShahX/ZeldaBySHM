@@ -12,8 +12,8 @@ public abstract class Personnage {
 	protected IntegerProperty posX;
 	protected IntegerProperty posY;
 	protected int vitesse;
+	protected Monde monde;
 
-	
 	public Personnage(String nom, int ptVie, int posX, int posY,int vitesse) {
 		super();
 		this.nom = nom;
@@ -21,14 +21,19 @@ public abstract class Personnage {
 		this.posX = new SimpleIntegerProperty(posX);
 		this.posY = new SimpleIntegerProperty(posY);
 		this.vitesse = vitesse;
+		this.monde = null;
 		
+	}
+	
+	public void setMonde(Monde monde) {
+		this.monde = monde;
 	}
 	
 	public abstract void attaquer(Personnage perso);
 	
 	
-	public Rectangle getBounds() {
-		return new Rectangle(getPosX(),getPosY(),30,30);
+	public Rectangle getBounds(int width,int height) {
+		return new Rectangle(getPosX(),getPosY(),width,height);
 	}
 	
 //	GETTER ET SETTER NOM

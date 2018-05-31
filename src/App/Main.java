@@ -7,12 +7,12 @@ import controller.Controleur;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 	
-	Pane pane;
+	BorderPane borderPane;
 	@Override
 	public void start(Stage window) throws Exception {
 		
@@ -22,10 +22,10 @@ public class Main extends Application {
 			loader.setLocation(url);
 			System.out.println(loader.getLocation());
 			window.setTitle("jeu Zelda");
-			pane = new Pane();
-			pane = loader.load();
+			borderPane = new BorderPane();
+			borderPane = loader.load();
 			Controleur c = loader.getController();
-			Scene scene = new Scene(pane,1600,960);
+			Scene scene = new Scene(borderPane,1600,960);
 			scene.setOnKeyPressed(e -> c.gererTouche(e));
 			window.setScene(scene);
 			window.show();

@@ -21,10 +21,12 @@ public class Monde {
 		this.listeObstacles = FXCollections.observableArrayList();
 		this.listeArmes = FXCollections.observableArrayList();
 		this.listeEnnemis = FXCollections.observableArrayList();
-		this.link = new Joueur("Link", 100, 600, 520,0,null);
+		this.link = new Joueur("Link", 100, 1320, 770,0,null);
 		this.tonneau = new Tonneau(1287,770);
 		this.epee = new Epee("épée", 30, 80, 1287, 770);
-		this.ours = new Ours("Ours tueur",200,800,538,0);
+//		this.ours = new Ours("Ours tueur",200,800,538,0);
+		this.ours = new Ours("Ours tueur",200,1287,580,0);
+		this.getLink().setMonde(this);
 	}
 	
 //	AJOUTER OBJET

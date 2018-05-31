@@ -3,19 +3,23 @@ package modele.Personnages;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import modele.Arme;
 import modele.Collisions;
+import modele.Monde;
 import modele.Personnage;
 
 public class Joueur extends Personnage {
 
 	private Arme arme;
 	private StringProperty orientation;
+	
 
 	public Joueur(String nom, int ptVie, int posX, int posY,int vitesse,Arme arme) {
 		super(nom, ptVie, posX, posY,vitesse);
 		this.orientation = new SimpleStringProperty();
 		this.arme = arme;
+		
 	}
 	
 	public int reglerVitesse() {
@@ -58,9 +62,16 @@ public class Joueur extends Personnage {
 
 	@Override
 	public void attaquer(Personnage adversaire) {
-//		int adversairePv = adversaire.getPtVie();
-//		adversairePv -= getArme().getPtAttaque();
-//		System.out.println(adversairePv);
+		if(Collisions.collision(monde.getLink().getBounds(28,28),adversaire.getBounds(28,28))) {
+				int adversairePv = adversaire.getPtVie();
+				if (adversairePv > getArme().getPtAttaque()) {
+					adversairePv -= getArme().getPtAttaque();
+					adversaire.setPtVie(adversairePv);
+					System.out.println(adversairePv);			
+				} else {
+					System.out.println("mort");
+				}
+		}
 		
 	}
 	
@@ -78,6 +89,24 @@ public class Joueur extends Personnage {
 		
 	}
 	
+	public void casserTonneau(KeyEvent e) {
+		if(Collisions.collision(monde.getLink().getBounds(28,28),monde.getTonneau().getBounds(30,30))) {
+			if(e.getCode() == KeyCode.A) {
+				monde.supprimerObjet(monde.getTonneau());
+				monde.ajouterArme(monde.getEpee());
+				System.out.println(monde.getListeObstacles());
+			}
+		}
+	}
+	// Récupérer Arme
+	public void recupererArme() {
+		if (monde.getListeArme().contains(monde.getEpee())) {
+			if (Collisions.collision(monde.getLink().getBounds(28,28), monde.getEpee().getBounds(12,12))) {
+				monde.supprimerArme(monde.getEpee());
+				monde.getLink().changerArmeJoueur(monde.getEpee());
+			}
+		}
+	}
 
 	//	GETTER ET SETTER ARME
 	public Arme getArme() {
@@ -99,5 +128,6 @@ public class Joueur extends Personnage {
 	public String getOrientation() {
 		return this.orientation.getValue();
 	}
+
 
 }
