@@ -14,19 +14,22 @@ public abstract class Personnage {
 	protected int vitesse;
 
 	
-	public Personnage(String nom, int ptVie, int posX, int posY,int vit) {
+	public Personnage(String nom, int ptVie, int posX, int posY,int vitesse) {
 		super();
 		this.nom = nom;
 		this.ptVie = ptVie;
 		this.posX = new SimpleIntegerProperty(posX);
 		this.posY = new SimpleIntegerProperty(posY);
-		this.vitesse=vit;
+		this.vitesse = vitesse;
 		
 	}
 	
-	public abstract void attaquer();
+	public abstract void attaquer(Personnage perso);
 	
 	
+	public Rectangle getBounds() {
+		return new Rectangle(getPosX(),getPosY(),30,30);
+	}
 	
 //	GETTER ET SETTER NOM
 	public void setNom(String nom) {
@@ -79,10 +82,5 @@ public abstract class Personnage {
 		this.vitesse=vitesse;
 	}
 	
-//	Renvoye un rectangle
-	public Rectangle getBounds() {
-		Rectangle recPerso=new Rectangle(getPosX(),getPosY(),30,30);
-		return recPerso;
-	}
 	
 }

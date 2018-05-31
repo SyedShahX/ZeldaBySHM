@@ -1,7 +1,5 @@
 package modele.Personnages;
 
-import java.awt.Rectangle;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
@@ -28,13 +26,6 @@ public class Joueur extends Personnage {
 		}
 		return getVitesse();
 	}
-
-	public boolean collision(Rectangle rect) {
-		if(rect.intersects(this.getBounds())) {
-		return true;
-	}else
-		return false;
-	}
 	
 	public void setPositionFixe(int positionX,int positionY) {
 		setPosX(positionX); 
@@ -45,27 +36,34 @@ public class Joueur extends Personnage {
 		int posY = getPosY();
 		int posX = getPosX();
 		int ajoutDistance = reglerVitesse();
-
-		if (key.equals(KeyCode.UP)) {
-			setOrientation("haut");
-			setPosY( posY - ajoutDistance);
-		} else if(key.equals(KeyCode.DOWN)) {
-			setOrientation("bas");
-			setPosY( posY + ajoutDistance);
-		} else if(key.equals(KeyCode.LEFT)) {
-			setOrientation("gauche");
-			setPosX( posX - ajoutDistance);
-		} else if (key.equals(KeyCode.RIGHT)){
-			setOrientation("droite");
-			setPosX( posX + ajoutDistance);
+		
+		switch(key) {
+		
+		case UP:    setOrientation("haut");
+				    setPosY( posY - ajoutDistance);
+			break;
+		case DOWN:  setOrientation("bas");
+				    setPosY( posY + ajoutDistance);
+			break;
+		case LEFT:  setOrientation("gauche");
+				    setPosX( posX - ajoutDistance);
+			break;
+		case RIGHT: setOrientation("droite");
+					setPosX( posX + ajoutDistance);
+			break;
+		default:
+			break;
 		}
 	}
 
 	@Override
-	public void attaquer() {
+	public void attaquer(Personnage adversaire) {
+//		int adversairePv = adversaire.getPtVie();
+//		adversairePv -= getArme().getPtAttaque();
+//		System.out.println(adversairePv);
 		
-
 	}
+	
 	public void parler() {
 
 	}
@@ -101,4 +99,5 @@ public class Joueur extends Personnage {
 	public String getOrientation() {
 		return this.orientation.getValue();
 	}
+
 }

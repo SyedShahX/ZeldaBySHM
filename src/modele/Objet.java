@@ -16,15 +16,12 @@ public class Objet {
 	}
 
 	public Rectangle getBoundsCollisions() {
-		Rectangle recTonneau = new Rectangle(this.getPosX(),this.getPosY(),15,15);
-		return recTonneau;
+		return new Rectangle(this.getPosX(),this.getPosY(),30,30);
 		
 	}
 	
 	public Rectangle getBounds() {
-		Rectangle recTonneau = new Rectangle(this.getPosX(),this.getPosY(),30,30);
-		return recTonneau;
-		
+		return new Rectangle(this.getPosX(),this.getPosY(),15,15);
 	}
 	// GETTER AND SETTER
 	public IntegerProperty PosXProperty() {

@@ -20,6 +20,7 @@ import modele.Ennemi;
 import modele.GameLoop;
 import modele.Monde;
 import modele.Objet;
+import modele.Personnage;
 import vue.Map1;
 
 public class Controleur implements Initializable {
@@ -27,9 +28,9 @@ public class Controleur implements Initializable {
 	@FXML Pane pane;
 	@FXML Pane paneArmes;
 	@FXML TilePane layout;
+	Monde monde = new Monde();
 	GameLoop gl = new GameLoop();
 	
-	Monde monde = new Monde();
 
 //	ImageView Objets
 	ImageView imgTonneau = new ImageView("assets/images/tonneau.png");
@@ -50,6 +51,7 @@ public class Controleur implements Initializable {
 	Image imgOursBas = new Image("assets/images/ImagesLink/gauche.png");
 	Image imgOursDroit = new Image("assets/images/ImageEnnemis/oursGrisGauche.png");
 
+//	Association objet - ImageView
 	Map<Objet,ImageView> mapObjetImg = new HashMap<>();
 	Map<Ennemi,ImageView> mapEnnemisImg = new HashMap<>();
 	Map<Arme,ImageView> mapArmeImg = new HashMap<>();
@@ -67,50 +69,52 @@ public class Controleur implements Initializable {
 		deplacements(e);
 		collisionObstacleMap(e,posX,posY);
 		collisionObjet(e,monde.getTonneau(), posX, posY);
+		collisionEnnemi(e, monde.getEnnemiOurs(), posX, posX);
 		casserTonneau(e);
 		recupererArme();
-		attaquer(e);
+		attaquer(e,monde.getEnnemiOurs());
 	}
 	
 //	Déplacements du joueur
 	public void deplacements(KeyEvent e) {
-		
-		if (e.getCode() == KeyCode.UP) {
-			monde.getLink().seDeplacer(KeyCode.UP);
-			
-		} else if (e.getCode() == KeyCode.DOWN) {
-			monde.getLink().seDeplacer(KeyCode.DOWN);
-			
-		} else if (e.getCode() == KeyCode.LEFT) {
-			monde.getLink().seDeplacer(KeyCode.LEFT);
-			
-		} else if(e.getCode() == KeyCode.RIGHT){
-			monde.getLink().seDeplacer(KeyCode.RIGHT);
-		} 
+		switch(e.getCode()) {
+		case UP:    monde.getLink().seDeplacer(KeyCode.UP);
+			break;
+		case DOWN:  monde.getLink().seDeplacer(KeyCode.DOWN);
+			break;
+		case LEFT:  monde.getLink().seDeplacer(KeyCode.LEFT);
+			break;
+		case RIGHT: monde.getLink().seDeplacer(KeyCode.RIGHT);
+			break;
+		default:
+			break;
+		}
 	}
 	
-	public void attaquer(KeyEvent e) {
-		if (e.getCode() == KeyCode.SPACE) {
-			if (monde.getLink().getArme() != null) {
-				monde.getLink().attaquer();				
-			} else {
-				System.out.println("Le joueur n'a aucune armes pour attaquer");
+	public void attaquer(KeyEvent e,Personnage perso) {
+//		if(monde.getLink().getBounds().intersects(perso.getBounds())) {
+			if (e.getCode() == KeyCode.SPACE) {
+				if (monde.getLink().getArme() != null) {
+//					monde.getLink().attaquer(monde.getEnnemiOurs());	
+					System.out.println("attaquer");
+				} else {
+					System.out.println("Le joueur n'a aucune armes pour attaquer");
+				}
 			}
-		}
+//		}
 	}
 
 	public void recupererArme() {
 			if (monde.getListeArme().contains(monde.getEpee())) {
-				if (monde.getLink().getBounds().intersects(monde.getEpee().getBounds())) {
+				if (Collisions.collision(monde.getLink().getBounds(), monde.getEpee().getBounds())) {
 					monde.supprimerArme(monde.getEpee());
 					monde.getLink().changerArmeJoueur(monde.getEpee());
-					System.out.println(monde.getLink());
 				}
 			}
 	}
 	
 	public void collisionObstacleMap(KeyEvent e,int positionX,int positionY) {
-		if (Collisions.collision(monde.getLink().getPosX(), monde.getLink().getPosY()) == true ) {
+		if (Collisions.collisionObstacleMap(monde.getLink().getPosX(), monde.getLink().getPosY())) {
 			monde.getLink().setPositionFixe(positionX,positionY);
 			
 		}
@@ -119,22 +123,32 @@ public class Controleur implements Initializable {
 	
 //	CASSER TONNEAU
 	public void casserTonneau(KeyEvent e) {
-		if(monde.getLink().collision(monde.getTonneau().getBounds()) == true &&
-		   e.getCode() == KeyCode.A) {
+		if(Collisions.collision(monde.getLink().getBounds(),monde.getTonneau().getBoundsCollisions())) {
+		   if(e.getCode() == KeyCode.A) {
 				monde.supprimerObjet(monde.getTonneau());
 				monde.ajouterArme(monde.getEpee());
-					
+				System.out.println(monde.getListeObstacles());
+			}
 		}
 	}
 	
 	public void collisionObjet(KeyEvent e,Objet obj,int positionX,int positionY) {
 		if (monde.getListeObstacles().contains(obj)) {
-			if (monde.getLink().collision(obj.getBoundsCollisions()) == true) {
+			if (Collisions.collision(monde.getLink().getBounds(),obj.getBounds())) {
 				monde.getLink().setPositionFixe(positionX,positionY);
 			}
 			
 		}
 			
+	} 
+	public void collisionEnnemi(KeyEvent e,Personnage obj,int positionX,int positionY) {
+		if (monde.getListeEnnemis().contains(obj)) {
+			if (Collisions.collision(monde.getLink().getBounds(),obj.getBounds())) {
+				monde.getLink().setPositionFixe(positionX,positionY);
+			}
+			
+		}
+		
 	} 
 	
 
@@ -177,7 +191,7 @@ public class Controleur implements Initializable {
 		// Animation Ennemi Ours
 		gl.initAnimation(monde.getEnnemiOurs(),0.017,265,-5,0);
 		
-		// demarre l'animation
+		// démarrage de l'animation
 		gl.gameLoop.play();
 		
 		// Changement position Ours
@@ -252,29 +266,27 @@ public class Controleur implements Initializable {
 	}
 
 	public void changerImageOurs(String nouvelleValeur) {
-		if (nouvelleValeur == "haut") {
-			imgOursGauche.setImage(imgOursHaut);
-		} else if (nouvelleValeur == "bas") {
-			imgOursGauche.setImage(imgOursBas);
-		} else if (nouvelleValeur == "droite") {
-			imgOursGauche.setImage(imgOursDroit);
+		switch(nouvelleValeur) {
+		case "haut" :   imgOursGauche.setImage(imgOursHaut);
+			break;
+		case "bas" :    imgOursGauche.setImage(imgOursBas);
+			break;
+		case "droite" : imgOursGauche.setImage(imgOursDroit);
+			break;
 		}
 		
 	}
 
 	public void changerImageLink(String nouvelleValeur) {
-		if (nouvelleValeur == "haut") {
-			imgLink.setImage(haut);
-		} else if (nouvelleValeur == "bas") {
-			imgLink.setImage(basdroit);
-		} else if (nouvelleValeur == "gauche") {
-			imgLink.setImage(gauche);
-		} else if (nouvelleValeur == "droite") {
-			imgLink.setImage(droite);
+		switch(nouvelleValeur) {
+		case "haut" :   imgLink.setImage(haut);
+			break;
+		case "bas" :    imgLink.setImage(basdroit);
+			break;
+		case "droite" : imgLink.setImage(droite);
+			break;
+		case "gauche" : imgLink.setImage(gauche);
+			break;
 		}
 	}
-
-
-
-
 }
