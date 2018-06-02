@@ -6,26 +6,29 @@ import modele.Armes.Epee;
 import modele.Objets.Tonneau;
 import modele.Personnages.Joueur;
 import modele.Personnages.Ours;
+import modele.Personnages.Vieux;
 
 public class Monde {
 	
 	private ObservableList<Objet> listeObstacles;
 	private ObservableList<Arme> listeArmes;
-	private ObservableList<Ennemi> listeEnnemis;
+	private ObservableList<Personnage> listePersonnages;
 	private Tonneau tonneau;
-	private Joueur link;
 	private Arme epee;
+	private Joueur link;
 	private Ennemi ours;
+	private Vieux vieux;
 	
+
 	public Monde() {
 		this.listeObstacles = FXCollections.observableArrayList();
 		this.listeArmes = FXCollections.observableArrayList();
-		this.listeEnnemis = FXCollections.observableArrayList();
-		this.link = new Joueur("Link", 100, 1320, 770,0,null);
+		this.listePersonnages = FXCollections.observableArrayList();
+		this.link = new Joueur("Link", 100, 130, 828,0,null);
 		this.tonneau = new Tonneau(1287,770);
 		this.epee = new Epee("épée", 30, 80, 1287, 770);
-//		this.ours = new Ours("Ours tueur",200,800,538,0);
-		this.ours = new Ours("Ours tueur",200,1287,580,0);
+		this.ours = new Ours("Ours tueur",200,800,538);
+		this.vieux = new Vieux("vieux", 0, 870, 220);
 		this.getLink().setMonde(this);
 	}
 	
@@ -46,7 +49,7 @@ public class Monde {
 	}
 //	SUPPRIMER ARME
 	public void supprimerArme(Arme arme) {
-		getListeArme().remove(arme);
+		getListeArmes().remove(arme);
 	}
 
 
@@ -63,18 +66,21 @@ public class Monde {
 	public Ennemi getEnnemiOurs() {
 		return this.ours;
 	}
+	public Vieux getVieux() {
+		return vieux;
+	}
 	
 //	GETTER LISTES OBSERVABLES
 	public ObservableList<Objet> getListeObstacles() {
 		return this.listeObstacles;
 	}
 	
-	public ObservableList<Arme> getListeArme() {
+	public ObservableList<Arme> getListeArmes() {
 		return this.listeArmes;
 	}
 
-	public ObservableList<Ennemi> getListeEnnemis() {
-		return this.listeEnnemis;
+	public ObservableList<Personnage> getListePersonnages() {
+		return this.listePersonnages;
 	}
 
 }

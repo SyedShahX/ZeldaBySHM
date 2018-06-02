@@ -2,23 +2,29 @@ package modele.Personnages;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import modele.Arme;
 import modele.Collisions;
 import modele.Monde;
+import modele.Objet;
 import modele.Personnage;
 
 public class Joueur extends Personnage {
 
 	private Arme arme;
-	private StringProperty orientation;
+	private StringProperty orientationEpee;
+	private int vitesse;
+	protected StringProperty orientation;
 	
 
 	public Joueur(String nom, int ptVie, int posX, int posY,int vitesse,Arme arme) {
-		super(nom, ptVie, posX, posY,vitesse);
+		super(nom, ptVie, posX, posY);
 		this.orientation = new SimpleStringProperty();
+		this.orientationEpee = new SimpleStringProperty();
 		this.arme = arme;
+		this.vitesse = vitesse;
 		
 	}
 	
@@ -43,16 +49,32 @@ public class Joueur extends Personnage {
 		
 		switch(key) {
 		
-		case UP:    setOrientation("haut");
+		case UP:    if(getArme() != null) {
+						setOrientationEpee("hautEpee");
+					} else {						
+						setOrientation("haut");
+					}
 				    setPosY( posY - ajoutDistance);
 			break;
-		case DOWN:  setOrientation("bas");
+		case DOWN:  if(getArme() != null) {
+						setOrientationEpee("basEpee");
+					} else {						
+						setOrientation("bas");
+					}
 				    setPosY( posY + ajoutDistance);
 			break;
-		case LEFT:  setOrientation("gauche");
+		case LEFT:  if(getArme() != null) {
+						setOrientationEpee("gaucheEpee");
+					} else {						
+						setOrientation("gauche");
+					}
 				    setPosX( posX - ajoutDistance);
 			break;
-		case RIGHT: setOrientation("droite");
+		case RIGHT: if(getArme() != null) {
+						setOrientationEpee("droiteEpee");
+					} else {
+						setOrientation("droite");
+					}
 					setPosX( posX + ajoutDistance);
 			break;
 		default:
@@ -60,14 +82,13 @@ public class Joueur extends Personnage {
 		}
 	}
 
-	@Override
+	
 	public void attaquer(Personnage adversaire) {
 		if(Collisions.collision(monde.getLink().getBounds(28,28),adversaire.getBounds(28,28))) {
 				int adversairePv = adversaire.getPtVie();
 				if (adversairePv > getArme().getPtAttaque()) {
 					adversairePv -= getArme().getPtAttaque();
 					adversaire.setPtVie(adversairePv);
-					System.out.println(adversairePv);			
 				} else {
 					System.out.println("mort");
 				}
@@ -94,16 +115,16 @@ public class Joueur extends Personnage {
 			if(e.getCode() == KeyCode.A) {
 				monde.supprimerObjet(monde.getTonneau());
 				monde.ajouterArme(monde.getEpee());
-				System.out.println(monde.getListeObstacles());
 			}
 		}
 	}
 	// Récupérer Arme
 	public void recupererArme() {
-		if (monde.getListeArme().contains(monde.getEpee())) {
+		if (monde.getListeArmes().contains(monde.getEpee())) {
 			if (Collisions.collision(monde.getLink().getBounds(28,28), monde.getEpee().getBounds(12,12))) {
 				monde.supprimerArme(monde.getEpee());
 				monde.getLink().changerArmeJoueur(monde.getEpee());
+				setOrientation("gaucheEpee");
 			}
 		}
 	}
@@ -116,17 +137,39 @@ public class Joueur extends Personnage {
 	public void setArme(Arme arme) {
 		this.arme = arme;
 	}
-//	GETTER PROPERTY ET SETTER DE ORIENTATION
+	
+//	GETTER PROPERTY ET SETTER DE ORIENTATIONEPEE
+	public StringProperty OrientationEpeeProperty() {
+		return this.orientationEpee;
+	}
+	
+	public void setOrientationEpee(String orientation) {
+		this.orientationEpee.setValue(orientation);
+	}
+	
+	public String getOrientationEpee() {
+		return this.orientationEpee.getValue();
+	}
+	
+//  GETTER ET SETTER VITESSE
+	public int getVitesse() {
+		return this.vitesse;
+	}
+	public void setVitesse(int vitesse) {
+		this.vitesse=vitesse;
+	}
+	
+//	GETTER ET SETTER ORIENTATION
 	public StringProperty OrientationProperty() {
 		return this.orientation;
 	}
-	
-	public void setOrientation(String orientation) {
-		this.orientation.setValue(orientation);
+
+	public StringProperty getOrientation() {
+		return orientation;
 	}
-	
-	public String getOrientation() {
-		return this.orientation.getValue();
+
+	public void setOrientation(String orientation) {
+		this.orientation.set(orientation);
 	}
 
 

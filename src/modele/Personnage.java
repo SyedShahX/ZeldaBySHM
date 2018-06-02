@@ -4,6 +4,8 @@ import java.awt.Rectangle;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public abstract class Personnage {
 	
@@ -11,16 +13,14 @@ public abstract class Personnage {
 	protected int ptVie;
 	protected IntegerProperty posX;
 	protected IntegerProperty posY;
-	protected int vitesse;
 	protected Monde monde;
 
-	public Personnage(String nom, int ptVie, int posX, int posY,int vitesse) {
+	public Personnage(String nom, int ptVie, int posX, int posY) {
 		super();
 		this.nom = nom;
 		this.ptVie = ptVie;
 		this.posX = new SimpleIntegerProperty(posX);
 		this.posY = new SimpleIntegerProperty(posY);
-		this.vitesse = vitesse;
 		this.monde = null;
 		
 	}
@@ -29,7 +29,7 @@ public abstract class Personnage {
 		this.monde = monde;
 	}
 	
-	public abstract void attaquer(Personnage perso);
+	
 	
 	
 	public Rectangle getBounds(int width,int height) {
@@ -78,14 +78,4 @@ public abstract class Personnage {
 	public void setPosY(int posY) {
 		this.posY.set(posY);;
 	}
-	
-//  GETTER ET SETTER VITESSE
-	public int getVitesse() {
-		return this.vitesse;
-	}
-	public void setVitesse(int vitesse) {
-		this.vitesse=vitesse;
-	}
-	
-	
 }

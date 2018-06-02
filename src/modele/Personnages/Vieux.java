@@ -1,21 +1,17 @@
-package modele;
+package modele.Personnages;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import modele.Personnage;
 
-public abstract class Ennemi extends Personnage {
-	
-	
+public class Vieux extends Personnage{
+
 	protected StringProperty orientation;
-
-	public Ennemi(String nom, int ptVie, int posX, int posY) {
+	
+	public Vieux(String nom, int ptVie, int posX, int posY) {
 		super(nom, ptVie, posX, posY);
 		this.orientation = new SimpleStringProperty();
-		
 	}
-
-	
-	public abstract void attaquer(Personnage perso);
 	
 //	GETTER ET SETTER ORIENTATION
 	public StringProperty OrientationProperty() {

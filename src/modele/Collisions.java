@@ -62,8 +62,8 @@ public class Collisions {
 	} 
 	
 	public static void collisionEnnemi(Personnage perso,int positionX,int positionY,Monde monde) {
-		if (monde.getListeEnnemis().contains(perso)) {
-			if (Collisions.collision(monde.getLink().getBounds(28,28),perso.getBounds(15,15))) {
+		if (monde.getListePersonnages().contains(perso)) {
+			if (Collisions.collision(monde.getLink().getBounds(28,28),perso.getBounds(30,30))) {
 				monde.getLink().setPositionFixe(positionX,positionY);
 			}
 			
