@@ -16,7 +16,7 @@ public abstract class Ennemi extends Personnage {
 		
 	}
 
-	@Override
+	
 	public void attaquer() {
 		// TODO Auto-generated method stub
 		
