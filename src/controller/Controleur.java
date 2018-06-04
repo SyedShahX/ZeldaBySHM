@@ -83,7 +83,8 @@ public class Controleur implements Initializable {
 		deplacements(e);
 		collisionObstacleMap(posX,posY,monde);
 		collisionObjet(monde.getTonneau(), posX, posY,monde);
-		collisionEnnemi(monde.getEnnemiOurs(), posX, posY,monde);
+		collisionPerso(monde.getEnnemiOurs(), posX, posY,monde);
+		collisionPerso(monde.getVieux(), posX, posY,monde);
 		casserTonneau(e);
 		recupererArme();
 		attaquer(e,monde.getEnnemiOurs());
@@ -131,10 +132,10 @@ public class Controleur implements Initializable {
 			
 	} 
 	
-	public void collisionEnnemi(Personnage perso,int positionX,int positionY,Monde monde) {
-		Collisions.collisionEnnemi(perso, positionX, positionY, monde);
+	public void collisionPerso(Personnage perso,int positionX,int positionY,Monde monde) {
+		Collisions.collisionPerso(perso, positionX, positionY, monde);
 		
-	} 
+	}
 	
 //	CASSER TONNEAU
 	public void casserTonneau(KeyEvent e) {

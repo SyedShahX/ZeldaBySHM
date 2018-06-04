@@ -39,7 +39,3 @@ public class Main extends Application {
 	}
 	
 }
-
-
-
-//ce commentaire est un test
