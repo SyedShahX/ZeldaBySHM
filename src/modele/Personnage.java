@@ -29,9 +29,6 @@ public abstract class Personnage {
 		this.monde = monde;
 	}
 	
-	
-	
-	
 	public Rectangle getBounds(int width,int height) {
 		return new Rectangle(getPosX(),getPosY(),width,height);
 	}

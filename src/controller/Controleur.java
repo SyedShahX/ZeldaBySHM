@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -16,12 +15,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import modele.Arme;
 import modele.Collisions;
-import modele.Ennemi;
 import modele.GameLoop;
 import modele.Monde;
 import modele.Objet;
 import modele.Personnage;
 import vue.Map1;
+import modele.Images;
 
 public class Controleur implements Initializable {
 
@@ -29,51 +28,20 @@ public class Controleur implements Initializable {
 	@FXML Pane paneArmes;
 	@FXML TilePane layout;
 	Monde monde = new Monde();
-	GameLoop gl = new GameLoop();
+	GameLoop gameLoop = new GameLoop();
+	Images img = new Images();
 	
-
-//	ImageView Objets
-	ImageView imgTonneau = new ImageView("assets/images/tonneau.png");
-
-//	ImageView Armes
-	ImageView imgEpee = new ImageView("assets/images/ImagesArmes/épée.png");
-	
-//	Images déplacements Link
-	ImageView imgLink = new ImageView("assets/images/ImagesLink/joueur.png");
-	Image haut = new Image("assets/images/ImagesLink/haut.png");
-	Image gauche = new Image("assets/images/ImagesLink/gauche.png");
-	Image basdroit = new Image("assets/images/ImagesLink/basdroit.png");
-	Image droite = new Image("assets/images/ImagesLink/droite.png");
-	
-//	Images Link Epee
-	Image droiteEpee = new Image("assets/images/ImagesLink/droiteEpee.png");
-	Image gaucheEpee = new Image("assets/images/ImagesLink/gaucheEpee.png");
-	Image basEpee = new Image("assets/images/ImagesLink/basEpee.png");
-	Image hautEpee = new Image("assets/images/ImagesLink/hautEpee.png");
-	
-//	Images Déplacements Ours
-	ImageView imgOurs = new ImageView("assets/images/ImageEnnemis/oursGrisGauche.png");
-	Image imgOursDroit = new Image("assets/images/ImageEnnemis/oursGrisDroite.png");
-	Image imgOursHaut = new Image("assets/images/ImageEnnemis/oursGrisHaut.png");
-	Image imgOursBas = new Image("assets/images/ImageEnnemis/oursGrisBas.png");
-	Image imgOursGauche = new Image("assets/images/ImageEnnemis/oursGrisGauche.png");
-	
-//	Images Vieux
-	ImageView imgVieux = new ImageView("assets/images/ImagesVieux/vieuxGauche.png");
-	Image imgVieuxDroite = new Image("assets/images/ImagesVieux/vieuxDroite.png");
-	Image imgVieuxGauche = new Image("assets/images/ImagesVieux/vieuxGauche.png");
-
 //	Association objet - ImageView
 	Map<Objet,ImageView> mapObjetImg = new HashMap<>();
 	Map<Arme,ImageView> mapArmeImg = new HashMap<>();
 	Map<Personnage,ImageView> mapPersoImg = new HashMap<>();
 	
 	public Controleur() {
-		mapObjetImg.put(monde.getTonneau(), imgTonneau);
-		mapArmeImg.put(monde.getEpee(), imgEpee);
-		mapPersoImg.put(monde.getEnnemiOurs(), imgOurs);
-		mapPersoImg.put(monde.getLink(), imgLink);
-		mapPersoImg.put(monde.getVieux(), imgVieux);
+		mapObjetImg.put(monde.getTonneau(), img.imgTonneau);
+		mapArmeImg.put(monde.getEpee(), img.imgEpee);
+		mapPersoImg.put(monde.getEnnemiOurs(), img.imgOurs);
+		mapPersoImg.put(monde.getLink(), img.imgLink);
+		mapPersoImg.put(monde.getVieux(), img.imgVieux);
 	}
 	
 	public void gererTouche(KeyEvent e) {
@@ -119,6 +87,7 @@ public class Controleur implements Initializable {
 	public void recupererArme() {
 			monde.getLink().recupererArme();
 			
+			
 	}
 	
 	public void collisionObstacleMap(int positionX,int positionY,Monde monde) {
@@ -148,7 +117,8 @@ public class Controleur implements Initializable {
 		Map1.map(layout);
 		// Ajout des obstacles et ennemis dans les listes
 		monde.getListeObstacles().add(monde.getTonneau());
-		monde.getListePersonnages().addAll(monde.getEnnemiOurs(),monde.getLink(),monde.getVieux());
+		monde.getListePersonnages().addAll(monde.getEnnemiOurs(),monde.getLink(),
+										   monde.getVieux());
 	}
 	
 	@Override
@@ -156,32 +126,32 @@ public class Controleur implements Initializable {
 		
 		
 		// Bind entre l'image Link et sa position x et y
-		imgLink.layoutXProperty().bind(monde.getLink().PosXProperty());
-		imgLink.layoutYProperty().bind(monde.getLink().PosYProperty());
+		img.imgLink.layoutXProperty().bind(monde.getLink().PosXProperty());
+		img.imgLink.layoutYProperty().bind(monde.getLink().PosYProperty());
 		
 		// Bind entre l'image Tonneau et sa position x et y
-		imgTonneau.layoutXProperty().bind(monde.getTonneau().PosXProperty());
-		imgTonneau.layoutYProperty().bind(monde.getTonneau().PosYProperty());
+		img.imgTonneau.layoutXProperty().bind(monde.getTonneau().PosXProperty());
+		img.imgTonneau.layoutYProperty().bind(monde.getTonneau().PosYProperty());
 		
 		// Bind entre l'image Tonneau et sa position x et y
-		imgEpee.layoutXProperty().bind(monde.getEpee().PosXProperty());
-		imgEpee.layoutYProperty().bind(monde.getEpee().PosYProperty());
+		img.imgEpee.layoutXProperty().bind(monde.getEpee().PosXProperty());
+		img.imgEpee.layoutYProperty().bind(monde.getEpee().PosYProperty());
 		
 		// Bind entre l'image Ours et sa position x et y
-		imgOurs.layoutXProperty().bind(monde.getEnnemiOurs().PosXProperty());
-		imgOurs.layoutYProperty().bind(monde.getEnnemiOurs().PosYProperty());
+		img.imgOurs.layoutXProperty().bind(monde.getEnnemiOurs().PosXProperty());
+		img.imgOurs.layoutYProperty().bind(monde.getEnnemiOurs().PosYProperty());
 		
 		// Bind entre l'image vieux et sa position x et y
-		imgVieux.layoutXProperty().bind(monde.getVieux().PosXProperty());
-		imgVieux.layoutYProperty().bind(monde.getVieux().PosYProperty());
+		img.imgVieux.layoutXProperty().bind(monde.getVieux().PosXProperty());
+		img.imgVieux.layoutYProperty().bind(monde.getVieux().PosYProperty());
 		
 		
 		// Animation Ennemi Ours
-		gl.initAnimationOurs(monde.getEnnemiOurs(),0.017,170,5,0,"droite","gauche");
-		gl.initAnimationVieux(monde.getVieux(), 0.018,100,"droite", "gauche");
+		gameLoop.initAnimationOurs(monde.getEnnemiOurs(),0.017,170,5,0,"droite","gauche");
+		gameLoop.initAnimationVieux(monde.getVieux(), 0.05,100,"droite", "gauche");
 		// démarrage de l'animation
-		gl.gameLoopOurs.play();
-		gl.gameLoopVieux.play();
+		gameLoop.gameLoopOurs.play();
+		gameLoop.gameLoopVieux.play();
 		
 		// Changement position Link
 		monde.getLink().OrientationProperty().addListener(
@@ -279,13 +249,13 @@ public class Controleur implements Initializable {
 	public void changerImageOurs(String nouvelleValeur) {
 		switch(nouvelleValeur) {
 		
-		case "haut" :   imgOurs.setImage(imgOursHaut);
+		case "haut" :   img.imgOurs.setImage(img.imgOursHaut);
 			break;
-		case "bas" :    imgOurs.setImage(imgOursBas);
+		case "bas" :    img.imgOurs.setImage(img.imgOursBas);
 			break;
-		case "droite" : imgOurs.setImage(imgOursDroit);
+		case "droite" : img.imgOurs.setImage(img.imgOursDroit);
 			break;
-		case "gauche" : imgOurs.setImage(imgOursGauche);
+		case "gauche" : img.imgOurs.setImage(img.imgOursGauche);
 			break;
 		}
 		
@@ -293,34 +263,34 @@ public class Controleur implements Initializable {
 
 	public void changerImageLink(String nouvelleValeur) {
 		switch(nouvelleValeur) {
-		case "haut" :   imgLink.setImage(haut);
+		case "haut" :   img.imgLink.setImage(img.haut);
 			break;
-		case "bas" :    imgLink.setImage(basdroit);
+		case "bas" :    img.imgLink.setImage(img.basdroit);
 			break;
-		case "droite" : imgLink.setImage(droite);
+		case "droite" : img.imgLink.setImage(img.droite);
 			break;
-		case "gauche" : imgLink.setImage(gauche);
+		case "gauche" : img.imgLink.setImage(img.gauche);
 			break;
 		}
 	}
 	
 	public void changerImageLinkEpee(String nouvelleValeur) {
 		switch(nouvelleValeur) {
-		case "gaucheEpee" : imgLink.setImage(gaucheEpee);
+		case "gaucheEpee" : img.imgLink.setImage(img.gaucheEpee);
 			break;
-		case "droiteEpee" : imgLink.setImage(droiteEpee);
+		case "droiteEpee" : img.imgLink.setImage(img.droiteEpee);
 			break;
-		case "basEpee" : imgLink.setImage(basEpee);
+		case "basEpee" : img.imgLink.setImage(img.basEpee);
 			break;
-		case "hautEpee" : imgLink.setImage(hautEpee);
+		case "hautEpee" : img.imgLink.setImage(img.hautEpee);
 			break;
 		}
 	}
 	public void changerImageVieux(String nouvelleValeur) {
 		switch(nouvelleValeur) {
-			case "gauche" : imgVieux.setImage(imgVieuxGauche);
+			case "gauche" : img.imgVieux.setImage(img.imgVieuxGauche);
 				break;
-			case "droite" : imgVieux.setImage(imgVieuxDroite);
+			case "droite" : img.imgVieux.setImage(img.imgVieuxDroite);
 				break;
 		
 		}

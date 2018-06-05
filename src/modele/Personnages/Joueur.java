@@ -15,8 +15,9 @@ public class Joueur extends Personnage {
 
 	private Arme arme;
 	private StringProperty orientationEpee;
-	private int vitesse;
 	protected StringProperty orientation;
+	private int vitesse;
+	// TODO liste Arme pour le joueur
 	
 
 	public Joueur(String nom, int ptVie, int posX, int posY,int vitesse,Arme arme) {
@@ -89,6 +90,7 @@ public class Joueur extends Personnage {
 				if (adversairePv > getArme().getPtAttaque()) {
 					adversairePv -= getArme().getPtAttaque();
 					adversaire.setPtVie(adversairePv);
+					System.out.println(adversairePv);
 				} else {
 					System.out.println("mort");
 				}
