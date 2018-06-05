@@ -2,6 +2,8 @@ package modele.Personnages;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import modele.Actifs;
@@ -15,8 +17,11 @@ public class Joueur extends Actifs {
 	private StringProperty orientationEpee;
 	protected StringProperty orientation;
 	private int vitesse;
+	private ObservableList<Arme> listeArmeLink;
+	
 	// TODO liste Arme pour le joueur
 	
+
 
 	public Joueur(String nom, int ptVie, int posX, int posY,int vitesse,Arme arme) {
 		super(nom, ptVie, posX, posY);
@@ -24,6 +29,7 @@ public class Joueur extends Actifs {
 		this.orientationEpee = new SimpleStringProperty();
 		this.arme = arme;
 		this.vitesse = vitesse;
+		this.listeArmeLink = FXCollections.observableArrayList();
 		
 	}
 	
@@ -90,6 +96,7 @@ public class Joueur extends Actifs {
 					adversaire.setPtVie(adversairePv);
 					System.out.println(adversairePv);
 				} else {
+					monde.getListePersonnages().remove(adversaire);
 					System.out.println("mort");
 				}
 		}
@@ -172,5 +179,8 @@ public class Joueur extends Actifs {
 		this.orientation.set(orientation);
 	}
 
-
+//	Getter listeArmeLink
+	public ObservableList<Arme> getListeArmeLink() {
+		return listeArmeLink;
+	}
 }

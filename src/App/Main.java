@@ -13,8 +13,12 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	BorderPane borderPane;
+	int width = 1600;
+	int height = 960;
+	
 	@Override
 	public void start(Stage window) throws Exception {
+		
 		
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -25,7 +29,7 @@ public class Main extends Application {
 			borderPane = new BorderPane();
 			borderPane = loader.load();
 			Controleur c = loader.getController();
-			Scene scene = new Scene(borderPane,1600,960);
+			Scene scene = new Scene(borderPane,width,height);
 			scene.setOnKeyPressed(e -> c.gererTouche(e));
 			window.setScene(scene);
 			window.show();
@@ -33,7 +37,6 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
 	public static void main(String[] args) {
 		launch(args);
 	}

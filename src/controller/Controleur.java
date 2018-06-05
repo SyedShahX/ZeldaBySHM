@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import modele.Actifs;
 import modele.Arme;
 import modele.Collisions;
 import modele.Ennemi;
@@ -57,7 +58,6 @@ public class Controleur implements Initializable {
 		casserTonneau(e);
 		recupererArme();
 		attaquer(e,monde.getEnnemiOurs());
-//		attaquerJoueur(monde.getEnnemiOurs(), posX, posY,monde);
 	}
 	
 //	Déplacements du joueur
@@ -86,16 +86,20 @@ public class Controleur implements Initializable {
 		}
 	}
 	
-	public void attaquerJoueur(Ennemi ennemi,int positionX,int positionY,Monde monde) {
-		if (Collisions.collisionPerso(ennemi, positionX, positionY, monde)) {
-			ennemi.attaquer();
+	public void attaquerJoueur(Ennemi ennemi,Actifs perso) {
+		if (Collisions.collision(ennemi.getBounds(30, 30), perso.getBounds(30, 30))) {
+			gameLoop.gameLoopOurs.stop();
+			ennemi.attaquer(perso);
+		} else {
+			gameLoop.gameLoopOurs.play();
+			
 		}
 	}
 
 	public void recupererArme() {
-			monde.getLink().recupererArme();
-			
-			
+		if (!monde.getListeObstacles().contains(monde.getTonneau())) {
+			monde.getLink().recupererArme();			
+		}
 	}
 	
 	public void collisionObstacleMap(int positionX,int positionY,Monde monde) {
@@ -109,14 +113,8 @@ public class Controleur implements Initializable {
 			
 	} 
 	
-	public boolean collisionPerso(Personnage perso,int positionX,int positionY,Monde monde) {
-		
-		if(Collisions.collisionPerso(perso, positionX, positionY, monde)) {
-			return true;
-		}
-		
-		return false;
-		
+	public void collisionPerso(Personnage perso,int positionX,int positionY,Monde monde) {
+		Collisions.collisionPerso(perso, positionX, positionY, monde);
 	}
 	
 //	CASSER TONNEAU
@@ -160,7 +158,7 @@ public class Controleur implements Initializable {
 		
 		
 		// Animation Ennemi Ours
-		gameLoop.initAnimationOurs(monde.getEnnemiOurs(),0.017,170,5,0,"droite","gauche");
+		gameLoop.initAnimationOurs(monde.getEnnemiOurs(),monde.getLink(),0.017,170,5,0,"droite","gauche");
 		gameLoop.initAnimationVieux(monde.getVieux(), 0.05,100,"droite", "gauche");
 		// démarrage de l'animation
 		gameLoop.gameLoopOurs.play();

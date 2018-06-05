@@ -10,7 +10,7 @@ public abstract class Ennemi extends Actifs{
 	}
 	
 
-	public abstract void attaquer();
+	public abstract void attaquer(Actifs perso);
 	
 	public void seDeplacer() {
 		

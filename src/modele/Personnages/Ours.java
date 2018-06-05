@@ -2,6 +2,7 @@ package modele.Personnages;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import modele.Actifs;
 import modele.Ennemi;
 
 public class Ours extends Ennemi {
@@ -14,17 +15,15 @@ public class Ours extends Ennemi {
 	}
 	
 	@Override
-	public void attaquer() {
-//			int adversairePv = monde.getLink().getPtVie();
-//			if (adversairePv > getPtAttaque()) {
-//				adversairePv -= getPtAttaque();
-//				monde.getLink().setPtVie(adversairePv);
-//				System.out.println(adversairePv);
-//			} else {
-//				System.out.println("mort");
-//			}
-		System.out.println("touché par méchant");
-		
+	public void attaquer(Actifs perso) {
+			int adversairePv = perso.getPtVie();
+			if (adversairePv > getPtAttaque()) {
+				adversairePv -= getPtAttaque();
+				perso.setPtVie(adversairePv);
+				System.out.println(adversairePv);
+			} else {
+				System.out.println("mort");
+			}
 	}
 	
 //	GETTER ET SETTER ORIENTATION
