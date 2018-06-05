@@ -16,7 +16,7 @@ public class Monde {
 	private Tonneau tonneau;
 	private Arme epee;
 	private Joueur link;
-	private Ennemi ours;
+	private Ours ours;
 	private Vieux vieux;
 	
 
@@ -27,8 +27,8 @@ public class Monde {
 		this.link = new Joueur("Link", 100, 130, 828,0,null);
 		this.tonneau = new Tonneau(1287,770);
 		this.epee = new Epee("épée", 30, 80, 1287, 770);
-		this.ours = new Ours("Ours tueur",200,800,538);
-		this.vieux = new Vieux("vieux", 0, 870, 220);
+		this.ours = new Ours("Ours tueur",200,800,538,50);
+		this.vieux = new Vieux("vieux", 870, 220);
 		this.getLink().setMonde(this);
 	}
 	
@@ -63,7 +63,7 @@ public class Monde {
 	public Arme getEpee() {
 		return this.epee;
 	}
-	public Ennemi getEnnemiOurs() {
+	public Ours getEnnemiOurs() {
 		return this.ours;
 	}
 	public Vieux getVieux() {

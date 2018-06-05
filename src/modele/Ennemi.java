@@ -1,32 +1,22 @@
 package modele;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
-public abstract class Ennemi extends Personnage {
+public abstract class Ennemi extends Actifs{
 	
+	protected int ptAttaque;
 	
-	protected StringProperty orientation;
-
-	public Ennemi(String nom, int ptVie, int posX, int posY) {
+	public Ennemi(String nom, int ptVie, int posX, int posY,int ptAttaque) {
 		super(nom, ptVie, posX, posY);
-		this.orientation = new SimpleStringProperty();
+		this.ptAttaque = ptAttaque;
+	}
+	
+
+	public abstract void attaquer();
+	
+	public void seDeplacer() {
 		
 	}
 
-	
-	public abstract void attaquer(Personnage perso);
-	
-//	GETTER ET SETTER ORIENTATION
-	public StringProperty OrientationProperty() {
-		return this.orientation;
-	}
-
-	public StringProperty getOrientation() {
-		return orientation;
-	}
-
-	public void setOrientation(String orientation) {
-		this.orientation.set(orientation);
+	public int getPtAttaque() {
+		return ptAttaque;
 	}
 }

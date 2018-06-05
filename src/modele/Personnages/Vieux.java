@@ -8,8 +8,8 @@ public class Vieux extends Personnage{
 
 	protected StringProperty orientation;
 	
-	public Vieux(String nom, int ptVie, int posX, int posY) {
-		super(nom, ptVie, posX, posY);
+	public Vieux(String nom, int posX, int posY) {
+		super(nom, posX, posY);
 		this.orientation = new SimpleStringProperty();
 	}
 	

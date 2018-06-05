@@ -4,8 +4,6 @@ import java.awt.Rectangle;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 public abstract class Personnage {
 	
@@ -15,10 +13,9 @@ public abstract class Personnage {
 	protected IntegerProperty posY;
 	protected Monde monde;
 
-	public Personnage(String nom, int ptVie, int posX, int posY) {
+	public Personnage(String nom, int posX, int posY) {
 		super();
 		this.nom = nom;
-		this.ptVie = ptVie;
 		this.posX = new SimpleIntegerProperty(posX);
 		this.posY = new SimpleIntegerProperty(posY);
 		this.monde = null;

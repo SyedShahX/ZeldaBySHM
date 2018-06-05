@@ -15,12 +15,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import modele.Arme;
 import modele.Collisions;
+import modele.Ennemi;
 import modele.GameLoop;
+import modele.Images;
 import modele.Monde;
 import modele.Objet;
 import modele.Personnage;
 import vue.Map1;
-import modele.Images;
 
 public class Controleur implements Initializable {
 
@@ -56,6 +57,7 @@ public class Controleur implements Initializable {
 		casserTonneau(e);
 		recupererArme();
 		attaquer(e,monde.getEnnemiOurs());
+//		attaquerJoueur(monde.getEnnemiOurs(), posX, posY,monde);
 	}
 	
 //	Déplacements du joueur
@@ -83,6 +85,12 @@ public class Controleur implements Initializable {
 			}
 		}
 	}
+	
+	public void attaquerJoueur(Ennemi ennemi,int positionX,int positionY,Monde monde) {
+		if (Collisions.collisionPerso(ennemi, positionX, positionY, monde)) {
+			ennemi.attaquer();
+		}
+	}
 
 	public void recupererArme() {
 			monde.getLink().recupererArme();
@@ -101,8 +109,13 @@ public class Controleur implements Initializable {
 			
 	} 
 	
-	public void collisionPerso(Personnage perso,int positionX,int positionY,Monde monde) {
-		Collisions.collisionPerso(perso, positionX, positionY, monde);
+	public boolean collisionPerso(Personnage perso,int positionX,int positionY,Monde monde) {
+		
+		if(Collisions.collisionPerso(perso, positionX, positionY, monde)) {
+			return true;
+		}
+		
+		return false;
 		
 	}
 	

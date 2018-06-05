@@ -2,16 +2,14 @@ package modele.Personnages;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import modele.Actifs;
 import modele.Arme;
 import modele.Collisions;
-import modele.Monde;
-import modele.Objet;
 import modele.Personnage;
 
-public class Joueur extends Personnage {
+public class Joueur extends Actifs {
 
 	private Arme arme;
 	private StringProperty orientationEpee;
@@ -30,7 +28,7 @@ public class Joueur extends Personnage {
 	}
 	
 	public int reglerVitesse() {
-		if(Collisions.persoRalenti(getPosX(),getPosY()) == true) {
+		if(Collisions.persoRalenti(getPosX(),getPosY())) {
 			setVitesse(3);
 		} else {
 			setVitesse(8);

@@ -2,6 +2,7 @@ package modele;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import modele.Personnages.Ours;
 import modele.Personnages.Vieux;
 
 public class GameLoop {
@@ -12,7 +13,7 @@ public class GameLoop {
 	public Timeline gameLoopVieux;
 	
 	
-	public void initAnimationOurs(Ennemi ennemi,double duree,int tempsAnimation,
+	public void initAnimationOurs(Ours ours,double duree,int tempsAnimation,
 			int ajoutDistanceX, int ajoutDistanceY,String orientationGauche,
 			String orientationDroite) {
 		
@@ -28,13 +29,13 @@ public class GameLoop {
 					if (tempsOurs == tempsAnimation*2) {
 						tempsOurs = 0;
 					} else if (tempsOurs > tempsAnimation && tempsOurs % 5 == 0) {
-								ennemi.setPosX(ennemi.getPosX()+ajoutDistanceX);
-								ennemi.setPosY(ennemi.getPosY()+ajoutDistanceY);
-								ennemi.setOrientation(orientationGauche);
+								ours.setPosX(ours.getPosX()+ajoutDistanceX);
+								ours.setPosY(ours.getPosY()+ajoutDistanceY);
+								ours.setOrientation(orientationGauche);
 					} else if (tempsOurs < tempsAnimation && tempsOurs % 5 == 0) {
-								ennemi.setOrientation(orientationDroite);
-								ennemi.setPosX(ennemi.getPosX()-ajoutDistanceX);
-								ennemi.setPosY(ennemi.getPosY()+ajoutDistanceY);
+								ours.setOrientation(orientationDroite);
+								ours.setPosX(ours.getPosX()-ajoutDistanceX);
+								ours.setPosY(ours.getPosY()+ajoutDistanceY);
 					}
 					tempsOurs++;
 				})
