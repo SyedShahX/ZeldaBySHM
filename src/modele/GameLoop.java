@@ -14,9 +14,9 @@ public class GameLoop {
 	public Timeline gameLoopVieux;
 	
 	
-	public void initAnimationOurs(Ours ours,Actifs perso,double duree,int tempsAnimation,
+	public void initAnimationOurs(Ours ours,double duree,int tempsAnimation,
 			int ajoutDistanceX, int ajoutDistanceY,String orientationGauche,
-			String orientationDroite) {
+			String orientationDroite,Actifs perso) {
 		
 		gameLoopOurs = new Timeline();
 		gameLoopOurs.setCycleCount(Timeline.INDEFINITE);
@@ -27,29 +27,31 @@ public class GameLoop {
 				// on définit ce qui se passe à chaque frame 
 				// c'est un eventHandler d'ou le lambda
 				(ev ->{
-					if (!Collisions.collision(ours.getBounds(28, 28), perso.getBounds(28, 28))) {
-						
-						if (tempsOurs == tempsAnimation*2) {
-							tempsOurs = 0;
-						} else if (tempsOurs > tempsAnimation && tempsOurs % 5 == 0) {
-									ours.setPosX(ours.getPosX()+ajoutDistanceX);
-									ours.setPosY(ours.getPosY()+ajoutDistanceY);
-									ours.setOrientation(orientationGauche);
-						} else if (tempsOurs < tempsAnimation && tempsOurs % 5 == 0) {
-									ours.setPosX(ours.getPosX()-ajoutDistanceX);
-									ours.setPosY(ours.getPosY()+ajoutDistanceY);
-									ours.setOrientation(orientationDroite);
-						}
-					} else {
-						if (tempsOursAttaque %90 == 0){
-						ours.attaquer(perso);
-					}
-						tempsOurs--;
+					if(!Collisions.collision(ours.getBounds(32, 20),perso.getBounds(32, 18))) {
+					if (tempsOurs == tempsAnimation*2) {
+						tempsOurs = 0;
+					} else if (tempsOurs > tempsAnimation && tempsOurs % 5 == 0) {
+								ours.setPosX(ours.getPosX()+ajoutDistanceX);
+								ours.setPosY(ours.getPosY()+ajoutDistanceY);
+								ours.setOrientation(orientationGauche);
+					} else if (tempsOurs < tempsAnimation && tempsOurs % 5 == 0) {
+								ours.setOrientation(orientationDroite);
+								ours.setPosX(ours.getPosX()-ajoutDistanceX);
+								ours.setPosY(ours.getPosY()+ajoutDistanceY);
 					}
 					tempsOurs++;
-					tempsOursAttaque++;
+					}
+					else { 
+						if(tempsOursAttaque %90==0) {
+							ours.attaquer(perso);
+							
+						}
+						tempsOursAttaque++;
+				}
+					
+					
+					
 				})
-				
 		);
 		gameLoopOurs.getKeyFrames().add(kf);
 	}

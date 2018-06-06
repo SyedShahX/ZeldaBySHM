@@ -16,14 +16,16 @@ public class Ours extends Ennemi {
 	
 	@Override
 	public void attaquer(Actifs perso) {
-			int adversairePv = perso.getPtVie();
-			if (adversairePv > getPtAttaque()) {
-				adversairePv -= getPtAttaque();
-				perso.setPtVie(adversairePv);
-				System.out.println(adversairePv);
-			} else {
-				System.out.println("mort");
+		int adversairePv = perso.getPtVie();
+		if (adversairePv > getPtAttaque()) {
+			adversairePv -= getPtAttaque();
+			perso.setPtVie(adversairePv);
+			System.out.println(adversairePv);
+		} else {
+			System.out.println("mort");
 			}
+		System.out.println("touché par méchant");
+		
 	}
 	
 //	GETTER ET SETTER ORIENTATION

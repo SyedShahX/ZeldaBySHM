@@ -19,4 +19,5 @@ public abstract class Ennemi extends Actifs{
 	public int getPtAttaque() {
 		return ptAttaque;
 	}
+	
 }

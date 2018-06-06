@@ -27,7 +27,7 @@ public abstract class Personnage {
 	}
 	
 	public Rectangle getBounds(int width,int height) {
-		return new Rectangle(getPosX(),getPosY(),width,height);
+		return new Rectangle(getPosX()-7,getPosY(),width,height);
 	}
 	
 //	GETTER ET SETTER NOM

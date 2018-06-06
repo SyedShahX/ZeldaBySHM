@@ -80,26 +80,30 @@ public class Controleur implements Initializable {
 		if (e.getCode() == KeyCode.SPACE) {
 			if(monde.getLink().getArme() != null) {
 				monde.getLink().attaquer(perso);
+
 			} else {
 				System.out.println("Vous n'avez aucune armes.");
 			}
 		}
+//		if(perso.getPtVie()<=0) {
+//			monde.getListePersonnages().remove(perso);
+//		}
 	}
 	
-	public void attaquerJoueur(Ennemi ennemi,Actifs perso) {
-		if (Collisions.collision(ennemi.getBounds(30, 30), perso.getBounds(30, 30))) {
-			gameLoop.gameLoopOurs.stop();
-			ennemi.attaquer(perso);
-		} else {
-			gameLoop.gameLoopOurs.play();
-			
-		}
-	}
+//	public void attaquerJoueur(Ennemi ennemi,Actifs perso) {
+//		if (Collisions.collision(ennemi.getBounds(28, 28),perso.getBounds(40, 40) )) {
+//			ennemi.attaquer(perso);
+//			gameLoop.gameLoopOurs.stop();
+//		}	
+//			else {
+//				gameLoop.gameLoopOurs.play();
+//			}
+//	}
 
 	public void recupererArme() {
-		if (!monde.getListeObstacles().contains(monde.getTonneau())) {
-			monde.getLink().recupererArme();			
-		}
+			monde.getLink().recupererArme();
+			
+			
 	}
 	
 	public void collisionObstacleMap(int positionX,int positionY,Monde monde) {
@@ -113,8 +117,14 @@ public class Controleur implements Initializable {
 			
 	} 
 	
-	public void collisionPerso(Personnage perso,int positionX,int positionY,Monde monde) {
-		Collisions.collisionPerso(perso, positionX, positionY, monde);
+	public boolean collisionPerso(Personnage perso,int positionX,int positionY,Monde monde) {
+		
+		if(Collisions.collisionPerso(perso, positionX, positionY, monde)) {
+			return true;
+		}
+		
+		return false;
+		
 	}
 	
 //	CASSER TONNEAU
@@ -158,7 +168,7 @@ public class Controleur implements Initializable {
 		
 		
 		// Animation Ennemi Ours
-		gameLoop.initAnimationOurs(monde.getEnnemiOurs(),monde.getLink(),0.017,170,5,0,"droite","gauche");
+		gameLoop.initAnimationOurs(monde.getEnnemiOurs(),0.017,170,4,0,"droite","gauche",monde.getLink());
 		gameLoop.initAnimationVieux(monde.getVieux(), 0.05,100,"droite", "gauche");
 		// démarrage de l'animation
 		gameLoop.gameLoopOurs.play();
