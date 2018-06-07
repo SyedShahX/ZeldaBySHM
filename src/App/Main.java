@@ -28,13 +28,13 @@ public class Main extends Application {
 			borderPane = new BorderPane();
 			borderPane = loader.load();
 			Controleur c = loader.getController();
-			Scene scene = new Scene(borderPane,1600,960);
+			Scene scene = new Scene(borderPane,500,360);
+			c.getCamera().setTranslateX(-500/2);
+			c.getCamera().setTranslateY(-360/2);
 //			Camera ca=new PerspectiveCamera();
-//			ca.setLayoutX(0);
-//			ca.setLayoutY(600);
-//			
+			
 			scene.setOnKeyPressed(e -> c.gererTouche(e));
-//			scene.setCamera(ca);
+			scene.setCamera(c.getCamera());
 			window.setScene(scene);
 			window.show();
 		} catch (Exception e) {

@@ -8,6 +8,8 @@ import java.util.ResourceBundle;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.ParallelCamera;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -27,8 +29,11 @@ import vue.Map1;
 public class Controleur implements Initializable {
 
 	@FXML Pane pane;
+	@FXML Pane paneCamera;
 	@FXML Pane paneArmes;
 	@FXML TilePane layout;
+    @FXML private PerspectiveCamera cameraLink;
+    
 	Monde monde = new Monde();
 	GameLoop gameLoop = new GameLoop();
 	Images img = new Images();
@@ -85,21 +90,7 @@ public class Controleur implements Initializable {
 				System.out.println("Vous n'avez aucune armes.");
 			}
 		}
-//		if(perso.getPtVie()<=0) {
-//			monde.getListePersonnages().remove(perso);
-//		}
 	}
-	
-//	public void attaquerJoueur(Ennemi ennemi,Actifs perso) {
-//		if (Collisions.collision(ennemi.getBounds(28, 28),perso.getBounds(40, 40) )) {
-//			ennemi.attaquer(perso);
-//			gameLoop.gameLoopOurs.stop();
-//		}	
-//			else {
-//				gameLoop.gameLoopOurs.play();
-//			}
-//	}
-
 	public void recupererArme() {
 			monde.getLink().recupererArme();
 			
@@ -125,6 +116,9 @@ public class Controleur implements Initializable {
 		
 		return false;
 		
+	}
+	public PerspectiveCamera getCamera() {
+		return cameraLink;
 	}
 	
 //	CASSER TONNEAU
@@ -166,13 +160,25 @@ public class Controleur implements Initializable {
 		img.imgVieux.layoutXProperty().bind(monde.getVieux().PosXProperty());
 		img.imgVieux.layoutYProperty().bind(monde.getVieux().PosYProperty());
 		
+//		//Bind pane et position ennemi
+//		pane.layoutXProperty().bind(monde.getLink().PosXProperty());
+//		pane.layoutYProperty().bind(monde.getLink().PosYProperty());
+//	if ((cameraLink.getLayoutX()==paneCamera.getLayoutX())) {
+		cameraLink.layoutXProperty().bind(monde.getLink().PosXProperty());
 		
+		System.out.println("rect");
+//		} 
+	if (!(cameraLink.getLayoutY()==paneCamera.getLayoutY())) 
+		cameraLink.layoutXProperty().bind(monde.getLink().PosXProperty());
+		cameraLink.layoutYProperty().bind(monde.getLink().PosYProperty());
 		// Animation Ennemi Ours
 		gameLoop.initAnimationOurs(monde.getEnnemiOurs(),0.017,170,4,0,"droite","gauche",monde.getLink());
 		gameLoop.initAnimationVieux(monde.getVieux(), 0.05,100,"droite", "gauche");
 		// démarrage de l'animation
 		gameLoop.gameLoopOurs.play();
 		gameLoop.gameLoopVieux.play();
+		
+	
 		
 		// Changement position Link
 		monde.getLink().OrientationProperty().addListener(

@@ -24,11 +24,11 @@ public class Monde {
 		this.listeObstacles = FXCollections.observableArrayList();
 		this.listeArmes = FXCollections.observableArrayList();
 		this.listePersonnages = FXCollections.observableArrayList();
-		this.link = new Joueur("Link", 100, 130, 828,0,null);
-		this.tonneau = new Tonneau(1287,770);
-		this.epee = new Epee("épée", 30, 80, 1287, 770);
-		this.ours = new Ours("Ours tueur",200,800,538,10);
-		this.vieux = new Vieux("vieux", 870, 220);
+		this.link = new Joueur("Link", 100, 320, 1020,0,null);
+		this.tonneau = new Tonneau(1475,964);
+		this.epee = new Epee("épée", 30, 100, 1475, 964);
+		this.ours = new Ours("Ours tueur",200,1221,415,10);
+		this.vieux = new Vieux("vieux", 755, 703);
 		this.getLink().setMonde(this);
 	}
 	

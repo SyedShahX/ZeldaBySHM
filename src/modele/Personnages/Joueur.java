@@ -44,6 +44,7 @@ public class Joueur extends Actifs {
 	public void seDeplacer(KeyCode key) {
 		int posY = getPosY();
 		int posX = getPosX();
+		System.out.println("X: "+posX+" Y:"+posY);
 		int ajoutDistance = reglerVitesse();
 		
 		switch(key) {
