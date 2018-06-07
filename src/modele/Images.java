@@ -9,7 +9,7 @@ public class Images {
 	public ImageView imgTonneau = new ImageView("assets/images/tonneau.png");
 
 //	ImageView Armes
-	public ImageView imgEpee = new ImageView("assets/images/ImagesArmes/épée.png");
+	public ImageView imgEpee = new ImageView("assets/images/ImagesArmes/epee.png");
 	
 //	Images dÃ©placements Link
 	public ImageView imgLink = new ImageView("assets/images/ImagesLink/joueur.png");

@@ -8,17 +8,14 @@ import java.util.ResourceBundle;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.ParallelCamera;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import modele.Actifs;
 import modele.Arme;
 import modele.Collisions;
-import modele.Ennemi;
 import modele.GameLoop;
 import modele.Images;
 import modele.Monde;
@@ -61,7 +58,7 @@ public class Controleur implements Initializable {
 		collisionPerso(monde.getEnnemiOurs(), posX, posY,monde);
 		collisionPerso(monde.getVieux(), posX, posY,monde);
 		casserTonneau(e);
-		recupererArme();
+		recupererArme(monde.getEpee());
 		attaquer(e,monde.getEnnemiOurs());
 	}
 	
@@ -91,8 +88,8 @@ public class Controleur implements Initializable {
 			}
 		}
 	}
-	public void recupererArme() {
-			monde.getLink().recupererArme();
+	public void recupererArme(Arme arme) {
+			monde.getLink().recupererArme(arme);
 			
 			
 	}
@@ -160,17 +157,10 @@ public class Controleur implements Initializable {
 		img.imgVieux.layoutXProperty().bind(monde.getVieux().PosXProperty());
 		img.imgVieux.layoutYProperty().bind(monde.getVieux().PosYProperty());
 		
-//		//Bind pane et position ennemi
-//		pane.layoutXProperty().bind(monde.getLink().PosXProperty());
-//		pane.layoutYProperty().bind(monde.getLink().PosYProperty());
-//	if ((cameraLink.getLayoutX()==paneCamera.getLayoutX())) {
-		cameraLink.layoutXProperty().bind(monde.getLink().PosXProperty());
-		
-		System.out.println("rect");
-//		} 
-	if (!(cameraLink.getLayoutY()==paneCamera.getLayoutY())) 
+		// Bind entre la camera et la position du joueur
 		cameraLink.layoutXProperty().bind(monde.getLink().PosXProperty());
 		cameraLink.layoutYProperty().bind(monde.getLink().PosYProperty());
+		
 		// Animation Ennemi Ours
 		gameLoop.initAnimationOurs(monde.getEnnemiOurs(),0.017,170,4,0,"droite","gauche",monde.getLink());
 		gameLoop.initAnimationVieux(monde.getVieux(), 0.05,100,"droite", "gauche");
@@ -207,6 +197,7 @@ public class Controleur implements Initializable {
 					changerImageVieux(nouvelleValeur);
 				}
 		);
+		
 		
 		monde.getListeObstacles().addListener(new ListChangeListener<Objet>() {
 			

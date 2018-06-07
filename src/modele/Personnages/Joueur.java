@@ -2,6 +2,8 @@ package modele.Personnages;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import modele.Actifs;
@@ -15,6 +17,7 @@ public class Joueur extends Actifs {
 	private StringProperty orientationEpee;
 	protected StringProperty orientation;
 	private int vitesse;
+	private ObservableList<Arme> listeArmes;
 	// TODO liste Arme pour le joueur
 	
 
@@ -24,6 +27,7 @@ public class Joueur extends Actifs {
 		this.orientationEpee = new SimpleStringProperty();
 		this.arme = arme;
 		this.vitesse = vitesse;
+		this.listeArmes = FXCollections.observableArrayList();
 		
 	}
 	
@@ -44,7 +48,6 @@ public class Joueur extends Actifs {
 	public void seDeplacer(KeyCode key) {
 		int posY = getPosY();
 		int posX = getPosX();
-		System.out.println("X: "+posX+" Y:"+posY);
 		int ajoutDistance = reglerVitesse();
 		
 		switch(key) {
@@ -111,6 +114,13 @@ public class Joueur extends Actifs {
 		setArme(arme);
 		
 	}
+	public void ajouterArme(Arme arme) {
+		this.listeArmes.add(arme);
+	}
+	
+	public void supprimerArme(Arme arme) {
+		this.listeArmes.remove(arme);
+	}
 	
 	public void casserTonneau(KeyEvent e) {
 		if(Collisions.collision(monde.getLink().getBounds(28,28),monde.getTonneau().getBounds(30,30))) {
@@ -121,12 +131,12 @@ public class Joueur extends Actifs {
 		}
 	}
 	// Récupérer Arme
-	public void recupererArme() {
-		if (monde.getListeArmes().contains(monde.getEpee())) {
-			if (Collisions.collision(monde.getLink().getBounds(28,28), monde.getEpee().getBounds(12,12))) {
-				monde.supprimerArme(monde.getEpee());
-				monde.getLink().changerArmeJoueur(monde.getEpee());
-				setOrientation("gaucheEpee");
+	public void recupererArme(Arme arme) {
+		if (monde.getListeArmes().contains(arme)) {
+			if (Collisions.collision(monde.getLink().getBounds(28,28), arme.getBounds(12,12))) {
+				monde.supprimerArme(arme);
+				ajouterArme(arme);
+				monde.getLink().changerArmeJoueur(arme);
 			}
 		}
 	}
