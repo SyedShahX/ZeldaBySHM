@@ -4,7 +4,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.TilePane?>
 
-
 <Pane fx:id="paneVue" xmlns="http://javafx.com/javafx/8.0.162-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controleur">
    <children>
       <Pane fx:id="paneCamera">
@@ -21,5 +20,6 @@
          </children>
       </Pane>
       <HBox fx:id="ptDeVie" layoutX="20.0" layoutY="12.0" prefHeight="180.0" prefWidth="888.0" />
+      <HBox fx:id="listeArmes" layoutX="281.0" layoutY="302.0" prefHeight="36.0" prefWidth="189.0" style="-fx-border-color: #c0392b; -fx-border-width: 2;" />
    </children>
 </Pane>

@@ -8,7 +8,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 public abstract class Personnage {
 	
 	protected String nom;
-	protected int ptVie;
 	protected IntegerProperty posX;
 	protected IntegerProperty posY;
 	protected Monde monde;
@@ -38,16 +37,7 @@ public abstract class Personnage {
 	public String getNom() {
 		return nom;
 	}
-
-//	GETTER ET SETTER POINT DE VIE
-	public int getPtVie() {
-		return ptVie;
-	}
 	
-	public void setPtVie(int ptVie) {
-		this.ptVie = ptVie;
-	}
-
 //	GETTER ET SETTER POSITION
 	public IntegerProperty PosXProperty() {
 		return posX;

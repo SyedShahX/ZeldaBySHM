@@ -16,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import modele.Actifs;
 import modele.Arme;
 import modele.Collisions;
 import modele.GameLoop;
@@ -33,6 +34,7 @@ public class Controleur implements Initializable {
 	@FXML Pane paneArmes;
 	@FXML TilePane map;
 	@FXML HBox ptDeVie;
+	@FXML HBox listeArmes;
     
 	private Monde monde = new Monde();
 	private GameLoop gameLoop = new GameLoop();
@@ -46,6 +48,8 @@ public class Controleur implements Initializable {
 	private Map<Objet,ImageView> mapObjetImg = new HashMap<>();
 	private Map<Arme,ImageView> mapArmeImg = new HashMap<>();
 	private Map<Personnage,ImageView> mapPersoImg = new HashMap<>();
+	private Map<Arme,ImageView> mapListArmesLinkImg = new HashMap<>();
+	
 	
 	public Controleur() {
 		mapObjetImg.put(monde.getTonneau(), img.imgTonneau);
@@ -53,6 +57,8 @@ public class Controleur implements Initializable {
 		mapPersoImg.put(monde.getEnnemiOurs(), img.imgOurs);
 		mapPersoImg.put(monde.getLink(), img.imgLink);
 		mapPersoImg.put(monde.getVieux(), img.imgVieux);
+		
+		mapListArmesLinkImg.put(monde.getEpee(), img.listeImgEpee);
 	}
 	
 	public void gererTouche(KeyEvent e) {
@@ -85,7 +91,7 @@ public class Controleur implements Initializable {
 		}
 	}
 	
-	public void attaquer(KeyEvent e,Personnage perso) {
+	public void attaquer(KeyEvent e,Actifs perso) {
 		if (e.getCode() == KeyCode.SPACE) {
 			if(monde.getLink().getArme() != null) {
 				monde.getLink().attaquer(perso);
@@ -135,10 +141,12 @@ public class Controleur implements Initializable {
 		monde.getListeObstacles().add(monde.getTonneau());
 		monde.getListePersonnages().addAll(monde.getEnnemiOurs(),monde.getLink(),
 										   monde.getVieux());
-		// Ajout des points de vie
+		
+		// Ajout des points de vie sur la map
 		for (ImageView imageView : ptDeVieListe) {
 			ptDeVie.getChildren().add(imageView);
 		}
+		
 	}
 	
 	@Override
@@ -169,6 +177,7 @@ public class Controleur implements Initializable {
 		paneCamera.layoutXProperty().bind(monde.getLink().PosXProperty().negate().add(200));
 		paneCamera.layoutYProperty().bind(monde.getLink().PosYProperty().negate().add(180));
 
+		
 		// Animation Ennemi Ours
 		gameLoop.initAnimationOurs(monde.getEnnemiOurs(),0.017,170,4,0,"droite","gauche",monde.getLink());
 		gameLoop.initAnimationVieux(monde.getVieux(), 0.05,100,"droite", "gauche");
@@ -206,11 +215,14 @@ public class Controleur implements Initializable {
 				}
 		);
 		
-//		ptDeVieListe.addListener(
+//		Perte ptDeVie
+		
+//		monde.getLink().ptDeVieProperty().addListener(
 //				(obs,ancienneValeur,nouvelleValeur) -> {
-//
+//					PerdVie(nouvelleValeur);
 //				}
 //		);
+		
 		
 		
 		monde.getListeObstacles().addListener(new ListChangeListener<Objet>() {
@@ -273,10 +285,46 @@ public class Controleur implements Initializable {
 			
 		});
 		
+		monde.getLink().getListeArmes().addListener(new ListChangeListener<Arme>() {
+			
+			@Override
+			public void onChanged(Change<? extends Arme> c) {
+				while(c.next()) {
+					if (c.wasAdded()) {
+						for (Arme obj : c.getAddedSubList()) {
+							listeArmes.getChildren().add(mapListArmesLinkImg.get(obj));
+						}
+					} else  if(c.wasRemoved()) {
+						for (Arme obj : c.getRemoved()) {
+							listeArmes.getChildren().remove(mapListArmesLinkImg.get(obj));
+							
+						}
+					}
+				}
+			}
+			
+		});
+		
 		initializeMap();
 		
 	}
 
+
+//	public void PerdVie(Number nouvelleValeur) {
+//		switch(nouvelleValeur) {
+//		
+//		case 80 :   ptDeVieListe.remove(index)
+//			break;
+//		case "bas" :    img.imgOurs.setImage(img.imgOursBas);
+//			break;
+//		case "droite" : img.imgOurs.setImage(img.imgOursDroit);
+//			break;
+//		case "gauche" : img.imgOurs.setImage(img.imgOursGauche);
+//			break;
+//		}
+//
+//		
+//	}
 
 	public void changerImageOurs(String nouvelleValeur) {
 		switch(nouvelleValeur) {

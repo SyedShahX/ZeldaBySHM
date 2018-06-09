@@ -8,8 +8,11 @@ public class Images {
 //	ImageView Objets
 	public ImageView imgTonneau = new ImageView("assets/images/tonneau.png");
 
-//	ImageView Armes
+//	ImageView Armes	
 	public ImageView imgEpee = new ImageView("assets/images/ImagesArmes/epee.png");
+
+//  ImageView liste Armes
+	public ImageView listeImgEpee = new ImageView("assets/images/ImagesListeArmes/listeArmesEpee.png");
 	
 //	Images déplacements Link
 	public ImageView imgLink = new ImageView("assets/images/ImagesLink/joueur.png");

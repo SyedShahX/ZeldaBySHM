@@ -1,19 +1,26 @@
 package modele;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class Actifs extends Personnage {
 
-	protected int ptVie;
+	protected IntegerProperty ptVie;
 	
 	public Actifs(String nom,int ptVie, int posX, int posY) {
 		super(nom, posX, posY);
-		this.ptVie = ptVie;
+		this.ptVie = new SimpleIntegerProperty();
 	}
 	
 	public int getPtVie() {
-		return ptVie;
+		return this.ptVie.getValue();
 	}
 
 	public void setPtVie(int ptVie) {
-		this.ptVie = ptVie;
+		this.ptVie.set(ptVie);
+	}
+	
+	public IntegerProperty ptDeVieProperty() {
+		return this.ptVie;
 	}
 }

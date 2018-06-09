@@ -18,8 +18,6 @@ public class Joueur extends Actifs {
 	protected StringProperty orientation;
 	private int vitesse;
 	private ObservableList<Arme> listeArmes;
-	// TODO liste Arme pour le joueur
-	
 
 	public Joueur(String nom, int ptVie, int posX, int posY,int vitesse,Arme arme) {
 		super(nom, ptVie, posX, posY);
@@ -35,7 +33,7 @@ public class Joueur extends Actifs {
 		if(Collisions.collisionBuisson(getPosX(),getPosY())) {
 			setVitesse(3);
 		} else {
-			setVitesse(8);
+			setVitesse(15);
 		}
 		return getVitesse();
 	}
@@ -86,7 +84,7 @@ public class Joueur extends Actifs {
 	}
 
 	
-	public void attaquer(Personnage adversaire) {
+	public void attaquer(Actifs adversaire) {
 		if(Collisions.collision(monde.getLink().getBounds(40,40),adversaire.getBounds(28,28))) {
 				int adversairePv = adversaire.getPtVie();
 				if (adversairePv > getArme().getPtAttaque()) {
@@ -182,6 +180,10 @@ public class Joueur extends Actifs {
 
 	public void setOrientation(String orientation) {
 		this.orientation.set(orientation);
+	}
+	
+	public ObservableList<Arme> getListeArmes() {
+		return listeArmes;
 	}
 
 

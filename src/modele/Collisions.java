@@ -12,7 +12,8 @@ public class Collisions {
 		for (int i = 0; i < tab.length; i++) {
 			for (int j = 0; j < tab[i].length; j++) {
 				if (estcollision(tab[i][j], 1) ||
-					estcollision(tab[i][j], 2) ){
+					estcollision(tab[i][j], 2) ||
+					estcollision(tab[i][j], 3) ){
 					int iPx = i*32;
 					int jPx = j*32;
 					Rectangle obstacleMap = new Rectangle(jPx,iPx,20,25);
