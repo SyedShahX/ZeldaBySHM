@@ -59,15 +59,12 @@ public class Collisions {
 	} 
 	
 	public static boolean collisionPerso(Personnage perso,int positionX,int positionY,Monde monde) {
-		if (monde.getListePersonnages().contains(perso)) {
-			if (Collisions.collision(monde.getLink().getBounds(28,28),perso.getBounds(30,30))) {
+		if (monde.getListePersonnages().contains(perso) && 
+			Collisions.collision(monde.getLink().getBounds(28,28),perso.getBounds(30,30))) {
 				monde.getLink().setPositionFixe(positionX,positionY);
 				return true;
-			}
-			
 		}
-		return false;
-		
+		return false;	
 	}
 	
 	

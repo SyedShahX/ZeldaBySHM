@@ -9,13 +9,13 @@ import javafx.scene.input.KeyEvent;
 import modele.Actifs;
 import modele.Arme;
 import modele.Collisions;
-import modele.Personnage;
 
 public class Joueur extends Actifs {
 
 	private Arme arme;
 	private StringProperty orientationEpee;
-	protected StringProperty orientation;
+	private StringProperty orientation;
+	private StringProperty paroles;
 	private int vitesse;
 	private ObservableList<Arme> listeArmes;
 
@@ -26,7 +26,7 @@ public class Joueur extends Actifs {
 		this.arme = arme;
 		this.vitesse = vitesse;
 		this.listeArmes = FXCollections.observableArrayList();
-		
+		this.paroles = new SimpleStringProperty();
 	}
 	
 	public int reglerVitesse() {
@@ -50,32 +50,16 @@ public class Joueur extends Actifs {
 		
 		switch(key) {
 		
-		case UP:    if(getArme() != null) {
-						setOrientationEpee("hautEpee");
-					} else {						
-						setOrientation("haut");
-					}
+		case UP:    ChangerOrientation("hautEpee","haut");
 				    setPosY( posY - ajoutDistance);
 			break;
-		case DOWN:  if(getArme() != null) {
-						setOrientationEpee("basEpee");
-					} else {						
-						setOrientation("bas");
-					}
+		case DOWN: 	ChangerOrientation("basEpee", "bas");
 				    setPosY( posY + ajoutDistance);
 			break;
-		case LEFT:  if(getArme() != null) {
-						setOrientationEpee("gaucheEpee");
-					} else {						
-						setOrientation("gauche");
-					}
+		case LEFT:  ChangerOrientation("gaucheEpee", "gauche");
 				    setPosX( posX - ajoutDistance);
 			break;
-		case RIGHT: if(getArme() != null) {
-						setOrientationEpee("droiteEpee");
-					} else {
-						setOrientation("droite");
-					}
+		case RIGHT: ChangerOrientation("droiteEpee", "droite");
 					setPosX( posX + ajoutDistance);
 			break;
 		default:
@@ -99,8 +83,12 @@ public class Joueur extends Actifs {
 		
 	}
 	
-	public void parler() {
-
+	public void parler(KeyEvent e) {
+		setParoles("Link : Bonjour Monsieur. Je cherche\nle coffre fort.\n"
+				+ " Sauriez-vous où il peut être ?");
+		if (e.getCode() == KeyCode.Z) {
+			monde.getVieux().parler(e);			
+		}
 	}
 
 	public void pousser() {
@@ -128,7 +116,7 @@ public class Joueur extends Actifs {
 			}
 		}
 	}
-	// Récupérer Arme
+// Récupérer Arme
 	public void recupererArme(Arme arme) {
 		if (monde.getListeArmes().contains(arme)) {
 			if (Collisions.collision(monde.getLink().getBounds(28,28), arme.getBounds(12,12))) {
@@ -136,6 +124,15 @@ public class Joueur extends Actifs {
 				ajouterArme(arme);
 				monde.getLink().changerArmeJoueur(arme);
 			}
+		}
+	}
+	
+//  Changement d'orientation lors d'une prise d'arme
+	public void ChangerOrientation(String orientationEpee,String orientation) {
+		if(getArme() == monde.getEpee()) {
+			setOrientationEpee(orientationEpee);
+		} else {						
+			setOrientation(orientation);
 		}
 	}
 
@@ -185,6 +182,20 @@ public class Joueur extends Actifs {
 	public ObservableList<Arme> getListeArmes() {
 		return listeArmes;
 	}
+	
+//	Getter et Setter StringProperty paroles
+	public StringProperty parolesProperty() {
+		return this.paroles;
+	}
+
+	public void setParoles(String paroles) {
+		this.paroles.set(paroles);
+	}
+	
+	public String getParoles() {
+		return this.paroles.get();
+	}
+
 
 
 }

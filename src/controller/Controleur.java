@@ -10,6 +10,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -35,6 +36,7 @@ public class Controleur implements Initializable {
 	@FXML TilePane map;
 	@FXML HBox ptDeVie;
 	@FXML HBox listeArmes;
+	@FXML Label messages;
     
 	private Monde monde = new Monde();
 	private GameLoop gameLoop = new GameLoop();
@@ -69,10 +71,10 @@ public class Controleur implements Initializable {
 		collisionObstacleMap(posX,posY,monde);
 		collisionObjet(monde.getTonneau(), posX, posY,monde);
 		collisionPerso(monde.getEnnemiOurs(), posX, posY,monde);
-		collisionPerso(monde.getVieux(), posX, posY,monde);
 		casserTonneau(e);
 		recupererArme(monde.getEpee());
 		attaquer(e,monde.getEnnemiOurs());
+		parler(e,monde.getVieux(), posX, posY, monde);
 	}
 	
 //	Déplacements du joueur
@@ -102,35 +104,34 @@ public class Controleur implements Initializable {
 		}
 	}
 	public void recupererArme(Arme arme) {
-			monde.getLink().recupererArme(arme);
-			
-			
+		monde.getLink().recupererArme(arme);
 	}
 	
 	public void collisionObstacleMap(int positionX,int positionY,Monde monde) {
 		Collisions.collisionMap(positionX, positionY, monde);
-			
 	} 
 	
 	
 	public void collisionObjet(Objet obj,int positionX,int positionY,Monde monde) {
 		Collisions.collisionObjet(obj,positionX,positionY,monde);
-			
 	} 
 	
-	public boolean collisionPerso(Personnage perso,int positionX,int positionY,Monde monde) {
-		
-		if(Collisions.collisionPerso(perso, positionX, positionY, monde)) {
-			return true;
-		}
-		
-		return false;
-		
+	public void collisionPerso(Personnage perso,int positionX,int positionY,Monde monde) {
+		Collisions.collisionPerso(perso, positionX, positionY, monde);
 	}
 	
 //	CASSER TONNEAU
 	public void casserTonneau(KeyEvent e) {
 		monde.getLink().casserTonneau(e);
+	}
+	
+	public void parler(KeyEvent e,Personnage perso,int positionX,int positionY,Monde monde) {
+		if (Collisions.collisionPerso(perso, positionX, positionY, monde)) {
+				gameLoop.gameLoopVieux.stop();
+				monde.getLink().parler(e);
+		} else {
+			gameLoop.gameLoopVieux.play();
+		}
 	}
 	
 
@@ -146,6 +147,7 @@ public class Controleur implements Initializable {
 		for (ImageView imageView : ptDeVieListe) {
 			ptDeVie.getChildren().add(imageView);
 		}
+		
 		
 	}
 	
@@ -176,6 +178,12 @@ public class Controleur implements Initializable {
 		// Bind entre la camera et la position du joueur
 		paneCamera.layoutXProperty().bind(monde.getLink().PosXProperty().negate().add(200));
 		paneCamera.layoutYProperty().bind(monde.getLink().PosYProperty().negate().add(180));
+		
+		// Bind entre le label et les paroles du Vieux
+		messages.textProperty().bind(monde.getVieux().parolesProperty());
+		// Bind entre le label et les paroles de Link
+		messages.textProperty().bind(monde.getLink().parolesProperty());
+		
 
 		
 		// Animation Ennemi Ours
