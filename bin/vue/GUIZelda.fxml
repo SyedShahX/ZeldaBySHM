@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.PerspectiveCamera?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.TilePane?>
 
-<BorderPane fx:id="VueMenu" prefHeight="960.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controleur">
-   <center>
-      <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1344.0" prefWidth="1984.0">
+
+<Pane fx:id="paneVue" xmlns="http://javafx.com/javafx/8.0.162-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controleur">
+   <children>
+      <Pane fx:id="paneCamera">
          <children>
-            <PerspectiveCamera fx:id="cameraLink" />
-            <TilePane fx:id="layout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1344.0" prefWidth="1984.0" />
-            <Pane fx:id="paneArmes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1344.0" prefWidth="1984.0" />
+            <Pane fx:id="paneElements" prefHeight="1344.0" prefWidth="1984.0">
+               <children>
+                  <Pane fx:id="paneArmes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1344.0" prefWidth="1984.0">
+                     <children>
+                        <TilePane fx:id="map" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1344.0" prefWidth="1984.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
          </children>
       </Pane>
-   </center>
-</BorderPane>
+      <HBox fx:id="ptDeVie" layoutX="20.0" layoutY="12.0" prefHeight="180.0" prefWidth="888.0" />
+   </children>
+</Pane>

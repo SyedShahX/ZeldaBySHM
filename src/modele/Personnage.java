@@ -70,6 +70,6 @@ public abstract class Personnage {
 	}
 
 	public void setPosY(int posY) {
-		this.posY.set(posY);;
+		this.posY.set(posY);
 	}
 }

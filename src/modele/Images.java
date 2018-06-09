@@ -36,5 +36,11 @@ public class Images {
 	public Image imgVieuxDroite = new Image("assets/images/ImagesVieux/vieuxDroite.png");
 	public Image imgVieuxGauche = new Image("assets/images/ImagesVieux/vieuxGauche.png");
 
+//	Image ptDeVie
+	public ImageView ptDeVie1 = new ImageView("assets/images/ptDeVie.png");
+	public ImageView ptDeVie2 = new ImageView("assets/images/ptDeVie.png");
+	public ImageView ptDeVie3 = new ImageView("assets/images/ptDeVie.png");
+	public ImageView ptDeVie4 = new ImageView("assets/images/ptDeVie.png");
+	public ImageView ptDeVie5 = new ImageView("assets/images/ptDeVie.png");
 
 }

@@ -2,9 +2,6 @@ package modele;
 
 import java.awt.Rectangle;
 
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import vue.Map1;
 
 public class Collisions {
@@ -15,8 +12,7 @@ public class Collisions {
 		for (int i = 0; i < tab.length; i++) {
 			for (int j = 0; j < tab[i].length; j++) {
 				if (estcollision(tab[i][j], 1) ||
-					estcollision(tab[i][j], 2) ||
-					estcollision(tab[i][j], 3)) {
+					estcollision(tab[i][j], 2) ){
 					int iPx = i*32;
 					int jPx = j*32;
 					Rectangle obstacleMap = new Rectangle(jPx,iPx,20,25);
@@ -71,9 +67,10 @@ public class Collisions {
 		}
 		return false;
 		
-	} 
+	}
 	
-	public static boolean persoRalenti(int posX,int posY) {
+	
+	public static boolean collisionBuisson(int posX,int posY) {
 		Rectangle joueur = new Rectangle(posX,posY,20,20);
 		int[][] tab = Map1.getTab();
 		for(int i=0;i < tab.length;i++) {

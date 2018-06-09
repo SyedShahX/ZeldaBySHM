@@ -5,13 +5,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.PerspectiveCamera;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import modele.Arme;
@@ -25,20 +27,25 @@ import vue.Map1;
 
 public class Controleur implements Initializable {
 
-	@FXML Pane pane;
+	@FXML Pane paneVue;
+	@FXML Pane paneElements;
 	@FXML Pane paneCamera;
 	@FXML Pane paneArmes;
-	@FXML TilePane layout;
-    @FXML private PerspectiveCamera cameraLink;
+	@FXML TilePane map;
+	@FXML HBox ptDeVie;
     
-	Monde monde = new Monde();
-	GameLoop gameLoop = new GameLoop();
-	Images img = new Images();
+	private Monde monde = new Monde();
+	private GameLoop gameLoop = new GameLoop();
+	private Images img = new Images();
+	private ObservableList<ImageView> ptDeVieListe = 
+			 FXCollections.observableArrayList( img.ptDeVie1,img.ptDeVie2,
+			 img.ptDeVie3,img.ptDeVie4,img.ptDeVie5);
+	
 	
 //	Association objet - ImageView
-	Map<Objet,ImageView> mapObjetImg = new HashMap<>();
-	Map<Arme,ImageView> mapArmeImg = new HashMap<>();
-	Map<Personnage,ImageView> mapPersoImg = new HashMap<>();
+	private Map<Objet,ImageView> mapObjetImg = new HashMap<>();
+	private Map<Arme,ImageView> mapArmeImg = new HashMap<>();
+	private Map<Personnage,ImageView> mapPersoImg = new HashMap<>();
 	
 	public Controleur() {
 		mapObjetImg.put(monde.getTonneau(), img.imgTonneau);
@@ -114,9 +121,6 @@ public class Controleur implements Initializable {
 		return false;
 		
 	}
-	public PerspectiveCamera getCamera() {
-		return cameraLink;
-	}
 	
 //	CASSER TONNEAU
 	public void casserTonneau(KeyEvent e) {
@@ -126,11 +130,15 @@ public class Controleur implements Initializable {
 
 	public void initializeMap() {
 		// Affichage de la map
-		Map1.map(layout);
+		Map1.map(map);
 		// Ajout des obstacles et ennemis dans les listes
 		monde.getListeObstacles().add(monde.getTonneau());
 		monde.getListePersonnages().addAll(monde.getEnnemiOurs(),monde.getLink(),
 										   monde.getVieux());
+		// Ajout des points de vie
+		for (ImageView imageView : ptDeVieListe) {
+			ptDeVie.getChildren().add(imageView);
+		}
 	}
 	
 	@Override
@@ -158,9 +166,9 @@ public class Controleur implements Initializable {
 		img.imgVieux.layoutYProperty().bind(monde.getVieux().PosYProperty());
 		
 		// Bind entre la camera et la position du joueur
-		cameraLink.layoutXProperty().bind(monde.getLink().PosXProperty());
-		cameraLink.layoutYProperty().bind(monde.getLink().PosYProperty());
-		
+		paneCamera.layoutXProperty().bind(monde.getLink().PosXProperty().negate().add(200));
+		paneCamera.layoutYProperty().bind(monde.getLink().PosYProperty().negate().add(180));
+
 		// Animation Ennemi Ours
 		gameLoop.initAnimationOurs(monde.getEnnemiOurs(),0.017,170,4,0,"droite","gauche",monde.getLink());
 		gameLoop.initAnimationVieux(monde.getVieux(), 0.05,100,"droite", "gauche");
@@ -198,6 +206,12 @@ public class Controleur implements Initializable {
 				}
 		);
 		
+//		ptDeVieListe.addListener(
+//				(obs,ancienneValeur,nouvelleValeur) -> {
+//
+//				}
+//		);
+		
 		
 		monde.getListeObstacles().addListener(new ListChangeListener<Objet>() {
 			
@@ -206,11 +220,11 @@ public class Controleur implements Initializable {
 				while(c.next()) {
 					if (c.wasAdded()) {
 						for (Objet obj : c.getAddedSubList()) {
-							pane.getChildren().add(mapObjetImg.get(obj));
+							paneElements.getChildren().add(mapObjetImg.get(obj));
 						}
 					} else  if(c.wasRemoved()) {
 						for (Objet obj : c.getRemoved()) {
-							pane.getChildren().remove(mapObjetImg.get(obj));
+							paneElements.getChildren().remove(mapObjetImg.get(obj));
 							
 						}
 					}
@@ -246,11 +260,11 @@ public class Controleur implements Initializable {
 				while(c.next()) {
 					if (c.wasAdded()) {
 						for (Personnage obj : c.getAddedSubList()) {
-							pane.getChildren().add(mapPersoImg.get(obj));
+							paneElements.getChildren().add(mapPersoImg.get(obj));
 						}
 					} else  if(c.wasRemoved()) {
 						for (Personnage obj : c.getRemoved()) {
-							pane.getChildren().remove(mapPersoImg.get(obj));
+							paneElements.getChildren().remove(mapPersoImg.get(obj));
 							
 						}
 					}

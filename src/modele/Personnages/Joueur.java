@@ -32,7 +32,7 @@ public class Joueur extends Actifs {
 	}
 	
 	public int reglerVitesse() {
-		if(Collisions.persoRalenti(getPosX(),getPosY())) {
+		if(Collisions.collisionBuisson(getPosX(),getPosY())) {
 			setVitesse(3);
 		} else {
 			setVitesse(8);
