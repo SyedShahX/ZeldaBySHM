@@ -15,16 +15,15 @@ public class Ours extends Ennemi {
 	}
 	
 	@Override
-	public void attaquer(Actifs perso) {
-		int adversairePv = perso.getPtVie();
-		if (adversairePv > getPtAttaque()) {
+	public void attaquer(Actifs adversaire) {
+		int adversairePv = adversaire.getPtVie();
+		if (adversairePv > 0) {
 			adversairePv -= getPtAttaque();
-			perso.setPtVie(adversairePv);
+			adversaire.setPtVie(adversairePv);
 			System.out.println(adversairePv);
 		} else {
-			System.out.println("mort");
-			}
-		System.out.println("touché par méchant");
+			monde.getListePersonnages().remove(adversaire);
+		}
 		
 	}
 	

@@ -5,9 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -41,10 +39,6 @@ public class Controleur implements Initializable {
 	private Monde monde = new Monde();
 	private GameLoop gameLoop = new GameLoop();
 	private Images img = new Images();
-	private ObservableList<ImageView> ptDeVieListe = 
-			 FXCollections.observableArrayList( img.ptDeVie1,img.ptDeVie2,
-			 img.ptDeVie3,img.ptDeVie4,img.ptDeVie5);
-	
 	
 //	Association objet - ImageView
 	private Map<Objet,ImageView> mapObjetImg = new HashMap<>();
@@ -59,7 +53,6 @@ public class Controleur implements Initializable {
 		mapPersoImg.put(monde.getEnnemiOurs(), img.imgOurs);
 		mapPersoImg.put(monde.getLink(), img.imgLink);
 		mapPersoImg.put(monde.getVieux(), img.imgVieux);
-		
 		mapListArmesLinkImg.put(monde.getEpee(), img.listeImgEpee);
 	}
 	
@@ -74,7 +67,7 @@ public class Controleur implements Initializable {
 		casserTonneau(e);
 		recupererArme(monde.getEpee());
 		attaquer(e,monde.getEnnemiOurs());
-		parler(e,monde.getVieux(), posX, posY, monde);
+		parler(monde.getVieux(), posX, posY, monde);
 	}
 	
 //	Déplacements du joueur
@@ -97,14 +90,17 @@ public class Controleur implements Initializable {
 		if (e.getCode() == KeyCode.SPACE) {
 			if(monde.getLink().getArme() != null) {
 				monde.getLink().attaquer(perso);
-
+				monde.setMessages("Attaque !");
 			} else {
-				System.out.println("Vous n'avez aucune armes.");
+				monde.setMessages("Vous ne pouvez attaquer sans armes...");
 			}
 		}
 	}
 	public void recupererArme(Arme arme) {
-		monde.getLink().recupererArme(arme);
+		if (monde.getLink().recupererArme(arme)) {
+			monde.setMessages("Arme récupérée !\n"
+					+ "Appuyez sur la touche ESPACE pour\nattaquer.");
+		}
 	}
 	
 	public void collisionObstacleMap(int positionX,int positionY,Monde monde) {
@@ -121,14 +117,18 @@ public class Controleur implements Initializable {
 	}
 	
 //	CASSER TONNEAU
-	public void casserTonneau(KeyEvent e) {
-		monde.getLink().casserTonneau(e);
-	}
-	
-	public void parler(KeyEvent e,Personnage perso,int positionX,int positionY,Monde monde) {
+	public void casserTonneau(KeyEvent e) {			
+		if(Collisions.collision(monde.getLink().getBounds(28,28),monde.getTonneau().getBounds(30,30))) {
+			if(e.getCode() == KeyCode.A) {
+				monde.getLink().casserTonneau(e);
+			}
+		}
+	}	
+	public void parler(Personnage perso,int positionX,int positionY,Monde monde) {
 		if (Collisions.collisionPerso(perso, positionX, positionY, monde)) {
 				gameLoop.gameLoopVieux.stop();
-				monde.getLink().parler(e);
+				monde.getLink().parler();
+//				monde.getVieux().parler();
 		} else {
 			gameLoop.gameLoopVieux.play();
 		}
@@ -144,10 +144,16 @@ public class Controleur implements Initializable {
 										   monde.getVieux());
 		
 		// Ajout des points de vie sur la map
-		for (ImageView imageView : ptDeVieListe) {
-			ptDeVie.getChildren().add(imageView);
-		}
+		ptDeVie.getChildren().add(img.ptDeVie1);
+		ptDeVie.getChildren().add(img.ptDeVie2);
+		ptDeVie.getChildren().add(img.ptDeVie3);
+		ptDeVie.getChildren().add(img.ptDeVie4);
+		ptDeVie.getChildren().add(img.ptDeVie5);
 		
+		monde.setMessages("Bienvenue !\n"
+				+ "Pour attaquer, appuyer sur la touche\nESPACE.\n"
+				+ "Pour ouvrir des objets, appuyez sur\nla touche A."
+				+ " Bon jeu !");
 		
 	}
 	
@@ -179,11 +185,8 @@ public class Controleur implements Initializable {
 		paneCamera.layoutXProperty().bind(monde.getLink().PosXProperty().negate().add(200));
 		paneCamera.layoutYProperty().bind(monde.getLink().PosYProperty().negate().add(180));
 		
-		// Bind entre le label et les paroles du Vieux
-		messages.textProperty().bind(monde.getVieux().parolesProperty());
-		// Bind entre le label et les paroles de Link
-		messages.textProperty().bind(monde.getLink().parolesProperty());
-		
+		// Bind entre le label et les messages
+		messages.textProperty().bind(monde.messagesProperty());
 
 		
 		// Animation Ennemi Ours
@@ -224,12 +227,11 @@ public class Controleur implements Initializable {
 		);
 		
 //		Perte ptDeVie
-		
-//		monde.getLink().ptDeVieProperty().addListener(
-//				(obs,ancienneValeur,nouvelleValeur) -> {
-//					PerdVie(nouvelleValeur);
-//				}
-//		);
+		monde.getLink().ptDeVieProperty().addListener(
+				(obs,ancienneValeur,nouvelleValeur) -> {
+					PerdVie((int) nouvelleValeur);
+				}
+		);
 		
 		
 		
@@ -312,27 +314,33 @@ public class Controleur implements Initializable {
 			}
 			
 		});
+
 		
 		initializeMap();
 		
 	}
 
 
-//	public void PerdVie(Number nouvelleValeur) {
-//		switch(nouvelleValeur) {
-//		
-//		case 80 :   ptDeVieListe.remove(index)
-//			break;
-//		case "bas" :    img.imgOurs.setImage(img.imgOursBas);
-//			break;
-//		case "droite" : img.imgOurs.setImage(img.imgOursDroit);
-//			break;
-//		case "gauche" : img.imgOurs.setImage(img.imgOursGauche);
-//			break;
-//		}
-//
-//		
-//	}
+	public void PerdVie(int nouvelleValeur) {
+		if (nouvelleValeur < 80 && nouvelleValeur > 60) {
+			ptDeVie.getChildren().remove(img.ptDeVie1);
+			System.out.println("coeur 1 perdu");
+		} else if (nouvelleValeur <= 60 && nouvelleValeur > 40) {
+			ptDeVie.getChildren().remove(img.ptDeVie2);
+			System.out.println("coeur 2 perdu");
+		} else if (nouvelleValeur <= 40 && nouvelleValeur > 20) {
+			ptDeVie.getChildren().remove(img.ptDeVie3);
+			System.out.println("coeur 3 perdu");
+		} else if (nouvelleValeur <= 20 && nouvelleValeur > 0) {
+			ptDeVie.getChildren().remove(img.ptDeVie4);
+			System.out.println("coeur 4 perdu");
+		} else if (nouvelleValeur <= 0) {
+			ptDeVie.getChildren().remove(img.ptDeVie5);
+			System.out.println("coeur 5 perdu");
+			monde.setMessages("Game Over !");
+		}
+		
+	}
 
 	public void changerImageOurs(String nouvelleValeur) {
 		switch(nouvelleValeur) {

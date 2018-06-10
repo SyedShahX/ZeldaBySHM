@@ -8,11 +8,16 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Objet {
 	protected IntegerProperty posX;
 	protected IntegerProperty posY;
+	protected Monde monde;
 	
 	public Objet(int positionX, int positionY) {
 		super();
 		this.posX = new SimpleIntegerProperty(positionX);
 		this.posY = new SimpleIntegerProperty(positionY);
+	}
+	
+	public void setMonde(Monde monde) {
+		this.monde = monde;
 	}
 	
 	public Rectangle getBounds(int width, int height) {

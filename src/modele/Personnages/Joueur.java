@@ -15,7 +15,6 @@ public class Joueur extends Actifs {
 	private Arme arme;
 	private StringProperty orientationEpee;
 	private StringProperty orientation;
-	private StringProperty paroles;
 	private int vitesse;
 	private ObservableList<Arme> listeArmes;
 
@@ -26,7 +25,6 @@ public class Joueur extends Actifs {
 		this.arme = arme;
 		this.vitesse = vitesse;
 		this.listeArmes = FXCollections.observableArrayList();
-		this.paroles = new SimpleStringProperty();
 	}
 	
 	public int reglerVitesse() {
@@ -71,24 +69,21 @@ public class Joueur extends Actifs {
 	public void attaquer(Actifs adversaire) {
 		if(Collisions.collision(monde.getLink().getBounds(40,40),adversaire.getBounds(28,28))) {
 				int adversairePv = adversaire.getPtVie();
-				if (adversairePv > getArme().getPtAttaque()) {
+				if (adversairePv > 0) {
 					adversairePv -= getArme().getPtAttaque();
 					adversaire.setPtVie(adversairePv);
 					System.out.println(adversairePv);
 				} else {
 					monde.getListePersonnages().remove(adversaire);
-					System.out.println("mort");
 				}
 		}
 		
 	}
 	
-	public void parler(KeyEvent e) {
-		setParoles("Link : Bonjour Monsieur. Je cherche\nle coffre fort.\n"
+	public void parler() {
+		monde.setMessages("Link : Bonjour Monsieur. Je cherche\nle coffre fort.\n"
 				+ " Sauriez-vous où il peut être ?");
-		if (e.getCode() == KeyCode.Z) {
-			monde.getVieux().parler(e);			
-		}
+		
 	}
 
 	public void pousser() {
@@ -109,22 +104,18 @@ public class Joueur extends Actifs {
 	}
 	
 	public void casserTonneau(KeyEvent e) {
-		if(Collisions.collision(monde.getLink().getBounds(28,28),monde.getTonneau().getBounds(30,30))) {
-			if(e.getCode() == KeyCode.A) {
-				monde.supprimerObjet(monde.getTonneau());
-				monde.ajouterArme(monde.getEpee());
-			}
-		}
+		monde.supprimerObjet(monde.getTonneau());
+		monde.ajouterArme(monde.getEpee());
 	}
 // Récupérer Arme
-	public void recupererArme(Arme arme) {
+	public boolean recupererArme(Arme arme) {
 		if (monde.getListeArmes().contains(arme)) {
-			if (Collisions.collision(monde.getLink().getBounds(28,28), arme.getBounds(12,12))) {
 				monde.supprimerArme(arme);
 				ajouterArme(arme);
 				monde.getLink().changerArmeJoueur(arme);
+				return true;
 			}
-		}
+		return false;
 	}
 	
 //  Changement d'orientation lors d'une prise d'arme
@@ -182,20 +173,5 @@ public class Joueur extends Actifs {
 	public ObservableList<Arme> getListeArmes() {
 		return listeArmes;
 	}
-	
-//	Getter et Setter StringProperty paroles
-	public StringProperty parolesProperty() {
-		return this.paroles;
-	}
-
-	public void setParoles(String paroles) {
-		this.paroles.set(paroles);
-	}
-	
-	public String getParoles() {
-		return this.paroles.get();
-	}
-
-
 
 }

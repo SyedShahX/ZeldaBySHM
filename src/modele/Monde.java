@@ -1,5 +1,7 @@
 package modele;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import modele.Armes.Epee;
@@ -18,19 +20,25 @@ public class Monde {
 	private Joueur link;
 	private Ours ours;
 	private Vieux vieux;
+	private StringProperty messages;
+//	private PointDeVie ptVieLink = new PointDeVie(200);
 	
+
 
 	public Monde() {
 		this.listeObstacles = FXCollections.observableArrayList();
 		this.listeArmes = FXCollections.observableArrayList();
 		this.listePersonnages = FXCollections.observableArrayList();
-		this.link = new Joueur("Link", 200, 320, 1020,0,null);
+		this.link = new Joueur("Link", 100, 320, 1020,0,null);
 		this.tonneau = new Tonneau(1475,964);
 		this.epee = new Epee("épée", 30, 70, 1475, 964);
 		this.ours = new Ours("Ours tueur",200,1221,415,10);
 		this.vieux = new Vieux("vieux", 755, 703);
 		this.getVieux().setMonde(this);
 		this.getLink().setMonde(this);
+		this.getEnnemiOurs().setMonde(this);
+		this.getTonneau().setMonde(this);
+		this.messages = new SimpleStringProperty();
 	}
 	
 //	AJOUTER OBJET
@@ -84,4 +92,15 @@ public class Monde {
 		return this.listePersonnages;
 	}
 
+	public StringProperty messagesProperty() {
+		return messages;
+	}
+	
+	public void setMessages(String message) {
+		this.messages.set(message);
+	}
+	
+	public String getMessages() {
+		return this.messages.get();
+	}
 }
