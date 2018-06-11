@@ -1,7 +1,5 @@
 package modele.Objets;
 
-
-
 import modele.Objet;
 
 public class Tonneau extends Objet {

@@ -5,12 +5,11 @@ import java.awt.Rectangle;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public abstract class Personnage {
+public abstract class Personnage extends SetMonde{
 	
 	protected String nom;
 	protected IntegerProperty posX;
 	protected IntegerProperty posY;
-	protected Monde monde;
 
 	public Personnage(String nom, int posX, int posY) {
 		super();
@@ -19,10 +18,6 @@ public abstract class Personnage {
 		this.posY = new SimpleIntegerProperty(posY);
 		this.monde = null;
 		
-	}
-	
-	public void setMonde(Monde monde) {
-		this.monde = monde;
 	}
 	
 	public Rectangle getBounds(int width,int height) {

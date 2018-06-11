@@ -5,6 +5,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import modele.Armes.Epee;
+import modele.Armes.Fleche;
 import modele.Objets.Tonneau;
 import modele.Personnages.Joueur;
 import modele.Personnages.Ours;
@@ -17,13 +18,11 @@ public class Monde {
 	private ObservableList<Personnage> listePersonnages;
 	private Tonneau tonneau;
 	private Arme epee;
+	private Arme fleche;
 	private Joueur link;
 	private Ours ours;
 	private Vieux vieux;
 	private StringProperty messages;
-//	private PointDeVie ptVieLink = new PointDeVie(200);
-	
-
 
 	public Monde() {
 		this.listeObstacles = FXCollections.observableArrayList();
@@ -32,12 +31,15 @@ public class Monde {
 		this.link = new Joueur("Link", 100, 320, 1020,0,null);
 		this.tonneau = new Tonneau(1475,964);
 		this.epee = new Epee("épée", 30, 70, 1475, 964);
+		this.fleche = new Fleche("projectile", 50,1470, 900);
 		this.ours = new Ours("Ours tueur",200,1221,415,10);
 		this.vieux = new Vieux("vieux", 755, 703);
 		this.getVieux().setMonde(this);
 		this.getLink().setMonde(this);
 		this.getEnnemiOurs().setMonde(this);
 		this.getTonneau().setMonde(this);
+		this.getFleche().setMonde(this);
+		this.getEpee().setMonde(this);
 		this.messages = new SimpleStringProperty();
 	}
 	
@@ -71,6 +73,9 @@ public class Monde {
 	}
 	public Arme getEpee() {
 		return this.epee;
+	}
+	public Arme getFleche() {
+		return fleche;
 	}
 	public Ours getEnnemiOurs() {
 		return this.ours;

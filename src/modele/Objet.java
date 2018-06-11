@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Objet {
+public class Objet extends SetMonde{
 	protected IntegerProperty posX;
 	protected IntegerProperty posY;
 	protected Monde monde;
@@ -14,10 +14,6 @@ public class Objet {
 		super();
 		this.posX = new SimpleIntegerProperty(positionX);
 		this.posY = new SimpleIntegerProperty(positionY);
-	}
-	
-	public void setMonde(Monde monde) {
-		this.monde = monde;
 	}
 	
 	public Rectangle getBounds(int width, int height) {

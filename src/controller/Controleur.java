@@ -50,6 +50,7 @@ public class Controleur implements Initializable {
 	public Controleur() {
 		mapObjetImg.put(monde.getTonneau(), img.imgTonneau);
 		mapArmeImg.put(monde.getEpee(), img.imgEpee);
+		mapArmeImg.put(monde.getFleche(), img.imgFleche);
 		mapPersoImg.put(monde.getEnnemiOurs(), img.imgOurs);
 		mapPersoImg.put(monde.getLink(), img.imgLink);
 		mapPersoImg.put(monde.getVieux(), img.imgVieux);
@@ -65,7 +66,7 @@ public class Controleur implements Initializable {
 		collisionObjet(monde.getTonneau(), posX, posY,monde);
 		collisionPerso(monde.getEnnemiOurs(), posX, posY,monde);
 		casserTonneau(e);
-		recupererArme(monde.getEpee());
+		recupererArme(e,monde.getEpee());
 		attaquer(e,monde.getEnnemiOurs());
 		parler(monde.getVieux(), posX, posY, monde);
 	}
@@ -89,8 +90,8 @@ public class Controleur implements Initializable {
 	public void attaquer(KeyEvent e,Actifs perso) {
 		monde.getLink().attaquer(e,perso);
 	}
-	public void recupererArme(Arme arme) {
-		monde.getLink().recupererArme(arme);
+	public void recupererArme(KeyEvent e,Arme arme) {
+		monde.getLink().recupererArme(e,arme);
 	}
 	
 	public void collisionObstacleMap(int positionX,int positionY,Monde monde) {
@@ -107,7 +108,7 @@ public class Controleur implements Initializable {
 	}
 	
 //	CASSER TONNEAU
-	public void casserTonneau(KeyEvent e) {			
+	public void casserTonneau(KeyEvent e) {
 		monde.getLink().casserTonneau(e);
 	}	
 	public void parler(Personnage perso,int positionX,int positionY,Monde monde) {
@@ -129,6 +130,7 @@ public class Controleur implements Initializable {
 		monde.getListeObstacles().add(monde.getTonneau());
 		monde.getListePersonnages().addAll(monde.getEnnemiOurs(),monde.getLink(),
 										   monde.getVieux());
+		monde.getListeArmes().add(monde.getFleche());
 		
 		// Ajout des points de vie sur la map
 		ptDeVie.getChildren().add(img.ptDeVie1);
@@ -146,7 +148,6 @@ public class Controleur implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
 		
 		// Bind entre l'image Link et sa position x et y
 		img.imgLink.layoutXProperty().bind(monde.getLink().PosXProperty());

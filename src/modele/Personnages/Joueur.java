@@ -31,7 +31,7 @@ public class Joueur extends Actifs {
 		if(Collisions.collisionBuisson(getPosX(),getPosY())) {
 			setVitesse(3);
 		} else {
-			setVitesse(15);
+			setVitesse(10);
 		}
 		return getVitesse();
 	}
@@ -68,19 +68,19 @@ public class Joueur extends Actifs {
 	
 	public void attaquer(KeyEvent e,Actifs adversaire) {
 		if (e.getCode() == KeyCode.SPACE) {
-			if(monde.getLink().getArme() == null) {
+			if(getArme() == null) {
 				monde.setMessages("Vous ne pouvez attaquer sans armes...");
 			} else {
 				monde.setMessages("A l'attaque !");
-				if(Collisions.collision(monde.getLink().getBounds(40,40),adversaire.getBounds(28,28))
-						&& monde.getLink().getArme() != null) {
+				if(Collisions.collision(getBounds(40,40),adversaire.getBounds(28,28))
+						&& getArme() != null) {
 					int adversairePv = adversaire.getPtVie();
 					if (adversairePv > 0) {
 						adversairePv -= getArme().getPtAttaque();
 						adversaire.setPtVie(adversairePv);
 					} else {
 						monde.getListePersonnages().remove(adversaire);
-						monde.setMessages("L'ennemi est mort");
+						monde.setMessages("L'ennemi est mort.");
 					}
 				}
 			}
@@ -111,21 +111,26 @@ public class Joueur extends Actifs {
 	}
 	
 	public void casserTonneau(KeyEvent e) {
-		if(Collisions.collision(monde.getLink().getBounds(28,28),monde.getTonneau().getBounds(30,30))) {
+		if(Collisions.collision(getBounds(28,28),monde.getTonneau().getBounds(30,30))) {
 			if(e.getCode() == KeyCode.A) {
 				monde.supprimerObjet(monde.getTonneau());
 				monde.ajouterArme(monde.getEpee());
 			}
 		}
+		
 	}
 // Récupérer Arme
-	public void recupererArme(Arme arme) {
+	public void recupererArme(KeyEvent e,Arme arme) {
 		if (monde.getListeArmes().contains(arme)) {
+			monde.setMessages("Appuyez sur B pour prendre l'épée.");
+			if (e.getCode() == KeyCode.B) {
 				monde.supprimerArme(arme);
 				ajouterArme(arme);
-				monde.getLink().changerArmeJoueur(arme);
+				changerArmeJoueur(arme);
 				monde.setMessages("Arme récupérée !\n"
 						+ "Appuyez sur la touche ESPACE pour\nattaquer.");
+				
+			}
 		}
 	}
 	
