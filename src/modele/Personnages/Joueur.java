@@ -59,23 +59,31 @@ public class Joueur extends Actifs {
 			break;
 		case RIGHT: ChangerOrientation("droiteEpee", "droite");
 					setPosX( posX + ajoutDistance);
-			break;
+			break;	
 		default:
 			break;
 		}
 	}
 
 	
-	public void attaquer(Actifs adversaire) {
-		if(Collisions.collision(monde.getLink().getBounds(40,40),adversaire.getBounds(28,28))) {
-				int adversairePv = adversaire.getPtVie();
-				if (adversairePv > 0) {
-					adversairePv -= getArme().getPtAttaque();
-					adversaire.setPtVie(adversairePv);
-					System.out.println(adversairePv);
-				} else {
-					monde.getListePersonnages().remove(adversaire);
+	public void attaquer(KeyEvent e,Actifs adversaire) {
+		if (e.getCode() == KeyCode.SPACE) {
+			if(monde.getLink().getArme() == null) {
+				monde.setMessages("Vous ne pouvez attaquer sans armes...");
+			} else {
+				monde.setMessages("A l'attaque !");
+				if(Collisions.collision(monde.getLink().getBounds(40,40),adversaire.getBounds(28,28))
+						&& monde.getLink().getArme() != null) {
+					int adversairePv = adversaire.getPtVie();
+					if (adversairePv > 0) {
+						adversairePv -= getArme().getPtAttaque();
+						adversaire.setPtVie(adversairePv);
+					} else {
+						monde.getListePersonnages().remove(adversaire);
+						monde.setMessages("L'ennemi est mort");
+					}
 				}
+			}
 		}
 		
 	}
@@ -83,7 +91,6 @@ public class Joueur extends Actifs {
 	public void parler() {
 		monde.setMessages("Link : Bonjour Monsieur. Je cherche\nle coffre fort.\n"
 				+ " Sauriez-vous où il peut être ?");
-		
 	}
 
 	public void pousser() {
@@ -104,18 +111,22 @@ public class Joueur extends Actifs {
 	}
 	
 	public void casserTonneau(KeyEvent e) {
-		monde.supprimerObjet(monde.getTonneau());
-		monde.ajouterArme(monde.getEpee());
+		if(Collisions.collision(monde.getLink().getBounds(28,28),monde.getTonneau().getBounds(30,30))) {
+			if(e.getCode() == KeyCode.A) {
+				monde.supprimerObjet(monde.getTonneau());
+				monde.ajouterArme(monde.getEpee());
+			}
+		}
 	}
 // Récupérer Arme
-	public boolean recupererArme(Arme arme) {
+	public void recupererArme(Arme arme) {
 		if (monde.getListeArmes().contains(arme)) {
 				monde.supprimerArme(arme);
 				ajouterArme(arme);
 				monde.getLink().changerArmeJoueur(arme);
-				return true;
-			}
-		return false;
+				monde.setMessages("Arme récupérée !\n"
+						+ "Appuyez sur la touche ESPACE pour\nattaquer.");
+		}
 	}
 	
 //  Changement d'orientation lors d'une prise d'arme

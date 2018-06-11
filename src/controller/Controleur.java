@@ -87,20 +87,10 @@ public class Controleur implements Initializable {
 	}
 	
 	public void attaquer(KeyEvent e,Actifs perso) {
-		if (e.getCode() == KeyCode.SPACE) {
-			if(monde.getLink().getArme() != null) {
-				monde.getLink().attaquer(perso);
-				monde.setMessages("Attaque !");
-			} else {
-				monde.setMessages("Vous ne pouvez attaquer sans armes...");
-			}
-		}
+		monde.getLink().attaquer(e,perso);
 	}
 	public void recupererArme(Arme arme) {
-		if (monde.getLink().recupererArme(arme)) {
-			monde.setMessages("Arme récupérée !\n"
-					+ "Appuyez sur la touche ESPACE pour\nattaquer.");
-		}
+		monde.getLink().recupererArme(arme);
 	}
 	
 	public void collisionObstacleMap(int positionX,int positionY,Monde monde) {
@@ -118,21 +108,18 @@ public class Controleur implements Initializable {
 	
 //	CASSER TONNEAU
 	public void casserTonneau(KeyEvent e) {			
-		if(Collisions.collision(monde.getLink().getBounds(28,28),monde.getTonneau().getBounds(30,30))) {
-			if(e.getCode() == KeyCode.A) {
-				monde.getLink().casserTonneau(e);
-			}
-		}
+		monde.getLink().casserTonneau(e);
 	}	
 	public void parler(Personnage perso,int positionX,int positionY,Monde monde) {
-		if (Collisions.collisionPerso(perso, positionX, positionY, monde)) {
+		if(Collisions.collisionPerso(perso,positionX,positionY,monde)) {
 				gameLoop.gameLoopVieux.stop();
 				monde.getLink().parler();
-//				monde.getVieux().parler();
-		} else {
-			gameLoop.gameLoopVieux.play();
-		}
+//				monde.getVieux().parler();					
+			} else {
+				gameLoop.gameLoopVieux.play();					
+			}
 	}
+	
 	
 
 	public void initializeMap() {
@@ -324,19 +311,14 @@ public class Controleur implements Initializable {
 	public void PerdVie(int nouvelleValeur) {
 		if (nouvelleValeur < 80 && nouvelleValeur > 60) {
 			ptDeVie.getChildren().remove(img.ptDeVie1);
-			System.out.println("coeur 1 perdu");
 		} else if (nouvelleValeur <= 60 && nouvelleValeur > 40) {
 			ptDeVie.getChildren().remove(img.ptDeVie2);
-			System.out.println("coeur 2 perdu");
 		} else if (nouvelleValeur <= 40 && nouvelleValeur > 20) {
 			ptDeVie.getChildren().remove(img.ptDeVie3);
-			System.out.println("coeur 3 perdu");
 		} else if (nouvelleValeur <= 20 && nouvelleValeur > 0) {
 			ptDeVie.getChildren().remove(img.ptDeVie4);
-			System.out.println("coeur 4 perdu");
 		} else if (nouvelleValeur <= 0) {
 			ptDeVie.getChildren().remove(img.ptDeVie5);
-			System.out.println("coeur 5 perdu");
 			monde.setMessages("Game Over !");
 		}
 		
