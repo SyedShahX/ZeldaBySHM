@@ -5,10 +5,9 @@ import java.awt.Rectangle;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Objet extends SetMonde{
+public class Objet {
 	protected IntegerProperty posX;
 	protected IntegerProperty posY;
-	protected Monde monde;
 	
 	public Objet(int positionX, int positionY) {
 		super();
@@ -24,8 +23,8 @@ public class Objet extends SetMonde{
 		return posX;
 	}
 
-	public void setPosX(IntegerProperty posX) {
-		this.posX = posX;
+	public void setPosX(int posX) {
+		this.posX.setValue(posX);
 	}
 
 	public IntegerProperty PosYProperty() {
@@ -37,8 +36,8 @@ public class Objet extends SetMonde{
 	public int getPosY() {
 		return this.posY.getValue();
 	}
-	public void setPosY(IntegerProperty posY) {
-		this.posY = posY;
+	public void setPosY(int posY) {
+		this.posY.setValue(posY);;
 	}
 
 }

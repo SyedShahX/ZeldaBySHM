@@ -5,16 +5,19 @@ import java.awt.Rectangle;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Arme extends SetMonde{
+public class Arme {
 	
 	protected String nom;
 	protected int ptAttaque;
-	protected IntegerProperty posX;
-	protected IntegerProperty posY;
+	protected int pvArme;
+
+	private IntegerProperty posX;
+	private IntegerProperty posY;
 	
-	public Arme(String nom,int ptAttaque,int positionX,int positionY) {
+	public Arme(String nom,int ptAttaque,int pvArme,int positionX,int positionY) {
 		this.nom=nom;
 		this.ptAttaque=ptAttaque;
+		this.pvArme=pvArme;
 		this.posX = new SimpleIntegerProperty(positionX);
 		this.posY = new SimpleIntegerProperty(positionY);
 	}
@@ -39,6 +42,14 @@ public class Arme extends SetMonde{
 		this.ptAttaque = ptAttaque;
 	}
 
+//	PvArme
+	public int getPvArme() {
+		return pvArme;
+	}
+	public void setPvArme(int pvArme) {
+		this.pvArme = pvArme;
+	}
+	
 	
 //	positionX
 	public IntegerProperty PosXProperty() {

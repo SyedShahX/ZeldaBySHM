@@ -1,12 +1,10 @@
 package modele;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import modele.Armes.Epee;
-import modele.Armes.Fleche;
 import modele.Objets.Tonneau;
+import modele.Objets.roche;
 import modele.Personnages.Joueur;
 import modele.Personnages.Ours;
 import modele.Personnages.Vieux;
@@ -18,29 +16,23 @@ public class Monde {
 	private ObservableList<Personnage> listePersonnages;
 	private Tonneau tonneau;
 	private Arme epee;
-	private Arme fleche;
 	private Joueur link;
 	private Ours ours;
 	private Vieux vieux;
-	private StringProperty messages;
+	private roche roche;
+	
 
 	public Monde() {
 		this.listeObstacles = FXCollections.observableArrayList();
 		this.listeArmes = FXCollections.observableArrayList();
 		this.listePersonnages = FXCollections.observableArrayList();
-		this.link = new Joueur("Link", 100, 320, 1020,0,null);
+		this.link = new Joueur("Link", 200, 320, 1020,0,null);
 		this.tonneau = new Tonneau(1475,964);
-		this.epee = new Epee("l'épée", 30, 70, 1475, 964);
-		this.fleche = new Fleche("la flèche", 50,320, 1025);
-		this.ours = new Ours("l'Ours tueur",200,1221,415,10);
-		this.vieux = new Vieux("Le viellard", 755, 703);
-		this.getVieux().setMonde(this);
+		this.epee = new Epee("épée", 30, 100, 1475, 964);
+		this.ours = new Ours("Ours tueur",200,1221,415,10);
+		this.vieux = new Vieux("vieux", 755, 703);
+		this.roche = new roche(724,370); 
 		this.getLink().setMonde(this);
-		this.getEnnemiOurs().setMonde(this);
-		this.getTonneau().setMonde(this);
-		this.getFleche().setMonde(this);
-		this.getEpee().setMonde(this);
-		this.messages = new SimpleStringProperty();
 	}
 	
 //	AJOUTER OBJET
@@ -74,14 +66,14 @@ public class Monde {
 	public Arme getEpee() {
 		return this.epee;
 	}
-	public Arme getFleche() {
-		return this.fleche;
-	}
 	public Ours getEnnemiOurs() {
 		return this.ours;
 	}
 	public Vieux getVieux() {
-		return this.vieux;
+		return vieux;
+	}
+	public roche getRoche() {
+		return this.roche;
 	}
 	
 //	GETTER LISTES OBSERVABLES
@@ -97,15 +89,4 @@ public class Monde {
 		return this.listePersonnages;
 	}
 
-	public StringProperty messagesProperty() {
-		return messages;
-	}
-	
-	public void setMessages(String message) {
-		this.messages.set(message);
-	}
-	
-	public String getMessages() {
-		return this.messages.get();
-	}
 }
