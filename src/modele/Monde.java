@@ -30,10 +30,10 @@ public class Monde {
 		this.listePersonnages = FXCollections.observableArrayList();
 		this.link = new Joueur("Link", 100, 320, 1020,0,null);
 		this.tonneau = new Tonneau(1475,964);
-		this.epee = new Epee("épée", 30, 70, 1475, 964);
-		this.fleche = new Fleche("projectile", 50,1470, 900);
-		this.ours = new Ours("Ours tueur",200,1221,415,10);
-		this.vieux = new Vieux("vieux", 755, 703);
+		this.epee = new Epee("l'épée", 30, 70, 1475, 964);
+		this.fleche = new Fleche("la flèche", 50,320, 1025);
+		this.ours = new Ours("l'Ours tueur",200,1221,415,10);
+		this.vieux = new Vieux("Le viellard", 755, 703);
 		this.getVieux().setMonde(this);
 		this.getLink().setMonde(this);
 		this.getEnnemiOurs().setMonde(this);
@@ -75,13 +75,13 @@ public class Monde {
 		return this.epee;
 	}
 	public Arme getFleche() {
-		return fleche;
+		return this.fleche;
 	}
 	public Ours getEnnemiOurs() {
 		return this.ours;
 	}
 	public Vieux getVieux() {
-		return vieux;
+		return this.vieux;
 	}
 	
 //	GETTER LISTES OBSERVABLES

@@ -17,6 +17,7 @@ public class Joueur extends Actifs {
 	private StringProperty orientation;
 	private int vitesse;
 	private ObservableList<Arme> listeArmes;
+	private static int discussion;
 
 	public Joueur(String nom, int ptVie, int posX, int posY,int vitesse,Arme arme) {
 		super(nom, ptVie, posX, posY);
@@ -27,6 +28,10 @@ public class Joueur extends Actifs {
 		this.listeArmes = FXCollections.observableArrayList();
 	}
 	
+	/**
+	 * Diminue la vitesse lorsque Link traverse les buissons.
+	 * @return int
+	 */
 	public int reglerVitesse() {
 		if(Collisions.collisionBuisson(getPosX(),getPosY())) {
 			setVitesse(3);
@@ -35,12 +40,22 @@ public class Joueur extends Actifs {
 		}
 		return getVitesse();
 	}
-	
+	/**
+	 * Fixe la position de Link lors d'une collision avec un element
+	 * de la map.Link reste à l'endroit où il se situe.
+	 * @param positionX
+	 * @param positionY
+	 */
 	public void setPositionFixe(int positionX,int positionY) {
 		setPosX(positionX); 
 		setPosY(positionY);
 	}
 	
+	/**
+	 * Déplacement de Link vers le haut, le bas , la gauche et la droite 
+	 * à une certaine vitesse. 
+	 * @param key
+	 */
 	public void seDeplacer(KeyCode key) {
 		int posY = getPosY();
 		int posX = getPosX();
@@ -65,7 +80,18 @@ public class Joueur extends Actifs {
 		}
 	}
 
-	
+	/**
+	 *  Le joueur attaque en appuyant sur la touche ESPACE.
+	 *  Il retire des points de vie à son adversaire s'il est armé 
+	 *  et s'il l'attaque.
+	 *  Si Link n'a pas d'arme, il ne peut attaquer et
+	 *  un message lui en informera.
+	 *  Si l'adversaire n'a plus de point de vie, il est retiré de la map
+	 *  et un message indiquera la mort de ce dernier.
+	 *
+	 * @param e
+	 * @param adversaire
+	 */
 	public void attaquer(KeyEvent e,Actifs adversaire) {
 		if (e.getCode() == KeyCode.SPACE) {
 			if(getArme() == null) {
@@ -80,7 +106,7 @@ public class Joueur extends Actifs {
 						adversaire.setPtVie(adversairePv);
 					} else {
 						monde.getListePersonnages().remove(adversaire);
-						monde.setMessages("L'ennemi est mort.");
+						monde.setMessages(adversaire.getNom() + " est mort.");
 					}
 				}
 			}
@@ -88,53 +114,108 @@ public class Joueur extends Actifs {
 		
 	}
 	
+	/**
+	 * Link demande au viellard le chemin vers le trésor qui lui répond.
+	 * Si Link revient vers lui, seul le viellard lui parlera. 
+	 */
 	public void parler() {
-		monde.setMessages("Link : Bonjour Monsieur. Je cherche\nle coffre fort.\n"
-				+ " Sauriez-vous où il peut être ?");
+		if (discussion == 0) {
+			monde.setMessages(getNom()+" : Bonjour Monsieur. Je cherche\nle coffre fort.\n"
+					+ " Sauriez-vous où il peut être ?");
+			discussion++;
+		} else {
+			monde.getVieux().parler();
+		}
+		
 	}
 
 	public void pousser() {
 
 	}
 	
-//	CHANGER ARME
-	public void changerArmeJoueur(Arme arme) {
-		setArme(arme);
+	public void lancer() {
+		System.out.println("ok");
+	}
+	
+	/**
+	 * Changement d'arme lors de la saisie de la touche Q
+	 *  
+	 * @param e
+	 * @param arme
+	 */
+	public void changerArmeJoueur(KeyEvent e) {
+		if (e.getCode() == KeyCode.Q) {
+			monde.setMessages("Changement d'arme.");
+		}
 		
 	}
+	
+	/**
+	 * Ajout d'une arme dans la liste d'armes du Link.
+	 * 
+	 * @param arme
+	 */
 	public void ajouterArme(Arme arme) {
 		this.listeArmes.add(arme);
 	}
 	
+	/**
+	 * Suppression d'une arme dans la liste d'armes du Link.
+	 * 
+	 * @param arme
+	 */
 	public void supprimerArme(Arme arme) {
 		this.listeArmes.remove(arme);
 	}
 	
-	public void casserTonneau(KeyEvent e) {
+	/**
+	 * Suppression du tonneau lors de la saisie de la touche A.
+	 * 
+	 * @param e
+	 * @param arme
+	 */
+	public void casserTonneau(KeyEvent e,Arme arme) {
 		if(Collisions.collision(getBounds(28,28),monde.getTonneau().getBounds(30,30))) {
 			if(e.getCode() == KeyCode.A) {
+				// On supprime le tonneau visible sur la map
 				monde.supprimerObjet(monde.getTonneau());
-				monde.ajouterArme(monde.getEpee());
+				// On affiche l'arme sur la map
+				monde.ajouterArme(arme);
 			}
 		}
 		
 	}
-// Récupérer Arme
+	
+	/**
+	 * Récupère une arme et l'ajoute dans la liste d'arme de Link.
+	 * 
+	 * @param e
+	 * @param arme
+	 */
 	public void recupererArme(KeyEvent e,Arme arme) {
 		if (monde.getListeArmes().contains(arme)) {
-			monde.setMessages("Appuyez sur B pour prendre l'épée.");
-			if (e.getCode() == KeyCode.B) {
+			monde.setMessages("Appuyez sur B pour prendre "+ arme.getNom());
+			if (e.getCode() == KeyCode.B && 
+				Collisions.collision(getBounds(28, 28), arme.getBounds(30, 30))) {
+				// On supprime l'arme visible sur la map
 				monde.supprimerArme(arme);
+				// On ajoute l'arme dans la liste d'armes de Link
 				ajouterArme(arme);
-				changerArmeJoueur(arme);
-				monde.setMessages("Arme récupérée !\n"
+				// On remplace l'ancienne arme de Link par la nouvelle
+				setArme(arme);
+				// On affiche le message de confirmation 
+				monde.setMessages(arme.getNom() + " est récupérée !\n"
 						+ "Appuyez sur la touche ESPACE pour\nattaquer.");
-				
 			}
 		}
 	}
 	
-//  Changement d'orientation lors d'une prise d'arme
+	/**
+	 * Changement d'orientation de Link lors d'une prise d'arme.
+	 * 
+	 * @param orientationEpee
+	 * @param orientation
+	 */
 	public void ChangerOrientation(String orientationEpee,String orientation) {
 		if(getArme() == monde.getEpee()) {
 			setOrientationEpee(orientationEpee);

@@ -50,11 +50,12 @@ public class Controleur implements Initializable {
 	public Controleur() {
 		mapObjetImg.put(monde.getTonneau(), img.imgTonneau);
 		mapArmeImg.put(monde.getEpee(), img.imgEpee);
-		mapArmeImg.put(monde.getFleche(), img.imgFleche);
+//		mapArmeImg.put(monde.getFleche(), img.imgFleche);
 		mapPersoImg.put(monde.getEnnemiOurs(), img.imgOurs);
 		mapPersoImg.put(monde.getLink(), img.imgLink);
 		mapPersoImg.put(monde.getVieux(), img.imgVieux);
 		mapListArmesLinkImg.put(monde.getEpee(), img.listeImgEpee);
+		mapListArmesLinkImg.put(monde.getFleche(), img.imgFleche);
 	}
 	
 	public void gererTouche(KeyEvent e) {
@@ -65,10 +66,11 @@ public class Controleur implements Initializable {
 		collisionObstacleMap(posX,posY,monde);
 		collisionObjet(monde.getTonneau(), posX, posY,monde);
 		collisionPerso(monde.getEnnemiOurs(), posX, posY,monde);
-		casserTonneau(e);
+		casserTonneau(e,monde.getEpee());
 		recupererArme(e,monde.getEpee());
 		attaquer(e,monde.getEnnemiOurs());
 		parler(monde.getVieux(), posX, posY, monde);
+//		changerArmeJoueur(e);
 	}
 	
 //	Déplacements du joueur
@@ -90,6 +92,14 @@ public class Controleur implements Initializable {
 	public void attaquer(KeyEvent e,Actifs perso) {
 		monde.getLink().attaquer(e,perso);
 	}
+	
+	public void lancer(KeyEvent e) {
+		if (e.getCode() == KeyCode.S) {
+			gameLoop.initAnimationFleche(100);
+			gameLoop.gameLoopFleche.play();
+		}
+	}
+	
 	public void recupererArme(KeyEvent e,Arme arme) {
 		monde.getLink().recupererArme(e,arme);
 	}
@@ -108,9 +118,10 @@ public class Controleur implements Initializable {
 	}
 	
 //	CASSER TONNEAU
-	public void casserTonneau(KeyEvent e) {
-		monde.getLink().casserTonneau(e);
-	}	
+	public void casserTonneau(KeyEvent e,Arme arme) {
+		monde.getLink().casserTonneau(e,arme);
+	}
+	
 	public void parler(Personnage perso,int positionX,int positionY,Monde monde) {
 		if(Collisions.collisionPerso(perso,positionX,positionY,monde)) {
 				gameLoop.gameLoopVieux.stop();
@@ -130,7 +141,7 @@ public class Controleur implements Initializable {
 		monde.getListeObstacles().add(monde.getTonneau());
 		monde.getListePersonnages().addAll(monde.getEnnemiOurs(),monde.getLink(),
 										   monde.getVieux());
-		monde.getListeArmes().add(monde.getFleche());
+		monde.getLink().getListeArmes().add(monde.getFleche());
 		
 		// Ajout des points de vie sur la map
 		ptDeVie.getChildren().add(img.ptDeVie1);
@@ -179,42 +190,42 @@ public class Controleur implements Initializable {
 		
 		// Animation Ennemi Ours
 		gameLoop.initAnimationOurs(monde.getEnnemiOurs(),0.017,170,4,0,"droite","gauche",monde.getLink());
-		gameLoop.initAnimationVieux(monde.getVieux(), 0.05,100,"droite", "gauche");
+		gameLoop.initAnimationVieux(monde.getVieux(),0.05,100,"droite", "gauche");
 		// démarrage de l'animation
 		gameLoop.gameLoopOurs.play();
 		gameLoop.gameLoopVieux.play();
 		
 	
 		
-		// Changement position Link
+		// Changement de la position de Link
 		monde.getLink().OrientationProperty().addListener(
 				(obs,ancienneValeur,nouvelleValeur) -> {
 					changerImageLink(nouvelleValeur);
 				}
 		);
 		
-		// Changement position Ours
+		// Changement de la position de l'Ours
 		monde.getEnnemiOurs().OrientationProperty().addListener(
 				(obs,ancienneValeur,nouvelleValeur) -> {
 					changerImageOurs(nouvelleValeur);
 				}
 		);
 		
-		// Changement position Link avec épée comme arme
+		// Changement de la position de Link avec une épée comme arme
 		monde.getLink().OrientationEpeeProperty().addListener(
 				(obs,ancienneValeur,nouvelleValeur) -> {
 					changerImageLinkEpee(nouvelleValeur);
 				}
 		);
 		
-//		 Changement image Vieux 
+//		 Changement de l'image du Vieux 
 		monde.getVieux().OrientationProperty().addListener(
 				(obs,ancienneValeur,nouvelleValeur) -> {
 					changerImageVieux(nouvelleValeur);
 				}
 		);
 		
-//		Perte ptDeVie
+//		Perte de point de vie
 		monde.getLink().ptDeVieProperty().addListener(
 				(obs,ancienneValeur,nouvelleValeur) -> {
 					PerdVie((int) nouvelleValeur);
@@ -302,6 +313,8 @@ public class Controleur implements Initializable {
 			}
 			
 		});
+		
+		
 
 		
 		initializeMap();
