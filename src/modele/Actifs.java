@@ -9,7 +9,7 @@ public class Actifs extends Personnage {
 	
 	public Actifs(String nom,int ptVie, int posX, int posY) {
 		super(nom, posX, posY);
-		this.ptVie = new SimpleIntegerProperty();
+		this.ptVie = new SimpleIntegerProperty(ptVie);
 	}
 	
 	public int getPtVie() {
