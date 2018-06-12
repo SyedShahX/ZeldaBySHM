@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Rectangle;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,11 +67,15 @@ public class Controleur implements Initializable {
 		collisionObstacleMap(posX,posY,monde);
 		collisionObjet(monde.getTonneau(), posX, posY,monde);
 		collisionPerso(monde.getEnnemiOurs(), posX, posY,monde);
+		collisionPerso(monde.getVieux(), posX, posY,monde);
 		casserTonneau(e,monde.getEpee());
 		recupererArme(e,monde.getEpee());
 		attaquer(e,monde.getEnnemiOurs());
-		parler(monde.getVieux(), posX, posY, monde);
+		parler(e,monde.getLink().getBounds(30, 30), monde
+				.getVieux().getBounds(30, 30), monde);
 //		changerArmeJoueur(e);
+		lancer(e);
+
 	}
 	
 //	Déplacements du joueur
@@ -90,12 +95,14 @@ public class Controleur implements Initializable {
 	}
 	
 	public void attaquer(KeyEvent e,Actifs perso) {
-		monde.getLink().attaquer(e,perso);
+		if (e.getCode() == KeyCode.SPACE) {
+			monde.getLink().attaquer(perso);			
+		}
 	}
 	
 	public void lancer(KeyEvent e) {
 		if (e.getCode() == KeyCode.S) {
-			gameLoop.initAnimationFleche(100);
+			gameLoop.initAnimationFleche(100,100);
 			gameLoop.gameLoopFleche.play();
 		}
 	}
@@ -119,18 +126,25 @@ public class Controleur implements Initializable {
 	
 //	CASSER TONNEAU
 	public void casserTonneau(KeyEvent e,Arme arme) {
-		monde.getLink().casserTonneau(e,arme);
+		if (e.getCode() == KeyCode.A) {
+			monde.getLink().casserTonneau(arme);			
+		}
 	}
 	
-	public void parler(Personnage perso,int positionX,int positionY,Monde monde) {
-		if(Collisions.collisionPerso(perso,positionX,positionY,monde)) {
+	public void parler(KeyEvent e,Rectangle rect1,Rectangle rect2,Monde monde) {
+		if(Collisions.collision( rect1, rect2)) {
 				gameLoop.gameLoopVieux.stop();
-				monde.getLink().parler();
-//				monde.getVieux().parler();					
-			} else {
-				gameLoop.gameLoopVieux.play();					
-			}
+				monde.getLink().parler(e);
+		} if (e.getCode() == KeyCode.U &&
+				Collisions.collision(rect1, rect2)) {
+				monde.getVieux().parler();
+		}
+					
+//			} else {
+//				gameLoop.gameLoopVieux.play();					
+//			}
 	}
+	
 	
 	
 
@@ -154,6 +168,7 @@ public class Controleur implements Initializable {
 				+ "Pour attaquer, appuyer sur la touche\nESPACE.\n"
 				+ "Pour ouvrir des objets, appuyez sur\nla touche A."
 				+ " Bon jeu !");
+		
 		
 	}
 	
@@ -301,6 +316,7 @@ public class Controleur implements Initializable {
 				while(c.next()) {
 					if (c.wasAdded()) {
 						for (Arme obj : c.getAddedSubList()) {
+							monde.getLink().setArme(obj);
 							listeArmes.getChildren().add(mapListArmesLinkImg.get(obj));
 						}
 					} else  if(c.wasRemoved()) {

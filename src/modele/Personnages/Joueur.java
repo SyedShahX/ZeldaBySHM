@@ -92,9 +92,8 @@ public class Joueur extends Actifs {
 	 * @param e
 	 * @param adversaire
 	 */
-	public void attaquer(KeyEvent e,Actifs adversaire) {
-		if (e.getCode() == KeyCode.SPACE) {
-			if(getArme() == null) {
+	public void attaquer(Actifs adversaire) {
+			if(getArme() != monde.getEpee()) {
 				monde.setMessages("Vous ne pouvez attaquer sans armes...");
 			} else {
 				monde.setMessages("A l'attaque !");
@@ -109,7 +108,6 @@ public class Joueur extends Actifs {
 						monde.setMessages(adversaire.getNom() + " est mort.");
 					}
 				}
-			}
 		}
 		
 	}
@@ -117,15 +115,14 @@ public class Joueur extends Actifs {
 	/**
 	 * Link demande au viellard le chemin vers le trésor qui lui répond.
 	 * Si Link revient vers lui, seul le viellard lui parlera. 
+	 * @param e 
 	 */
-	public void parler() {
+	public void parler(KeyEvent e) {
 		if (discussion == 0) {
 			monde.setMessages(getNom()+" : Bonjour Monsieur. Je cherche\nle coffre fort.\n"
 					+ " Sauriez-vous où il peut être ?");
 			discussion++;
-		} else {
-			monde.getVieux().parler();
-		}
+		} 
 		
 	}
 
@@ -174,14 +171,12 @@ public class Joueur extends Actifs {
 	 * @param e
 	 * @param arme
 	 */
-	public void casserTonneau(KeyEvent e,Arme arme) {
+	public void casserTonneau(Arme arme) {
 		if(Collisions.collision(getBounds(28,28),monde.getTonneau().getBounds(30,30))) {
-			if(e.getCode() == KeyCode.A) {
-				// On supprime le tonneau visible sur la map
-				monde.supprimerObjet(monde.getTonneau());
-				// On affiche l'arme sur la map
-				monde.ajouterArme(arme);
-			}
+			// On supprime le tonneau visible sur la map
+			monde.supprimerObjet(monde.getTonneau());
+			// On affiche l'arme sur la map
+			monde.ajouterArme(arme);
 		}
 		
 	}

@@ -21,7 +21,7 @@ public abstract class Personnage extends SetMonde{
 	}
 	
 	public Rectangle getBounds(int width,int height) {
-		return new Rectangle(getPosX()-7,getPosY(),width,height);
+		return new Rectangle(getPosX()-15,getPosY(),width,height);
 	}
 	
 //	GETTER ET SETTER NOM

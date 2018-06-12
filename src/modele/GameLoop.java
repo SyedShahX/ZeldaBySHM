@@ -2,6 +2,8 @@ package modele;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import modele.Personnages.Ours;
 import modele.Personnages.Vieux;
@@ -10,6 +12,7 @@ public class GameLoop {
 	
 	public Timeline gameLoopOurs;
 	public Timeline gameLoopVieux;
+	public int tempsFleche;
 	public Timeline gameLoopFleche;
 	Monde monde = new Monde();
 	
@@ -55,13 +58,20 @@ public class GameLoop {
 		gameLoopVieux.getKeyFrames().add(kf);
 	}
 	
-	public void initAnimationFleche(double duree) {
-		gameLoopVieux = new Timeline();
-		gameLoopVieux.setCycleCount(Timeline.INDEFINITE);
+	public void initAnimationFleche(double duree,int tempsAnimation) {
+		gameLoopFleche = new Timeline();
+		gameLoopFleche.setCycleCount(Timeline.INDEFINITE);
 		
 		KeyFrame kf = new KeyFrame(Duration.seconds(duree), 
 				(ev -> {
-					monde.getLink().lancer();
+					if (monde.getLink().getListeArmes()
+							.contains(monde.getFleche())) {
+							System.out.println("appelé");
+//							monde.getFleche().setPosX(monde.getLink()
+//									.getPosX());
+//							monde.getFleche().setPosY(monde.getLink()
+//									.getPosY());
+						}		
 				})
 				
 		);
