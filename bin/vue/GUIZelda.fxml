@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.TilePane?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controleur">
+<Pane fx:id="paneVue" xmlns="http://javafx.com/javafx/8.0.162-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controleur">
    <children>
-      <TilePane fx:id="layout" prefHeight="962.0" prefWidth="1601.0" />
-      <Pane fx:id="paneArmes" prefHeight="960.0" prefWidth="1600.0" />
+      <Pane fx:id="paneCamera">
+         <children>
+            <Pane fx:id="paneElements" prefHeight="1344.0" prefWidth="1984.0">
+               <children>
+                  <Pane fx:id="paneArmes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1344.0" prefWidth="1984.0">
+                     <children>
+                        <TilePane fx:id="map" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1344.0" prefWidth="1984.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <HBox fx:id="ptDeVie" layoutX="20.0" layoutY="12.0" prefHeight="180.0" prefWidth="888.0" />
+      <HBox fx:id="listeArmes" layoutX="281.0" layoutY="302.0" prefHeight="36.0" prefWidth="189.0" style="-fx-border-color: #c0392b; -fx-border-width: 2;" />
    </children>
 </Pane>
