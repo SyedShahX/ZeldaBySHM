@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Arme extends SetMonde{
+public class Arme extends ElementsMonde{
 	
 	protected String nom;
 	protected int ptAttaque;

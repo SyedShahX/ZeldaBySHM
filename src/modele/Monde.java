@@ -6,8 +6,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import modele.Armes.Epee;
 import modele.Armes.Fleche;
+import modele.Objets.Roche;
 import modele.Objets.Tonneau;
-import modele.Objets.roche;
 import modele.Personnages.Joueur;
 import modele.Personnages.Ours;
 import modele.Personnages.Vieux;
@@ -23,28 +23,28 @@ public class Monde {
 	private Joueur link;
 	private Ours ours;
 	private Vieux vieux;
-	private roche roche;
+	private Roche roche;
 	private StringProperty messages;
 
 	public Monde() {
 		this.listeObstacles = FXCollections.observableArrayList();
 		this.listeArmes = FXCollections.observableArrayList();
 		this.listePersonnages = FXCollections.observableArrayList();
-		this.link = new Joueur("Link", 100, 320, 1020,0,null);
+		this.link = new Joueur("Link", 100, 320, 1020,20,null);
 		this.tonneau = new Tonneau(1475,964);
 		this.epee = new Epee("l'épée", 30, 70, 1475, 964);
-		this.fleche = new Fleche("la flèche", 50,320, 1025);
+		this.fleche = new Fleche("la flèche", 50,0,0);
 		this.ours = new Ours("l'Ours tueur",200,1221,415,10);
 		this.vieux = new Vieux("Le viellard", 755, 703);
-		this.roche = new roche(724,370);
+		this.roche = new Roche(724,370);
+		this.messages = new SimpleStringProperty();
 		this.getVieux().setMonde(this);
 		this.getLink().setMonde(this);
 		this.getEnnemiOurs().setMonde(this);
 		this.getTonneau().setMonde(this);
-		this.getRoche().setMonde(this);
 		this.getFleche().setMonde(this);
 		this.getEpee().setMonde(this);
-		this.messages = new SimpleStringProperty();
+		this.getRoche().setMonde(this);
 	}
 	
 //	AJOUTER OBJET
@@ -78,10 +78,6 @@ public class Monde {
 	public Arme getEpee() {
 		return this.epee;
 	}
-	public roche getRoche() {
-		return this.roche;
-	}
-	
 	public Arme getFleche() {
 		return this.fleche;
 	}
@@ -90,6 +86,9 @@ public class Monde {
 	}
 	public Vieux getVieux() {
 		return this.vieux;
+	}
+	public Roche getRoche() {
+		return this.roche;
 	}
 	
 //	GETTER LISTES OBSERVABLES

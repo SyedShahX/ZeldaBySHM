@@ -9,7 +9,7 @@ import javafx.scene.input.KeyEvent;
 import modele.Actifs;
 import modele.Arme;
 import modele.Collisions;
-import modele.Objets.roche;
+import modele.Objets.Roche;
 
 public class Joueur extends Actifs {
 
@@ -55,14 +55,14 @@ public class Joueur extends Actifs {
 	/**
 	 * Déplacement de Link vers le haut, le bas , la gauche et la droite 
 	 * à une certaine vitesse. 
-	 * @param key
+	 * @param up
 	 */
-	public void seDeplacer(KeyCode key) {
+	public void seDeplacer(KeyCode up) {
 		int posY = getPosY();
 		int posX = getPosX();
 		int ajoutDistance = reglerVitesse();
 		
-		switch(key) {
+		switch(up) {
 		
 		case UP:    ChangerOrientation("hautEpee","haut");
 				    setPosY( posY - ajoutDistance);
@@ -94,23 +94,31 @@ public class Joueur extends Actifs {
 	 * @param adversaire
 	 */
 	public void attaquer(Actifs adversaire) {
-			if(getArme() != monde.getEpee()) {
+			if(getArme() == null) {
 				monde.setMessages("Vous ne pouvez attaquer sans armes...");
 			} else {
 				monde.setMessages("A l'attaque !");
-				if(Collisions.collision(getBounds(40,40),adversaire.getBounds(28,28))
+				if(Collisions.collision(getBounds(40,40),adversaire.getBounds(32,30))
 						&& getArme() != null) {
 					int adversairePv = adversaire.getPtVie();
-					if (adversairePv > 0) {
+					if (adversairePv >= getArme().getPtAttaque()) {
 						adversairePv -= getArme().getPtAttaque();
 						adversaire.setPtVie(adversairePv);
+						System.out.println(adversaire.getNom() + " : "+adversairePv);
 					} else {
-						monde.getListePersonnages().remove(adversaire);
-						monde.setMessages(adversaire.getNom() + " est mort.");
+						if (adversaire == monde.getEnnemiOurs()) {
+							monde.getListePersonnages().remove(adversaire);
+							monde.getFleche().setPosX(monde.getEnnemiOurs().getPosX());
+							monde.getFleche().setPosY(monde.getEnnemiOurs().getPosY());
+							monde.getListeArmes().add(monde.getFleche());
+							monde.setMessages(adversaire.getNom() + " est mort.\n");
+						} else {
+							monde.getListePersonnages().remove(adversaire);							
+							monde.setMessages(adversaire.getNom() + " est mort.");
+						}
 					}
 				}
-		}
-		
+			}	
 	}
 	
 	/**
@@ -118,7 +126,7 @@ public class Joueur extends Actifs {
 	 * Si Link revient vers lui, seul le viellard lui parlera. 
 	 * @param e 
 	 */
-	public void parler(KeyEvent e) {
+	public void parler() {
 		if (discussion == 0) {
 			monde.setMessages(getNom()+" : Bonjour Monsieur. Je cherche\nle coffre fort.\n"
 					+ " Sauriez-vous où il peut être ?");
@@ -127,7 +135,7 @@ public class Joueur extends Actifs {
 		
 	}
 
-	public void pousser(KeyCode key,roche roche) {
+	public void pousser(KeyCode key,Roche roche) {
 		int posX=roche.getPosX();
 		int posY=roche.getPosY();
 		int ajoutDistance=2;
@@ -145,7 +153,7 @@ public class Joueur extends Actifs {
 			break;
 		}
 
-	}
+}
 	
 	public void lancer() {
 		System.out.println("ok");

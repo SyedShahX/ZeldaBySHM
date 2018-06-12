@@ -24,7 +24,7 @@ import modele.Images;
 import modele.Monde;
 import modele.Objet;
 import modele.Personnage;
-import modele.Objets.roche;
+import modele.Objets.Roche;
 import vue.Map1;
 
 public class Controleur implements Initializable {
@@ -51,14 +51,14 @@ public class Controleur implements Initializable {
 	
 	public Controleur() {
 		mapObjetImg.put(monde.getTonneau(), img.imgTonneau);
-		mapArmeImg.put(monde.getEpee(), img.imgEpee);
 		mapObjetImg.put(monde.getRoche(), img.imgRoche);
-//		mapArmeImg.put(monde.getFleche(), img.imgFleche);
+		mapArmeImg.put(monde.getEpee(), img.imgEpee);
+		mapArmeImg.put(monde.getFleche(), img.imgFleche);
 		mapPersoImg.put(monde.getEnnemiOurs(), img.imgOurs);
 		mapPersoImg.put(monde.getLink(), img.imgLink);
 		mapPersoImg.put(monde.getVieux(), img.imgVieux);
 		mapListArmesLinkImg.put(monde.getEpee(), img.listeImgEpee);
-		mapListArmesLinkImg.put(monde.getFleche(), img.imgFleche);
+		mapListArmesLinkImg.put(monde.getFleche(), img.listeImgFleche);
 	}
 	
 	public void gererTouche(KeyEvent e) {
@@ -73,11 +73,13 @@ public class Controleur implements Initializable {
 		collisionPerso(monde.getVieux(), posX, posY,monde);
 		casserTonneau(e,monde.getEpee());
 		recupererArme(e,monde.getEpee());
+		recupererArme(e,monde.getFleche());
 		attaquer(e,monde.getEnnemiOurs());
-		pousser(e, monde.getRoche());
-		parler(e,monde.getLink().getBounds(30, 30), monde);
+		parler(e,monde.getLink().getBounds(30, 30), monde
+				.getVieux().RectangleDetection(60,20), monde);
 //		changerArmeJoueur(e);
 		lancer(e);
+		pousser(e, monde.getRoche());
 
 	}
 	
@@ -96,8 +98,9 @@ public class Controleur implements Initializable {
 			break;
 		}
 	}
+	
 	// PUUSSER ROCHE
-	public void pousser(KeyEvent e,roche roche) {
+	public void pousser(KeyEvent e,Roche roche) {
 		if(Collisions.collision(monde.getLink().getBounds(20, 28), monde.getRoche().zoneDetection())) {
 				switch(e.getCode()) {
 				case UP:    monde.getLink().pousser(KeyCode.UP,roche);
@@ -112,11 +115,11 @@ public class Controleur implements Initializable {
 					break;
 				}
 		}
-	}
+}
 	
 	public void attaquer(KeyEvent e,Actifs perso) {
 		if (e.getCode() == KeyCode.SPACE) {
-			monde.getLink().attaquer(perso);			
+			monde.getLink().attaquer(perso);	
 		}
 	}
 	
@@ -151,19 +154,16 @@ public class Controleur implements Initializable {
 		}
 	}
 	
-	public void parler(KeyEvent e,Rectangle rect1,Monde monde) {
-		Rectangle recPerso=new Rectangle(monde.getVieux().getPosX()-30,monde.getVieux().getPosY(),32,20);
-		if(Collisions.collision( rect1, recPerso)) {
+	public void parler(KeyEvent e,Rectangle rect1,Rectangle rect2,Monde monde) {
+		if(Collisions.collision( rect1, rect2)) {
 				gameLoop.gameLoopVieux.stop();
-				monde.getLink().parler(e);
+				monde.getLink().parler();
 		} if (e.getCode() == KeyCode.U &&
-				Collisions.collision(rect1, recPerso)) {
+				Collisions.collision(rect1, rect2)) {
 				monde.getVieux().parler();
+		} else {
+			gameLoop.gameLoopVieux.play();					
 		}
-					
-//			} else {
-//				gameLoop.gameLoopVieux.play();					
-//			}
 	}
 	
 	
@@ -176,7 +176,6 @@ public class Controleur implements Initializable {
 		monde.getListeObstacles().addAll(monde.getTonneau(),monde.getRoche());
 		monde.getListePersonnages().addAll(monde.getEnnemiOurs(),monde.getLink(),
 										   monde.getVieux());
-		monde.getLink().getListeArmes().add(monde.getFleche());
 		
 		// Ajout des points de vie sur la map
 		ptDeVie.getChildren().add(img.ptDeVie1);
@@ -204,9 +203,17 @@ public class Controleur implements Initializable {
 		img.imgTonneau.layoutXProperty().bind(monde.getTonneau().PosXProperty());
 		img.imgTonneau.layoutYProperty().bind(monde.getTonneau().PosYProperty());
 		
-		// Bind entre l'image Tonneau et sa position x et y
+		// Bind entre l'image Epée et sa position x et y
 		img.imgEpee.layoutXProperty().bind(monde.getEpee().PosXProperty());
 		img.imgEpee.layoutYProperty().bind(monde.getEpee().PosYProperty());
+		
+		// Bind entre l'image Epée et sa position x et y
+		img.imgFleche.layoutXProperty().bind(monde.getFleche().PosXProperty());
+		img.imgFleche.layoutYProperty().bind(monde.getFleche().PosYProperty());
+		
+		//Bind entre l'image roche et sa position x et y
+		img.imgRoche.layoutXProperty().bind(monde.getRoche().PosXProperty());
+		img.imgRoche.layoutYProperty().bind(monde.getRoche().PosYProperty());
 		
 		// Bind entre l'image Ours et sa position x et y
 		img.imgOurs.layoutXProperty().bind(monde.getEnnemiOurs().PosXProperty());
@@ -219,10 +226,6 @@ public class Controleur implements Initializable {
 		// Bind entre la camera et la position du joueur
 		paneCamera.layoutXProperty().bind(monde.getLink().PosXProperty().negate().add(200));
 		paneCamera.layoutYProperty().bind(monde.getLink().PosYProperty().negate().add(180));
-		
-		//Bind entre l'image roche et sa position x et y
-		img.imgRoche.layoutXProperty().bind(monde.getRoche().PosXProperty());
-		img.imgRoche.layoutYProperty().bind(monde.getRoche().PosYProperty());
 		
 		// Bind entre le label et les messages
 		messages.textProperty().bind(monde.messagesProperty());

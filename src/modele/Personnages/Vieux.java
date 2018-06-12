@@ -1,4 +1,6 @@
- package modele.Personnages;
+package modele.Personnages;
+
+import java.awt.Rectangle;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -14,13 +16,18 @@ public class Vieux extends Personnage{
 		this.orientation = new SimpleStringProperty();
 	}
 	
+	public Rectangle RectangleDetection(int width, int height) {
+		return new Rectangle(getPosX()-30, getPosY()-10,width,height);
+	}
+	
 	public void parler() {
 		if(monde.getLink().getArme() == monde.getEpee()) {
-				monde.setMessages(getNom() + " : Tu es armé ! Super ! Tu peux aller\ncombattre le grand méchant\nours tueur !"
+				monde.setMessages(getNom() + " : Tu as "+monde.getEpee().getNom()+ " ! Super ! Tu peux aller\ncombattre le grand méchant\nours tueur !"
 					+ " À l'attaque !");
+				
 		} else {
 			monde.setMessages(getNom() + " : Ne continue pas ce chemin si\ntu n'es pas armé !"
-					+ " Tu y trouveras un\nméchant ours tueur ! Il te faut une\narme. "
+					+ " Tu y trouveras un\nméchant ours tueur ! Il te faut\nune "+monde.getEpee().getNom()+ "."
 					+ "Si tu souhaite continuer sur ce\nchemin, à tes risques et périls !");
 		}
 		

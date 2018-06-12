@@ -17,15 +17,17 @@ public class Ours extends Ennemi {
 		this.orientation = new SimpleStringProperty();
 	}
 	
-	@Override
+	
 	public void attaquer(Actifs adversaire) {
-		int adversairePv = adversaire.getPtVie();
-		if (adversairePv > 0) {
-			adversairePv -= getPtAttaque();
-			adversaire.setPtVie(adversairePv);
-			System.out.println(adversairePv);
-		} else {
-			monde.getListePersonnages().remove(adversaire);
+		if (monde.getListePersonnages().contains(monde.getEnnemiOurs())) {
+			int adversairePv = adversaire.getPtVie();
+			if (adversairePv > 0) {
+				adversairePv -= getPtAttaque();
+				adversaire.setPtVie(adversairePv);
+				System.out.println(adversaire.getNom() + " : "+adversairePv);
+			} else {
+				monde.getListePersonnages().remove(adversaire);
+			}
 		}
 		
 	}
@@ -34,30 +36,25 @@ public class Ours extends Ennemi {
 	public void agir(Ours ours,double duree,int tempsAnimation,
 			int ajoutDistanceX, int ajoutDistanceY,String orientationGauche,
 			String orientationDroite,Actifs perso) {
-		if(!Collisions.collision(ours.getBounds(32, 20),perso.getBounds(32, 18))) {
-			if (tempsOurs == tempsAnimation*2) {
-				tempsOurs = 0;
-			} else if (tempsOurs > tempsAnimation && tempsOurs % 5 == 0) {
-						ours.setPosX(ours.getPosX()+ajoutDistanceX);
-						ours.setPosY(ours.getPosY()+ajoutDistanceY);
-						ours.setOrientation(orientationGauche);
-			} else if (tempsOurs < tempsAnimation && tempsOurs % 5 == 0) {
-						ours.setOrientation(orientationDroite);
-						ours.setPosX(ours.getPosX()-ajoutDistanceX);
-						ours.setPosY(ours.getPosY()+ajoutDistanceY);
-			}
-			tempsOurs++;
-			}
-			else { 
-				if(tempsOursAttaque %90==0) {
-					ours.attaquer(perso);
-					
+			if(!Collisions.collision(ours.getBounds(32, 20),perso.getBounds(32, 18))) {
+				if (tempsOurs == tempsAnimation*2) {
+					tempsOurs = 0;
+				} else if (tempsOurs > tempsAnimation && tempsOurs % 5 == 0) {
+							ours.setPosX(ours.getPosX()+ajoutDistanceX);
+							ours.setPosY(ours.getPosY()+ajoutDistanceY);
+							ours.setOrientation(orientationGauche);
+				} else if (tempsOurs < tempsAnimation && tempsOurs % 5 == 0) {
+							ours.setOrientation(orientationDroite);
+							ours.setPosX(ours.getPosX()-ajoutDistanceX);
+							ours.setPosY(ours.getPosY()+ajoutDistanceY);
 				}
-				tempsOursAttaque++;
-		}
-			
-			
-			
+				tempsOurs++;
+			} else  {
+					if(tempsOursAttaque %90==0) {
+						ours.attaquer(perso);
+					}					
+					tempsOursAttaque++;
+			}
 	}
 	
 //	GETTER ET SETTER ORIENTATION

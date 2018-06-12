@@ -15,7 +15,7 @@ public abstract class Ennemi extends Actifs{
 	public void seDeplacer() {
 		
 	}
-
+	
 	public int getPtAttaque() {
 		return ptAttaque;
 	}

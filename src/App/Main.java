@@ -16,12 +16,12 @@ public class Main extends Application {
 	@Override
 	public void start(Stage window) throws Exception {
 		
-		int width = 500;
+		int width = 485;
 		int height = 360;
 		
 		try {
 			FXMLLoader loader = new FXMLLoader();	
-			URL url = new File("ZeldaBySHM-master/src/vue/GUIZelda.fxml").toURI().toURL();
+			URL url = new File("src/vue/GUIZelda.fxml").toURI().toURL();
 			loader.setLocation(url);
 			System.out.println(loader.getLocation());
 			window.setTitle("jeu Zelda");

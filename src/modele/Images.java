@@ -15,6 +15,8 @@ public class Images {
 
 //  ImageView liste Armes
 	public ImageView listeImgEpee = new ImageView("assets/images/ImagesListeArmes/listeArmesEpee.png");
+	public ImageView listeImgFleche = new ImageView("assets/images/ImagesArmes/flecheBas.png");
+
 //	Images déplacements Link
 	public ImageView imgLink = new ImageView("assets/images/ImagesLink/joueur.png");
 	public Image haut = new Image("assets/images/ImagesLink/haut.png");

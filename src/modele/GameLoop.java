@@ -2,8 +2,6 @@ package modele;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import modele.Personnages.Ours;
 import modele.Personnages.Vieux;
@@ -67,10 +65,10 @@ public class GameLoop {
 					if (monde.getLink().getListeArmes()
 							.contains(monde.getFleche())) {
 							System.out.println("appelé");
-//							monde.getFleche().setPosX(monde.getLink()
-//									.getPosX());
-//							monde.getFleche().setPosY(monde.getLink()
-//									.getPosY());
+							monde.getFleche().setPosX(monde.getLink()
+									.getPosX());
+							monde.getFleche().setPosY(monde.getLink()
+									.getPosY());
 						}		
 				})
 				
