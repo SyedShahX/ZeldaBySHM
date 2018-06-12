@@ -4,30 +4,30 @@ import java.awt.Rectangle;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.input.KeyEvent;
 
 public abstract class Personnage {
 	
 	protected String nom;
-	protected int ptVie;
 	protected IntegerProperty posX;
 	protected IntegerProperty posY;
-	protected int vitesse;
+	protected Monde monde;
 
-	
-	public Personnage(String nom, int ptVie, int posX, int posY,int vit) {
+	public Personnage(String nom, int posX, int posY) {
 		super();
 		this.nom = nom;
-		this.ptVie = ptVie;
 		this.posX = new SimpleIntegerProperty(posX);
 		this.posY = new SimpleIntegerProperty(posY);
-		this.vitesse=vit;
+		this.monde = null;
 		
 	}
 	
-	public abstract void attaquer(Personnage perso);
+	public void setMonde(Monde monde) {
+		this.monde = monde;
+	}
 	
-	
+	public Rectangle getBounds(int width,int height) {
+		return new Rectangle(getPosX()-7,getPosY(),width,height);
+	}
 	
 //	GETTER ET SETTER NOM
 	public void setNom(String nom) {
@@ -37,16 +37,7 @@ public abstract class Personnage {
 	public String getNom() {
 		return nom;
 	}
-
-//	GETTER ET SETTER POINT DE VIE
-	public int getPtVie() {
-		return ptVie;
-	}
 	
-	public void setPtVie(int ptVie) {
-		this.ptVie = ptVie;
-	}
-
 //	GETTER ET SETTER POSITION
 	public IntegerProperty PosXProperty() {
 		return posX;
@@ -69,21 +60,6 @@ public abstract class Personnage {
 	}
 
 	public void setPosY(int posY) {
-		this.posY.set(posY);;
+		this.posY.set(posY);
 	}
-	
-//  GETTER ET SETTER VITESSE
-	public int getVitesse() {
-		return this.vitesse;
-	}
-	public void setVitesse(int vitesse) {
-		this.vitesse=vitesse;
-	}
-	
-//	Renvoye un rectangle
-	public Rectangle getBounds() {
-		Rectangle recPerso=new Rectangle(getPosX(),getPosY(),30,30);
-		return recPerso;
-	}
-	
 }

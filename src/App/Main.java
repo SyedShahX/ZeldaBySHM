@@ -7,28 +7,28 @@ import controller.Controleur;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 	
-	Pane pane;
-	
+	Pane paneVue;
 	@Override
 	public void start(Stage window) throws Exception {
 		
+		int width = 500;
+		int height = 360;
+		
 		try {
-			FXMLLoader loader = new FXMLLoader();
+			FXMLLoader loader = new FXMLLoader();	
 			URL url = new File("ZeldaBySHM-master/src/vue/GUIZelda.fxml").toURI().toURL();
 			loader.setLocation(url);
 			System.out.println(loader.getLocation());
 			window.setTitle("jeu Zelda");
-			pane = new Pane();
-			pane = loader.load();
+			paneVue = new Pane();
+			paneVue = loader.load();
 			Controleur c = loader.getController();
-			Scene scene = new Scene(pane,1600,960);
+			Scene scene = new Scene(paneVue,width,height);
 			scene.setOnKeyPressed(e -> c.gererTouche(e));
 			window.setScene(scene);
 			window.show();
@@ -42,4 +42,3 @@ public class Main extends Application {
 	}
 	
 }
-

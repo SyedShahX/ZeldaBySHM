@@ -4,22 +4,35 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import modele.Armes.Epee;
 import modele.Objets.Tonneau;
+import modele.Objets.roche;
 import modele.Personnages.Joueur;
+import modele.Personnages.Ours;
+import modele.Personnages.Vieux;
 
 public class Monde {
 	
 	private ObservableList<Objet> listeObstacles;
-	private ObservableList<Arme> listeArme;
+	private ObservableList<Arme> listeArmes;
+	private ObservableList<Personnage> listePersonnages;
 	private Tonneau tonneau;
-	private Joueur link;
 	private Arme epee;
+	private Joueur link;
+	private Ours ours;
+	private Vieux vieux;
+	private roche roche;
 	
+
 	public Monde() {
 		this.listeObstacles = FXCollections.observableArrayList();
-		this.listeArme = FXCollections.observableArrayList();
-		this.link = new Joueur("Link", 100, 1200, 820,0);
-		this.tonneau = new Tonneau(1287,770);
-		this.epee = new Epee("épée", 20, 80, 1287, 770);
+		this.listeArmes = FXCollections.observableArrayList();
+		this.listePersonnages = FXCollections.observableArrayList();
+		this.link = new Joueur("Link", 200, 320, 1020,0,null);
+		this.tonneau = new Tonneau(1475,964);
+		this.epee = new Epee("épée", 30, 100, 1475, 964);
+		this.ours = new Ours("Ours tueur",200,1221,415,10);
+		this.vieux = new Vieux("vieux", 755, 703);
+		this.roche = new roche(1221,800); 
+		this.getLink().setMonde(this);
 	}
 	
 //	AJOUTER OBJET
@@ -29,28 +42,21 @@ public class Monde {
 	
 //	AJOUTER ARME
 	public void ajouterArme(Arme arme) {
-		this.listeArme.add(arme);
+		this.listeArmes.add(arme);
 	}
 	
 	
 //	SUPPRIMER OBJET
 	public void supprimerObjet(Objet objet) {
-		for (Object obj : listeObstacles) {
-			if (obj == objet) {
-				this.listeObstacles.remove(obj);
-			}
-		}
+		getListeObstacles().remove(objet);
 	}
 //	SUPPRIMER ARME
 	public void supprimerArme(Arme arme) {
-		for (Arme obj : listeArme) {
-			if (obj == arme) {
-				this.listeArme.remove(arme);
-			}
-		}
+		getListeArmes().remove(arme);
 	}
-	
-//	GETTER OBJET
+
+
+//	GETTER ELEMENTS
 	public Joueur getLink() {
 		return this.link;
 	}
@@ -60,15 +66,27 @@ public class Monde {
 	public Arme getEpee() {
 		return this.epee;
 	}
+	public Ours getEnnemiOurs() {
+		return this.ours;
+	}
+	public Vieux getVieux() {
+		return vieux;
+	}
+	public roche getRoche() {
+		return this.roche;
+	}
 	
-//	GETTER LISTE 
+//	GETTER LISTES OBSERVABLES
 	public ObservableList<Objet> getListeObstacles() {
 		return this.listeObstacles;
 	}
 	
-	public ObservableList<Arme> getListeArme() {
-		return this.listeArme;
+	public ObservableList<Arme> getListeArmes() {
+		return this.listeArmes;
 	}
 
+	public ObservableList<Personnage> getListePersonnages() {
+		return this.listePersonnages;
+	}
 
 }

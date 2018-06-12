@@ -21,6 +21,10 @@ public class Arme {
 		this.posX = new SimpleIntegerProperty(positionX);
 		this.posY = new SimpleIntegerProperty(positionY);
 	}
+	
+	public Rectangle getBounds(int width, int height) {
+		return new Rectangle(getPosX(),getPosY(),width,height);
+	}
 
 //	Nom
 	public String getNom() {
@@ -57,11 +61,6 @@ public class Arme {
 	public int getPosX() {
 		return this.posX.getValue();
 	}
-//Renvoie les dimensions
-	public Rectangle getBounds() {
-	return new Rectangle(getPosX(), getPosY(), 12, 12);
-	}
-	
 	
 	
 //	positionY

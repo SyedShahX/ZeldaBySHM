@@ -1,25 +1,23 @@
 package modele;
 
-public abstract class Ennemi extends Personnage {
+public abstract class Ennemi extends Actifs{
 	
+	protected int ptAttaque;
 	
-
-	public Ennemi(String nom, int ptVie, int posX, int posY,int vit) {
-		super(nom, ptVie, posX, posY,vit);
-		// TODO Auto-generated constructor stub
+	public Ennemi(String nom, int ptVie, int posX, int posY,int ptAttaque) {
+		super(nom, ptVie, posX, posY);
+		this.ptAttaque = ptAttaque;
 	}
+	
 
+	public abstract void attaquer(Actifs perso);
+	
 	public void seDeplacer() {
-		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public void attaquer(Personnage perso) {
-		// TODO Auto-generated method stub
-		
+	public int getPtAttaque() {
+		return ptAttaque;
 	}
 	
-	
-
 }

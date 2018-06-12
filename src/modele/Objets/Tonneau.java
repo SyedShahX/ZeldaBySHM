@@ -2,12 +2,6 @@ package modele.Objets;
 
 
 
-import java.awt.Rectangle;
-
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import modele.Objet;
 
 public class Tonneau extends Objet {
@@ -15,17 +9,5 @@ public class Tonneau extends Objet {
 	
 	public Tonneau(int positionX, int positionY) {
 		super(positionX,positionY);
-	}
-
-	// GETTER AND SETTER
-	public Rectangle getBoundsCollisions() {
-		Rectangle recTonneau = new Rectangle(this.getPosX(),this.getPosY(),15,15);
-		return recTonneau;
-		
-	}
-	public Rectangle getBounds() {
-		Rectangle recTonneau = new Rectangle(this.getPosX(),this.getPosY(),30,30);
-		return recTonneau;
-		
 	}
 }
