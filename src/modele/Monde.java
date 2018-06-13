@@ -31,12 +31,12 @@ public class Monde {
 		this.listeArmes = FXCollections.observableArrayList();
 		this.listePersonnages = FXCollections.observableArrayList();
 		this.link = new Joueur("Link", 100, 320, 1020,20,null);
-		this.tonneau = new Tonneau(1475,964);
+		this.tonneau = new Tonneau("tonneau",1475,964);
 		this.epee = new Epee("l'épée", 30, 70, 1475, 964);
 		this.fleche = new Fleche("la flèche", 50,0,0);
 		this.ours = new Ours("l'Ours tueur",200,1221,415,10);
 		this.vieux = new Vieux("Le viellard", 755, 703);
-		this.roche = new Roche(724,370);
+		this.roche = new Roche("roche",724,370);
 		this.messages = new SimpleStringProperty();
 		this.getVieux().setMonde(this);
 		this.getLink().setMonde(this);

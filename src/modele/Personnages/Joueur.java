@@ -6,12 +6,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import modele.Actifs;
+import modele.Vivant;
 import modele.Arme;
 import modele.Collisions;
 import modele.Objets.Roche;
 
-public class Joueur extends Actifs {
+public class Joueur extends Vivant {
 
 	private Arme arme;
 	private StringProperty orientationEpee;
@@ -93,7 +93,7 @@ public class Joueur extends Actifs {
 	 * @param e
 	 * @param adversaire
 	 */
-	public void attaquer(Actifs adversaire) {
+	public void attaquer(Vivant adversaire) {
 			if(getArme() == null) {
 				monde.setMessages("Vous ne pouvez attaquer sans armes...");
 			} else {

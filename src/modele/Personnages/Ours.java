@@ -2,7 +2,7 @@ package modele.Personnages;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import modele.Actifs;
+import modele.Vivant;
 import modele.Collisions;
 import modele.Ennemi;
 
@@ -18,7 +18,7 @@ public class Ours extends Ennemi {
 	}
 	
 	
-	public void attaquer(Actifs adversaire) {
+	public void attaquer(Vivant adversaire) {
 		if (monde.getListePersonnages().contains(monde.getEnnemiOurs())) {
 			int adversairePv = adversaire.getPtVie();
 			if (adversairePv > 0) {
@@ -34,8 +34,9 @@ public class Ours extends Ennemi {
 	
 	
 	public void agir() {
+		System.out.println(getPosX());
+		System.out.println(getPosY());
 		int tempsAnimation = 170;
-		// Ne pas dupliquer code -> mettre dans classe parent méthode agir pour tous
 			if(!Collisions.collision(this.getBounds(32, 20),monde.getLink().getBounds(32, 18))) {
 				if (tempsOurs == tempsAnimation*2) {
 					tempsOurs = 0;
@@ -53,6 +54,7 @@ public class Ours extends Ennemi {
 					}					
 					tempsOursAttaque++;
 			}
+			System.out.println(monde.getListePersonnages());
 	}
 	
 //	GETTER ET SETTER ORIENTATION
@@ -61,7 +63,7 @@ public class Ours extends Ennemi {
 	}
 
 	public StringProperty getOrientation() {
-		return orientation;
+		return this.orientation;
 	}
 
 	public void setOrientation(String orientation) {

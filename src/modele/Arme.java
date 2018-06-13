@@ -7,13 +7,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Arme extends ElementsMonde{
 	
-	protected String nom;
 	protected int ptAttaque;
 	protected IntegerProperty posX;
 	protected IntegerProperty posY;
 	
 	public Arme(String nom,int ptAttaque,int positionX,int positionY) {
-		this.nom=nom;
+		super(nom,positionX,positionY);
 		this.ptAttaque=ptAttaque;
 		this.posX = new SimpleIntegerProperty(positionX);
 		this.posY = new SimpleIntegerProperty(positionY);

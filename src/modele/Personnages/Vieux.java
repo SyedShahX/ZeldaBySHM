@@ -37,18 +37,19 @@ public class Vieux extends Personnage implements Agissement{
 	@Override
 	public void agir() {
 		
-		int tempsAnimation = 100;  
+		int tempsAnimation = 100;
+		
 		if (tempsVieux == tempsAnimation*2) {
 			tempsVieux = 0;
 		} else if (tempsVieux < tempsAnimation && tempsVieux % 5 == 0) {
 			setOrientation("droite");
-			System.out.println("droite");
+//			System.out.println("droite");
 		} else if (tempsVieux > tempsAnimation && tempsVieux % 5 == 0) {
 			setOrientation("gauche");
-			System.out.println("gauche");
+//			System.out.println("gauche");
 		}
 		tempsVieux++;
-		System.out.println("temps : "+tempsVieux);
+//		System.out.println("temps : "+tempsVieux);
 	}
 	
 	

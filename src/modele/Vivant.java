@@ -3,11 +3,11 @@ package modele;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Actifs extends Personnage {
+public class Vivant extends Personnage {
 
 	protected IntegerProperty ptVie;
 	
-	public Actifs(String nom,int ptVie, int posX, int posY) {
+	public Vivant(String nom,int ptVie, int posX, int posY) {
 		super(nom, posX, posY);
 		this.ptVie = new SimpleIntegerProperty(ptVie);
 	}

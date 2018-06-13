@@ -16,7 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import modele.Actifs;
+import modele.Vivant;
 import modele.Arme;
 import modele.Collisions;
 import modele.GameLoop;
@@ -117,7 +117,7 @@ public class Controleur implements Initializable {
 		}
 }
 	
-	public void attaquer(KeyEvent e,Actifs perso) {
+	public void attaquer(KeyEvent e,Vivant perso) {
 		if (e.getCode() == KeyCode.SPACE)
 			monde.getLink().attaquer(perso);	
 	}
@@ -231,9 +231,6 @@ public class Controleur implements Initializable {
 		messages.textProperty().bind(monde.messagesProperty());
 
 		
-		// démarrage des différentes animations
-		gl.initAnimation();
-		gl.gameLoop.play();
 	
 		
 		// Changement de la position de Link
@@ -356,9 +353,10 @@ public class Controleur implements Initializable {
 		
 		
 
-		
+		// démarrage des différentes animations
 		initializeMap();
-		
+		gl.initAnimation();
+		gl.gameLoop.play();
 	}
 
 

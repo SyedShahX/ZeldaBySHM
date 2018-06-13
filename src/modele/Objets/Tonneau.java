@@ -4,7 +4,7 @@ import modele.Objet;
 
 public class Tonneau extends Objet {
 	
-	public Tonneau(int positionX, int positionY) {
-		super(positionX,positionY);
+	public Tonneau(String nom,int positionX, int positionY) {
+		super(nom,positionX,positionY);
 	}
 }
