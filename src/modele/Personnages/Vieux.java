@@ -4,9 +4,10 @@ import java.awt.Rectangle;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import modele.Agissement;
 import modele.Personnage;
 
-public class Vieux extends Personnage{
+public class Vieux extends Personnage implements Agissement{
 
 	private StringProperty orientation;
 	private int tempsVieux;
@@ -22,28 +23,32 @@ public class Vieux extends Personnage{
 	
 	public void parler() {
 		if(monde.getLink().getArme() == monde.getEpee()) {
-				monde.setMessages(getNom() + " : Tu as "+monde.getEpee().getNom()+ " ! Super ! Tu peux aller\ncombattre le grand méchant\nours tueur !"
+				monde.setMessages(getNom() + " : Tu as "+monde.getEpee().getNom()+ " !\nTu peux aller\ncombattre le grand méchant\nours tueur !"
 					+ " À l'attaque !");
 				
 		} else {
-			monde.setMessages(getNom() + " : Ne continue pas ce chemin si\ntu n'es pas armé !"
-					+ " Tu y trouveras un\nméchant ours tueur ! Il te faut\nune "+monde.getEpee().getNom()+ "."
-					+ "Si tu souhaite continuer sur ce\nchemin, à tes risques et périls !");
+			monde.setMessages(getNom() + " : Ne continue pas ce\nchemin si tu n'es pas armé !"
+					+ " Tu y\ntrouveras un méchant ours tueur ! Il\nte faut une "+monde.getEpee().getNom()+ "."
+					+ "Si tu souhaite\ncontinuer sur ce chemin,\nà tes risques et périls !");
 		}
 		
 	}
 	
-	public void agir(Vieux vieux,double duree,int tempsAnimation,String orientationDroite,
-			String orientationGauche) {
+	@Override
+	public void agir() {
 		
+		int tempsAnimation = 100;  
 		if (tempsVieux == tempsAnimation*2) {
 			tempsVieux = 0;
 		} else if (tempsVieux < tempsAnimation && tempsVieux % 5 == 0) {
-					vieux.setOrientation(orientationDroite);
+			setOrientation("droite");
+			System.out.println("droite");
 		} else if (tempsVieux > tempsAnimation && tempsVieux % 5 == 0) {
-					vieux.setOrientation(orientationGauche);
+			setOrientation("gauche");
+			System.out.println("gauche");
 		}
 		tempsVieux++;
+		System.out.println("temps : "+tempsVieux);
 	}
 	
 	

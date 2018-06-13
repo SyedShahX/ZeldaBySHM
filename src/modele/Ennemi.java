@@ -1,6 +1,8 @@
 package modele;
 
-public abstract class Ennemi extends Actifs{
+import modele.Agissement;
+
+public abstract class Ennemi extends Actifs implements Agissement{
 	
 	protected int ptAttaque;
 	
@@ -9,12 +11,13 @@ public abstract class Ennemi extends Actifs{
 		this.ptAttaque = ptAttaque;
 	}
 	
+	@Override
+	public abstract void agir();
+	
 
 	public abstract void attaquer(Actifs perso);
 	
-	public void seDeplacer() {
-		
-	}
+	// Mettre méthode agir. Problème : le vieux aussi agit...
 	
 	public int getPtAttaque() {
 		return ptAttaque;

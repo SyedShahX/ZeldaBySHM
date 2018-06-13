@@ -33,25 +33,23 @@ public class Ours extends Ennemi {
 	}
 	
 	
-	public void agir(Ours ours,double duree,int tempsAnimation,
-			int ajoutDistanceX, int ajoutDistanceY,String orientationGauche,
-			String orientationDroite,Actifs perso) {
-			if(!Collisions.collision(ours.getBounds(32, 20),perso.getBounds(32, 18))) {
+	public void agir() {
+		int tempsAnimation = 170;
+		// Ne pas dupliquer code -> mettre dans classe parent méthode agir pour tous
+			if(!Collisions.collision(this.getBounds(32, 20),monde.getLink().getBounds(32, 18))) {
 				if (tempsOurs == tempsAnimation*2) {
 					tempsOurs = 0;
 				} else if (tempsOurs > tempsAnimation && tempsOurs % 5 == 0) {
-							ours.setPosX(ours.getPosX()+ajoutDistanceX);
-							ours.setPosY(ours.getPosY()+ajoutDistanceY);
-							ours.setOrientation(orientationGauche);
+							setOrientation("gauche");
+							setPosX(getPosX() + 4);
 				} else if (tempsOurs < tempsAnimation && tempsOurs % 5 == 0) {
-							ours.setOrientation(orientationDroite);
-							ours.setPosX(ours.getPosX()-ajoutDistanceX);
-							ours.setPosY(ours.getPosY()+ajoutDistanceY);
+							setOrientation("droite");
+							setPosX(getPosX() - 4);
 				}
 				tempsOurs++;
 			} else  {
-					if(tempsOursAttaque %90==0) {
-						ours.attaquer(perso);
+					if(tempsOursAttaque % 90 == 0) {
+						this.attaquer(monde.getLink());
 					}					
 					tempsOursAttaque++;
 			}

@@ -111,7 +111,8 @@ public class Joueur extends Actifs {
 							monde.getFleche().setPosX(monde.getEnnemiOurs().getPosX());
 							monde.getFleche().setPosY(monde.getEnnemiOurs().getPosY());
 							monde.getListeArmes().add(monde.getFleche());
-							monde.setMessages(adversaire.getNom() + " est mort.\n");
+							monde.setMessages(adversaire.getNom() + " est mort.\n"
+									+ "Vous avez gagné la flèche.");
 						} else {
 							monde.getListePersonnages().remove(adversaire);							
 							monde.setMessages(adversaire.getNom() + " est mort.");
@@ -135,7 +136,7 @@ public class Joueur extends Actifs {
 		
 	}
 
-	public void pousser(KeyCode key,Roche roche) {
+	public void pousserRoche(KeyCode key,Roche roche) {
 		int posX=roche.getPosX();
 		int posY=roche.getPosY();
 		int ajoutDistance=2;
@@ -197,11 +198,13 @@ public class Joueur extends Actifs {
 	 * @param arme
 	 */
 	public void casserTonneau(Arme arme) {
-		if(Collisions.collision(getBounds(28,28),monde.getTonneau().getBounds(30,30))) {
+		if(Collisions.collision(getBounds(28,28),monde.getTonneau().getBounds(30,30))
+				&& monde.getListeObstacles().contains(monde.getTonneau())) {
 			// On supprime le tonneau visible sur la map
 			monde.supprimerObjet(monde.getTonneau());
 			// On affiche l'arme sur la map
 			monde.ajouterArme(arme);
+			monde.setMessages("Appuyez sur B pour prendre "+ arme.getNom());
 		}
 		
 	}
@@ -212,11 +215,9 @@ public class Joueur extends Actifs {
 	 * @param e
 	 * @param arme
 	 */
-	public void recupererArme(KeyEvent e,Arme arme) {
+	public void recupererArme(Arme arme) {
 		if (monde.getListeArmes().contains(arme)) {
-			monde.setMessages("Appuyez sur B pour prendre "+ arme.getNom());
-			if (e.getCode() == KeyCode.B && 
-				Collisions.collision(getBounds(28, 28), arme.getBounds(30, 30))) {
+			if (Collisions.collision(getBounds(28, 28), arme.getBounds(30, 30))) {
 				// On supprime l'arme visible sur la map
 				monde.supprimerArme(arme);
 				// On ajoute l'arme dans la liste d'armes de Link

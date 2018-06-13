@@ -39,7 +39,7 @@ public class Controleur implements Initializable {
 	@FXML Label messages;
     
 	private Monde monde = new Monde();
-	private GameLoop gameLoop = new GameLoop();
+	private GameLoop gl = new GameLoop();
 	private Images img = new Images();
 	
 //	Association objet - ImageView
@@ -79,7 +79,7 @@ public class Controleur implements Initializable {
 				.getVieux().RectangleDetection(60,20), monde);
 //		changerArmeJoueur(e);
 		lancer(e);
-		pousser(e, monde.getRoche());
+		pousserRoche(e, monde.getRoche());
 
 	}
 	
@@ -100,16 +100,16 @@ public class Controleur implements Initializable {
 	}
 	
 	// PUUSSER ROCHE
-	public void pousser(KeyEvent e,Roche roche) {
+	public void pousserRoche(KeyEvent e,Roche roche) {
 		if(Collisions.collision(monde.getLink().getBounds(20, 28), monde.getRoche().zoneDetection())) {
 				switch(e.getCode()) {
-				case UP:    monde.getLink().pousser(KeyCode.UP,roche);
+				case UP:    monde.getLink().pousserRoche(KeyCode.UP,roche);
 				break;
-				case DOWN: monde.getLink().pousser(KeyCode.DOWN,roche);
+				case DOWN: monde.getLink().pousserRoche(KeyCode.DOWN,roche);
 				break;
-				case LEFT:  monde.getLink().pousser(KeyCode.LEFT,roche);
+				case LEFT:  monde.getLink().pousserRoche(KeyCode.LEFT,roche);
 				break;
-				case RIGHT: monde.getLink().pousser(KeyCode.RIGHT,roche);
+				case RIGHT: monde.getLink().pousserRoche(KeyCode.RIGHT,roche);
 				break;
 				default:
 					break;
@@ -118,20 +118,40 @@ public class Controleur implements Initializable {
 }
 	
 	public void attaquer(KeyEvent e,Actifs perso) {
-		if (e.getCode() == KeyCode.SPACE) {
+		if (e.getCode() == KeyCode.SPACE)
 			monde.getLink().attaquer(perso);	
-		}
 	}
 	
 	public void lancer(KeyEvent e) {
 		if (e.getCode() == KeyCode.S) {
-			gameLoop.initAnimationFleche(100,100);
-			gameLoop.gameLoopFleche.play();
+//			gl.initAnimationFleche(100,100);
+//			gl.gameLoopFleche.play();
+		}
+	}
+	
+	public void casserTonneau(KeyEvent e,Arme arme) {
+		if (e.getCode() == KeyCode.A) 
+			monde.getLink().casserTonneau(arme);			
+		
+	}
+	
+	public void parler(KeyEvent e,Rectangle rect1,Rectangle rect2,Monde monde) {
+		if(Collisions.collision( rect1, rect2)) {
+//			gl.gameLoopVieux.stop();
+			monde.getLink().parler();
+		} if (e.getCode() == KeyCode.U &&
+			  Collisions.collision(rect1, rect2)) {
+//				gl.gameLoopVieux.stop();
+				monde.getVieux().parler();
+		} else {
+//			gl.gameLoopVieux.play();					
 		}
 	}
 	
 	public void recupererArme(KeyEvent e,Arme arme) {
-		monde.getLink().recupererArme(e,arme);
+		if(e.getCode() == KeyCode.B ) 
+			monde.getLink().recupererArme(arme);
+		
 	}
 	
 	public void collisionObstacleMap(int positionX,int positionY,Monde monde) {
@@ -146,29 +166,8 @@ public class Controleur implements Initializable {
 	public void collisionPerso(Personnage perso,int positionX,int positionY,Monde monde) {
 		Collisions.collisionPerso(perso, positionX, positionY, monde);
 	}
-	
-//	CASSER TONNEAU
-	public void casserTonneau(KeyEvent e,Arme arme) {
-		if (e.getCode() == KeyCode.A) {
-			monde.getLink().casserTonneau(arme);			
-		}
-	}
-	
-	public void parler(KeyEvent e,Rectangle rect1,Rectangle rect2,Monde monde) {
-		if(Collisions.collision( rect1, rect2)) {
-				gameLoop.gameLoopVieux.stop();
-				monde.getLink().parler();
-		} if (e.getCode() == KeyCode.U &&
-				Collisions.collision(rect1, rect2)) {
-				monde.getVieux().parler();
-		} else {
-			gameLoop.gameLoopVieux.play();					
-		}
-	}
-	
-	
-	
 
+	
 	public void initializeMap() {
 		// Affichage de la map
 		Map1.map(map);
@@ -184,6 +183,7 @@ public class Controleur implements Initializable {
 		ptDeVie.getChildren().add(img.ptDeVie4);
 		ptDeVie.getChildren().add(img.ptDeVie5);
 		
+		// Affichage d'un message de bienvenue
 		monde.setMessages("Bienvenue !\n"
 				+ "Pour attaquer, appuyer sur la touche\nESPACE.\n"
 				+ "Pour ouvrir des objets, appuyez sur\nla touche A."
@@ -195,31 +195,31 @@ public class Controleur implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		// Bind entre l'image Link et sa position x et y
+		// Bind entre l'image de Link et sa position x et y
 		img.imgLink.layoutXProperty().bind(monde.getLink().PosXProperty());
 		img.imgLink.layoutYProperty().bind(monde.getLink().PosYProperty());
 		
-		// Bind entre l'image Tonneau et sa position x et y
+		// Bind entre l'image du tonneau et sa position x et y
 		img.imgTonneau.layoutXProperty().bind(monde.getTonneau().PosXProperty());
 		img.imgTonneau.layoutYProperty().bind(monde.getTonneau().PosYProperty());
 		
-		// Bind entre l'image Epée et sa position x et y
+		// Bind entre l'image de l'épée et sa position x et y
 		img.imgEpee.layoutXProperty().bind(monde.getEpee().PosXProperty());
 		img.imgEpee.layoutYProperty().bind(monde.getEpee().PosYProperty());
 		
-		// Bind entre l'image Epée et sa position x et y
+		// Bind entre l'image de la flèche et sa position x et y
 		img.imgFleche.layoutXProperty().bind(monde.getFleche().PosXProperty());
 		img.imgFleche.layoutYProperty().bind(monde.getFleche().PosYProperty());
 		
-		//Bind entre l'image roche et sa position x et y
+		//Bind entre l'image de la roche et sa position x et y
 		img.imgRoche.layoutXProperty().bind(monde.getRoche().PosXProperty());
 		img.imgRoche.layoutYProperty().bind(monde.getRoche().PosYProperty());
 		
-		// Bind entre l'image Ours et sa position x et y
+		// Bind entre l'image de ours et sa position x et y
 		img.imgOurs.layoutXProperty().bind(monde.getEnnemiOurs().PosXProperty());
 		img.imgOurs.layoutYProperty().bind(monde.getEnnemiOurs().PosYProperty());
 		
-		// Bind entre l'image vieux et sa position x et y
+		// Bind entre l'image du vieux et sa position x et y
 		img.imgVieux.layoutXProperty().bind(monde.getVieux().PosXProperty());
 		img.imgVieux.layoutYProperty().bind(monde.getVieux().PosYProperty());
 		
@@ -231,13 +231,9 @@ public class Controleur implements Initializable {
 		messages.textProperty().bind(monde.messagesProperty());
 
 		
-		// Animation Ennemi Ours
-		gameLoop.initAnimationOurs(monde.getEnnemiOurs(),0.017,170,4,0,"droite","gauche",monde.getLink());
-		gameLoop.initAnimationVieux(monde.getVieux(),0.05,100,"droite", "gauche");
-		// démarrage de l'animation
-		gameLoop.gameLoopOurs.play();
-		gameLoop.gameLoopVieux.play();
-		
+		// démarrage des différentes animations
+		gl.initAnimation();
+		gl.gameLoop.play();
 	
 		
 		// Changement de la position de Link

@@ -1,7 +1,6 @@
 package modele;
 
 import java.awt.Rectangle;
-
 import vue.Map1;
 
 public class Collisions {
@@ -33,8 +32,9 @@ public class Collisions {
 		else {
 			return false;
 		}
+		
 	}
-	
+		
 	public static boolean collision(Rectangle rect,Rectangle rec2) {
 		if(rect.intersects(rec2.getBounds())) {
 			return true;

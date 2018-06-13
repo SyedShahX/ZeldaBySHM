@@ -39,6 +39,10 @@ public class Arme extends ElementsMonde{
 		this.ptAttaque = ptAttaque;
 	}
 
+	public Object agir() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 //	positionX
 	public IntegerProperty PosXProperty() {
@@ -62,4 +66,5 @@ public class Arme extends ElementsMonde{
 	public void setPosY(int posY) {
 		this.posY.setValue(posY);
 	}
+
 }
