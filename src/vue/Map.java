@@ -3,8 +3,7 @@ package vue;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 
-public abstract class Map {
-	
+public class Map {
 	
 	public static void setTile(int tile,TilePane tilePane,int number, String urlImage) {
 		if (tile == number) {

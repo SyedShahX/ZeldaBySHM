@@ -16,7 +16,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import modele.Vivant;
 import modele.Arme;
 import modele.Collisions;
 import modele.GameLoop;
@@ -24,6 +23,7 @@ import modele.Images;
 import modele.Monde;
 import modele.Objet;
 import modele.Personnage;
+import modele.Vivant;
 import modele.Objets.Roche;
 import vue.Map1;
 
@@ -42,7 +42,6 @@ public class Controleur implements Initializable {
 	private GameLoop gl = new GameLoop();
 	private Images img = new Images();
 	
-//	Association objet - ImageView
 	private Map<Objet,ImageView> mapObjetImg = new HashMap<>();
 	private Map<Arme,ImageView> mapArmeImg = new HashMap<>();
 	private Map<Personnage,ImageView> mapPersoImg = new HashMap<>();
@@ -50,6 +49,7 @@ public class Controleur implements Initializable {
 	
 	
 	public Controleur() {
+//	Association des éléments de la map avec leur ImageView correspondant
 		mapObjetImg.put(monde.getTonneau(), img.imgTonneau);
 		mapObjetImg.put(monde.getRoche(), img.imgRoche);
 		mapArmeImg.put(monde.getEpee(), img.imgEpee);
@@ -76,7 +76,7 @@ public class Controleur implements Initializable {
 		recupererArme(e,monde.getFleche());
 		attaquer(e,monde.getEnnemiOurs());
 		parler(e,monde.getLink().getBounds(30, 30), monde
-				.getVieux().RectangleDetection(60,20), monde);
+				.getVieux().rectangleDetection(60,20), monde);
 //		changerArmeJoueur(e);
 		lancer(e);
 		pousserRoche(e, monde.getRoche());
@@ -171,10 +171,6 @@ public class Controleur implements Initializable {
 	public void initializeMap() {
 		// Affichage de la map
 		Map1.map(map);
-		// Ajout des obstacles et ennemis dans les listes
-		monde.getListeObstacles().addAll(monde.getTonneau(),monde.getRoche());
-		monde.getListePersonnages().addAll(monde.getEnnemiOurs(),monde.getLink(),
-										   monde.getVieux());
 		
 		// Ajout des points de vie sur la map
 		ptDeVie.getChildren().add(img.ptDeVie1);
@@ -196,36 +192,36 @@ public class Controleur implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		// Bind entre l'image de Link et sa position x et y
-		img.imgLink.layoutXProperty().bind(monde.getLink().PosXProperty());
-		img.imgLink.layoutYProperty().bind(monde.getLink().PosYProperty());
+		img.imgLink.layoutXProperty().bind(monde.getLink().posXProperty());
+		img.imgLink.layoutYProperty().bind(monde.getLink().posYProperty());
 		
 		// Bind entre l'image du tonneau et sa position x et y
-		img.imgTonneau.layoutXProperty().bind(monde.getTonneau().PosXProperty());
-		img.imgTonneau.layoutYProperty().bind(monde.getTonneau().PosYProperty());
+		img.imgTonneau.layoutXProperty().bind(monde.getTonneau().posXProperty());
+		img.imgTonneau.layoutYProperty().bind(monde.getTonneau().posYProperty());
 		
 		// Bind entre l'image de l'épée et sa position x et y
-		img.imgEpee.layoutXProperty().bind(monde.getEpee().PosXProperty());
-		img.imgEpee.layoutYProperty().bind(monde.getEpee().PosYProperty());
+		img.imgEpee.layoutXProperty().bind(monde.getEpee().posXProperty());
+		img.imgEpee.layoutYProperty().bind(monde.getEpee().posYProperty());
 		
 		// Bind entre l'image de la flèche et sa position x et y
-		img.imgFleche.layoutXProperty().bind(monde.getFleche().PosXProperty());
-		img.imgFleche.layoutYProperty().bind(monde.getFleche().PosYProperty());
+		img.imgFleche.layoutXProperty().bind(monde.getFleche().posXProperty());
+		img.imgFleche.layoutYProperty().bind(monde.getFleche().posYProperty());
 		
 		//Bind entre l'image de la roche et sa position x et y
-		img.imgRoche.layoutXProperty().bind(monde.getRoche().PosXProperty());
-		img.imgRoche.layoutYProperty().bind(monde.getRoche().PosYProperty());
+		img.imgRoche.layoutXProperty().bind(monde.getRoche().posXProperty());
+		img.imgRoche.layoutYProperty().bind(monde.getRoche().posYProperty());
 		
 		// Bind entre l'image de ours et sa position x et y
-		img.imgOurs.layoutXProperty().bind(monde.getEnnemiOurs().PosXProperty());
-		img.imgOurs.layoutYProperty().bind(monde.getEnnemiOurs().PosYProperty());
+		img.imgOurs.layoutXProperty().bind(monde.getEnnemiOurs().posXProperty());
+		img.imgOurs.layoutYProperty().bind(monde.getEnnemiOurs().posYProperty());
 		
 		// Bind entre l'image du vieux et sa position x et y
-		img.imgVieux.layoutXProperty().bind(monde.getVieux().PosXProperty());
-		img.imgVieux.layoutYProperty().bind(monde.getVieux().PosYProperty());
+		img.imgVieux.layoutXProperty().bind(monde.getVieux().posXProperty());
+		img.imgVieux.layoutYProperty().bind(monde.getVieux().posYProperty());
 		
 		// Bind entre la camera et la position du joueur
-		paneCamera.layoutXProperty().bind(monde.getLink().PosXProperty().negate().add(200));
-		paneCamera.layoutYProperty().bind(monde.getLink().PosYProperty().negate().add(180));
+		paneCamera.layoutXProperty().bind(monde.getLink().posXProperty().negate().add(200));
+		paneCamera.layoutYProperty().bind(monde.getLink().posYProperty().negate().add(180));
 		
 		// Bind entre le label et les messages
 		messages.textProperty().bind(monde.messagesProperty());
@@ -234,38 +230,33 @@ public class Controleur implements Initializable {
 	
 		
 		// Changement de la position de Link
-		monde.getLink().OrientationProperty().addListener(
-				(obs,ancienneValeur,nouvelleValeur) -> {
-					changerImageLink(nouvelleValeur);
-				}
+		monde.getLink().orientationProperty().addListener(
+				(obs,ancienneValeur,nouvelleValeur) -> 
+					changerImageLink(nouvelleValeur)
 		);
 		
 		// Changement de la position de l'Ours
-		monde.getEnnemiOurs().OrientationProperty().addListener(
-				(obs,ancienneValeur,nouvelleValeur) -> {
-					changerImageOurs(nouvelleValeur);
-				}
+		monde.getEnnemiOurs().orientationProperty().addListener(
+				(obs,ancienneValeur,nouvelleValeur) -> 
+					changerImageOurs(nouvelleValeur)
 		);
 		
 		// Changement de la position de Link avec une épée comme arme
-		monde.getLink().OrientationEpeeProperty().addListener(
-				(obs,ancienneValeur,nouvelleValeur) -> {
-					changerImageLinkEpee(nouvelleValeur);
-				}
+		monde.getLink().orientationEpeeProperty().addListener(
+				(obs,ancienneValeur,nouvelleValeur) -> 
+					changerImageLinkEpee(nouvelleValeur)
 		);
 		
 //		 Changement de l'image du Vieux 
-		monde.getVieux().OrientationProperty().addListener(
-				(obs,ancienneValeur,nouvelleValeur) -> {
-					changerImageVieux(nouvelleValeur);
-				}
+		monde.getVieux().orientationProperty().addListener(
+				(obs,ancienneValeur,nouvelleValeur) -> 
+					changerImageVieux(nouvelleValeur)
 		);
 		
 //		Perte de point de vie
 		monde.getLink().ptDeVieProperty().addListener(
-				(obs,ancienneValeur,nouvelleValeur) -> {
-					PerdVie((int) nouvelleValeur);
-				}
+				(obs,ancienneValeur,nouvelleValeur) -> 
+					perdVie((int) nouvelleValeur)
 		);
 		
 		
@@ -360,7 +351,7 @@ public class Controleur implements Initializable {
 	}
 
 
-	public void PerdVie(int nouvelleValeur) {
+	public void perdVie(int nouvelleValeur) {
 		if (nouvelleValeur < 80 && nouvelleValeur > 60) {
 			ptDeVie.getChildren().remove(img.ptDeVie1);
 		} else if (nouvelleValeur <= 60 && nouvelleValeur > 40) {

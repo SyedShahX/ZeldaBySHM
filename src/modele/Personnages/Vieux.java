@@ -17,7 +17,7 @@ public class Vieux extends Personnage implements Agissement{
 		this.orientation = new SimpleStringProperty();
 	}
 	
-	public Rectangle RectangleDetection(int width, int height) {
+	public Rectangle rectangleDetection(int width, int height) {
 		return new Rectangle(getPosX()-30, getPosY()-10,width,height);
 	}
 	
@@ -54,7 +54,7 @@ public class Vieux extends Personnage implements Agissement{
 	
 	
 //	GETTER ET SETTER ORIENTATION
-	public StringProperty OrientationProperty() {
+	public StringProperty orientationProperty() {
 		return this.orientation;
 	}
 

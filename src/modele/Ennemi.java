@@ -11,9 +11,6 @@ public abstract class Ennemi extends Vivant implements Agissement{
 		this.ptAttaque = ptAttaque;
 	}
 	
-	@Override
-	public abstract void agir();
-	
 	public abstract void attaquer(Vivant perso);
 		
 	public int getPtAttaque() {

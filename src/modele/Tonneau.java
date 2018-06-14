@@ -18,17 +18,15 @@ public class Tonneau {
 	}
 
 	// GETTER AND SETTER
-	public IntegerProperty PosXProperty() {
+	public IntegerProperty posXProperty() {
 		return posX;
 	}
 	public Rectangle getBoundsCollisions() {
-		Rectangle recTonneau = new Rectangle(this.getPosX(),this.getPosY(),15,15);
-		return recTonneau;
+		return new Rectangle(this.getPosX(),this.getPosY(),15,15);
 		
 	}
 	public Rectangle getBounds() {
-		Rectangle recTonneau = new Rectangle(this.getPosX(),this.getPosY(),30,30);
-		return recTonneau;
+		return new Rectangle(this.getPosX(),this.getPosY(),30,30);
 		
 	}
 
@@ -36,7 +34,7 @@ public class Tonneau {
 		this.posX = posX;
 	}
 
-	public IntegerProperty PosYProperty() {
+	public IntegerProperty posYProperty() {
 		return posY;
 	}
 	public int getPosX() {

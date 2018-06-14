@@ -18,7 +18,7 @@ public class Joueur extends Vivant {
 	private StringProperty orientation;
 	private int vitesse;
 	private ObservableList<Arme> listeArmes;
-	private static int discussion;
+	private static int discussion = 0;
 
 	public Joueur(String nom, int ptVie, int posX, int posY,int vitesse,Arme arme) {
 		super(nom, ptVie, posX, posY);
@@ -64,16 +64,16 @@ public class Joueur extends Vivant {
 		
 		switch(up) {
 		
-		case UP:    ChangerOrientation("hautEpee","haut");
+		case UP:    changerOrientation("hautEpee","haut");
 				    setPosY( posY - ajoutDistance);
 			break;
-		case DOWN: 	ChangerOrientation("basEpee", "bas");
+		case DOWN: 	changerOrientation("basEpee", "bas");
 				    setPosY( posY + ajoutDistance);
 			break;
-		case LEFT:  ChangerOrientation("gaucheEpee", "gauche");
+		case LEFT:  changerOrientation("gaucheEpee", "gauche");
 				    setPosX( posX - ajoutDistance);
 			break;
-		case RIGHT: ChangerOrientation("droiteEpee", "droite");
+		case RIGHT: changerOrientation("droiteEpee", "droite");
 					setPosX( posX + ajoutDistance);
 			break;	
 		default:
@@ -201,9 +201,9 @@ public class Joueur extends Vivant {
 		if(Collisions.collision(getBounds(28,28),monde.getTonneau().getBounds(30,30))
 				&& monde.getListeObstacles().contains(monde.getTonneau())) {
 			// On supprime le tonneau visible sur la map
-			monde.supprimerObjet(monde.getTonneau());
+			monde.supprimerObjetMap(monde.getTonneau());
 			// On affiche l'arme sur la map
-			monde.ajouterArme(arme);
+			monde.ajouterArmeMap(arme);
 			monde.setMessages("Appuyez sur B pour prendre "+ arme.getNom());
 		}
 		
@@ -216,10 +216,10 @@ public class Joueur extends Vivant {
 	 * @param arme
 	 */
 	public void recupererArme(Arme arme) {
-		if (monde.getListeArmes().contains(arme)) {
-			if (Collisions.collision(getBounds(28, 28), arme.getBounds(30, 30))) {
+		if (monde.getListeArmes().contains(arme) &&
+			Collisions.collision(getBounds(28, 28), arme.getBounds(30, 30))) {
 				// On supprime l'arme visible sur la map
-				monde.supprimerArme(arme);
+				monde.supprimerArmeMap(arme);
 				// On ajoute l'arme dans la liste d'armes de Link
 				ajouterArme(arme);
 				// On remplace l'ancienne arme de Link par la nouvelle
@@ -228,7 +228,6 @@ public class Joueur extends Vivant {
 				monde.setMessages(arme.getNom() + " est récupérée !\n"
 						+ "Appuyez sur la touche ESPACE pour\nattaquer.");
 			}
-		}
 	}
 	
 	/**
@@ -237,7 +236,7 @@ public class Joueur extends Vivant {
 	 * @param orientationEpee
 	 * @param orientation
 	 */
-	public void ChangerOrientation(String orientationEpee,String orientation) {
+	public void changerOrientation(String orientationEpee,String orientation) {
 		if(getArme() == monde.getEpee()) {
 			setOrientationEpee(orientationEpee);
 		} else {						
@@ -255,7 +254,7 @@ public class Joueur extends Vivant {
 	}
 	
 //	GETTER PROPERTY ET SETTER DE ORIENTATIONEPEE
-	public StringProperty OrientationEpeeProperty() {
+	public StringProperty orientationEpeeProperty() {
 		return this.orientationEpee;
 	}
 	
@@ -276,7 +275,7 @@ public class Joueur extends Vivant {
 	}
 	
 //	GETTER ET SETTER ORIENTATION
-	public StringProperty OrientationProperty() {
+	public StringProperty orientationProperty() {
 		return this.orientation;
 	}
 

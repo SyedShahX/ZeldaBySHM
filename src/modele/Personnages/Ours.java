@@ -9,8 +9,8 @@ import modele.Ennemi;
 public class Ours extends Ennemi {
 	
 	private StringProperty orientation;
-	public int tempsOurs;
-	public int tempsOursAttaque;
+	private int tempsOurs;
+	private int tempsOursAttaque;
 	
 	public Ours(String nom, int ptVie, int posX, int posY,int ptAttaque) {
 		super(nom,ptVie, posX, posY,ptAttaque);
@@ -32,10 +32,8 @@ public class Ours extends Ennemi {
 		
 	}
 	
-	
+	@Override
 	public void agir() {
-		System.out.println(getPosX());
-		System.out.println(getPosY());
 		int tempsAnimation = 170;
 			if(!Collisions.collision(this.getBounds(32, 20),monde.getLink().getBounds(32, 18))) {
 				if (tempsOurs == tempsAnimation*2) {
@@ -54,11 +52,10 @@ public class Ours extends Ennemi {
 					}					
 					tempsOursAttaque++;
 			}
-			System.out.println(monde.getListePersonnages());
 	}
 	
 //	GETTER ET SETTER ORIENTATION
-	public StringProperty OrientationProperty() {
+	public StringProperty orientationProperty() {
 		return this.orientation;
 	}
 

@@ -29,9 +29,6 @@ public abstract class ElementsMonde {
 		this.monde = monde;
 	}
 	
-	
-	
-//	GETTER ET SETTER NOM
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
@@ -40,8 +37,7 @@ public abstract class ElementsMonde {
 		return nom;
 	}
 	
-//	GETTER ET SETTER POSITION
-	public IntegerProperty PosXProperty() {
+	public IntegerProperty posXProperty() {
 		return posX;
 	}
 	
@@ -53,7 +49,7 @@ public abstract class ElementsMonde {
 		this.posX.set(posX);
 	}
 
-	public IntegerProperty PosYProperty() {
+	public IntegerProperty posYProperty() {
 		return posY;
 	}
 

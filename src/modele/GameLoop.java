@@ -13,7 +13,7 @@ public class GameLoop {
 		gameLoop = new Timeline();
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
 		
-		KeyFrame animationOurs = new KeyFrame(Duration.seconds(0.017), 
+		KeyFrame kf = new KeyFrame(Duration.seconds(0.017), 
 				(e ->
 					{monde.getEnnemiOurs().agir();
 					monde.getVieux().agir();}
@@ -31,6 +31,6 @@ public class GameLoop {
 //				)
 //		);
 		
-		gameLoop.getKeyFrames().add(animationOurs);
+		gameLoop.getKeyFrames().add(kf);
 	}
 }
