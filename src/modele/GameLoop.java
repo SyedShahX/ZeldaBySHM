@@ -15,6 +15,9 @@ public class GameLoop {
 		
 		KeyFrame kf = new KeyFrame(Duration.seconds(0.017), 
 				(e ->
+//				{for (Personnage perso : monde.getListePersonnages()) {
+//					perso.agir();
+//				}}
 					{monde.getEnnemiOurs().agir();
 					monde.getVieux().agir();}
 				)

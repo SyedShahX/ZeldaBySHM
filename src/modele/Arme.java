@@ -6,9 +6,8 @@ public class Arme extends ElementsMonde{
 
 	public Arme(String nom,int ptAttaque,int positionX,int positionY) {
 		super(nom,positionX,positionY);
-		this.ptAttaque=ptAttaque;
+		this.ptAttaque = ptAttaque;
 	}
-	
 	
 	public int getPtAttaque() {
 		return ptAttaque;

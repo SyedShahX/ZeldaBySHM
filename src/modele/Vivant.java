@@ -3,7 +3,7 @@ package modele;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Vivant extends Personnage {
+public abstract class Vivant extends Personnage {
 
 	protected IntegerProperty ptVie;
 	
@@ -23,4 +23,5 @@ public class Vivant extends Personnage {
 	public IntegerProperty ptDeVieProperty() {
 		return this.ptVie;
 	}
+
 }

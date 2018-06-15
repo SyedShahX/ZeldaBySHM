@@ -47,6 +47,11 @@ public class Controleur implements Initializable {
 	private Map<Personnage,ImageView> mapPersoImg = new HashMap<>();
 	private Map<Arme,ImageView> mapListArmesLinkImg = new HashMap<>();
 	
+	private static final String IMAGEGAUCHE = "gauche";
+	private static final String IMAGEDROITE = "droite";
+	private static final String IMAGEHAUT = "haut";
+	private static final String IMAGEBAS = "bas";
+	
 	
 	public Controleur() {
 //	Association des éléments de la map avec leur ImageView correspondant
@@ -77,12 +82,18 @@ public class Controleur implements Initializable {
 		attaquer(e,monde.getEnnemiOurs());
 		parler(e,monde.getLink().getBounds(30, 30), monde
 				.getVieux().rectangleDetection(60,20), monde);
-//		changerArmeJoueur(e);
+		changerArmeJoueur(e);
 		lancer(e);
 		pousserRoche(e, monde.getRoche());
 
 	}
 	
+	public void changerArmeJoueur(KeyEvent e) {
+		if (e.getCode() == KeyCode.Q) {
+			monde.getLink().changerArmeJoueur();
+		}
+	}
+
 //	Déplacements du joueur
 	public void deplacements(KeyEvent e) {
 		switch(e.getCode()) {
@@ -99,21 +110,18 @@ public class Controleur implements Initializable {
 		}
 	}
 	
-	// PUUSSER ROCHE
 	public void pousserRoche(KeyEvent e,Roche roche) {
-		if(Collisions.collision(monde.getLink().getBounds(20, 28), monde.getRoche().zoneDetection())) {
-				switch(e.getCode()) {
-				case UP:    monde.getLink().pousserRoche(KeyCode.UP,roche);
+			switch(e.getCode()) {
+			case UP:    monde.getLink().pousserRoche(KeyCode.UP,roche);
+			break;
+			case DOWN: monde.getLink().pousserRoche(KeyCode.DOWN,roche);
+			break;
+			case LEFT:  monde.getLink().pousserRoche(KeyCode.LEFT,roche);
+			break;
+			case RIGHT: monde.getLink().pousserRoche(KeyCode.RIGHT,roche);
+			break;
+			default:
 				break;
-				case DOWN: monde.getLink().pousserRoche(KeyCode.DOWN,roche);
-				break;
-				case LEFT:  monde.getLink().pousserRoche(KeyCode.LEFT,roche);
-				break;
-				case RIGHT: monde.getLink().pousserRoche(KeyCode.RIGHT,roche);
-				break;
-				default:
-					break;
-				}
 		}
 }
 	
@@ -185,7 +193,12 @@ public class Controleur implements Initializable {
 				+ "Pour ouvrir des objets, appuyez sur\nla touche A."
 				+ " Bon jeu !");
 		
-		
+		for (Personnage perso : monde.getListePersonnages()) {
+			paneElements.getChildren().add(mapPersoImg.get(perso));
+		}
+		for (Objet objet : monde.getListeObstacles()) {
+			paneElements.getChildren().add(mapObjetImg.get(objet));
+		}
 	}
 	
 	@Override
@@ -226,9 +239,6 @@ public class Controleur implements Initializable {
 		// Bind entre le label et les messages
 		messages.textProperty().bind(monde.messagesProperty());
 
-		
-	
-		
 		// Changement de la position de Link
 		monde.getLink().orientationProperty().addListener(
 				(obs,ancienneValeur,nouvelleValeur) -> 
@@ -331,7 +341,7 @@ public class Controleur implements Initializable {
 							monde.getLink().setArme(obj);
 							listeArmes.getChildren().add(mapListArmesLinkImg.get(obj));
 						}
-					} else  if(c.wasRemoved()) {
+					} else if(c.wasRemoved()) {
 						for (Arme obj : c.getRemoved()) {
 							listeArmes.getChildren().remove(mapListArmesLinkImg.get(obj));
 							
@@ -348,6 +358,7 @@ public class Controleur implements Initializable {
 		initializeMap();
 		gl.initAnimation();
 		gl.gameLoop.play();
+
 	}
 
 
@@ -370,13 +381,13 @@ public class Controleur implements Initializable {
 	public void changerImageOurs(String nouvelleValeur) {
 		switch(nouvelleValeur) {
 		
-		case "haut" :   img.imgOurs.setImage(img.imgOursHaut);
+		case IMAGEHAUT :   img.imgOurs.setImage(img.imgOursHaut);
 			break;
-		case "bas" :    img.imgOurs.setImage(img.imgOursBas);
+		case IMAGEBAS :    img.imgOurs.setImage(img.imgOursBas);
 			break;
-		case "droite" : img.imgOurs.setImage(img.imgOursDroit);
+		case IMAGEDROITE : img.imgOurs.setImage(img.imgOursDroit);
 			break;
-		case "gauche" : img.imgOurs.setImage(img.imgOursGauche);
+		case IMAGEGAUCHE : img.imgOurs.setImage(img.imgOursGauche);
 			break;
 		}
 		
@@ -384,13 +395,13 @@ public class Controleur implements Initializable {
 
 	public void changerImageLink(String nouvelleValeur) {
 		switch(nouvelleValeur) {
-		case "haut" :   img.imgLink.setImage(img.haut);
+		case IMAGEHAUT :   img.imgLink.setImage(img.haut);
 			break;
-		case "bas" :    img.imgLink.setImage(img.basdroit);
+		case IMAGEBAS :    img.imgLink.setImage(img.basdroit);
 			break;
-		case "droite" : img.imgLink.setImage(img.droite);
+		case IMAGEDROITE : img.imgLink.setImage(img.droite);
 			break;
-		case "gauche" : img.imgLink.setImage(img.gauche);
+		case IMAGEGAUCHE : img.imgLink.setImage(img.gauche);
 			break;
 		}
 	}
@@ -409,9 +420,9 @@ public class Controleur implements Initializable {
 	}
 	public void changerImageVieux(String nouvelleValeur) {
 		switch(nouvelleValeur) {
-			case "gauche" : img.imgVieux.setImage(img.imgVieuxGauche);
+			case IMAGEGAUCHE : img.imgVieux.setImage(img.imgVieuxGauche);
 				break;
-			case "droite" : img.imgVieux.setImage(img.imgVieuxDroite);
+			case IMAGEDROITE : img.imgVieux.setImage(img.imgVieuxDroite);
 				break;
 		
 		}

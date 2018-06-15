@@ -8,7 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import modele.Objets.Roche;
 import modele.Objets.Tonneau;
-import modele.Personnages.Joueur;
+import modele.Personnages.Link;
 import modele.Personnages.Ours;
 import modele.Personnages.Vieux;
 
@@ -17,7 +17,7 @@ public class Monde {
 	private ObservableList<Objet> listeObstacles;
 	private ObservableList<Arme> listeArmes;
 	private ObservableList<Personnage> listePersonnages;
-	Joueur link = new Joueur("Link", 100, 320, 1020,20,null);
+	Link link = new Link("Link", 100, 320, 1020,20,null);
 	Tonneau tonneau = new Tonneau("tonneau",1475,964);
 	Arme epee = new Epee("l'épée", 30, 70, 1475, 964);
 	Arme fleche = new Fleche("la flèche", 50,0,0);
@@ -27,7 +27,6 @@ public class Monde {
 	private StringProperty messages;
 
 	public Monde() {
-		System.out.println("monde");
 		this.listeObstacles = FXCollections.observableArrayList();
 		this.listeArmes = FXCollections.observableArrayList();
 		this.listePersonnages = FXCollections.observableArrayList();
@@ -39,34 +38,34 @@ public class Monde {
 		this.getFleche().setMonde(this);
 		this.getEpee().setMonde(this);
 		this.getRoche().setMonde(this);
-		getListePersonnages().addAll(ours,vieux,link);
-		getListeObstacles().addAll(tonneau,roche);
-		getListeArmes().addAll(epee,fleche);
+		ajouterPersoMap(link,ours,vieux);
+		ajouterObjetMap(tonneau,roche);
 	}
 	
-//	AJOUTER OBJET
-	public void ajouterObjetMap(Objet obj) {
-		this.listeObstacles.add(obj);
+	public void ajouterPersoMap(Personnage... perso) {
+		getListePersonnages().addAll(perso);
+	}
+	public void supprimerPersoMap(Personnage perso) {
+		getListePersonnages().remove(perso);
 	}
 	
-//	AJOUTER ARME
-	public void ajouterArmeMap(Arme arme) {
-		this.listeArmes.add(arme);
+	public void ajouterArmeMap(Arme... arme) {
+		getListeArmes().addAll(arme);
 	}
-	
-	
-//	SUPPRIMER OBJET
-	public void supprimerObjetMap(Objet objet) {
-		getListeObstacles().remove(objet);
-	}
-//	SUPPRIMER ARME
 	public void supprimerArmeMap(Arme arme) {
 		getListeArmes().remove(arme);
+	}
+	
+	public void ajouterObjetMap(Objet... obj) {
+		getListeObstacles().addAll(obj);
+	}	
+	public void supprimerObjetMap(Objet obj) {
+		getListeObstacles().remove(obj);
 	}
 
 
 //	GETTER ELEMENTS
-	public Joueur getLink() {
+	public Link getLink() {
 		return link;
 	}
 	public Tonneau getTonneau() {
@@ -86,6 +85,16 @@ public class Monde {
 	}
 	public Roche getRoche() {
 		return this.roche;
+	}
+	
+	public Personnage getP(Personnage p ) {
+		Personnage personnage = null;
+		for (Personnage perso : getListePersonnages()) {
+			if (perso == p) {
+				personnage = perso;
+			}
+		}
+		return personnage;
 	}
 	
 //	GETTER LISTES OBSERVABLES

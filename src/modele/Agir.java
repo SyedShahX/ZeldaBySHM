@@ -1,6 +1,6 @@
 package modele;
 
-public interface Agissement {
+public interface Agir {
 	
 	public void agir();
 }

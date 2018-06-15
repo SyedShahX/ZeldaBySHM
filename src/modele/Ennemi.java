@@ -1,8 +1,8 @@
 package modele;
 
-import modele.Agissement;
+import modele.Agir;
 
-public abstract class Ennemi extends Vivant implements Agissement{
+public abstract class Ennemi extends Vivant implements Agir{
 	
 	protected int ptAttaque;
 	

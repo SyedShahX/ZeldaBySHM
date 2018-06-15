@@ -4,10 +4,10 @@ import java.awt.Rectangle;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import modele.Agissement;
+import modele.Agir;
 import modele.Personnage;
 
-public class Vieux extends Personnage implements Agissement{
+public class Vieux extends Personnage implements Agir{
 
 	private StringProperty orientation;
 	private int tempsVieux;

@@ -26,7 +26,7 @@ public class Ours extends Ennemi {
 				adversaire.setPtVie(adversairePv);
 				System.out.println(adversaire.getNom() + " : "+adversairePv);
 			} else {
-				monde.getListePersonnages().remove(adversaire);
+				monde.supprimerPersoMap(adversaire);
 			}
 		}
 		
@@ -39,11 +39,11 @@ public class Ours extends Ennemi {
 				if (tempsOurs == tempsAnimation*2) {
 					tempsOurs = 0;
 				} else if (tempsOurs > tempsAnimation && tempsOurs % 5 == 0) {
-							setOrientation("gauche");
-							setPosX(getPosX() + 4);
+							this.setOrientation("droite");
+							this.setPosX(this.getPosX() + 4);
 				} else if (tempsOurs < tempsAnimation && tempsOurs % 5 == 0) {
-							setOrientation("droite");
-							setPosX(getPosX() - 4);
+							this.setPosX(this.getPosX() - 4);
+							this.setOrientation("gauche");
 				}
 				tempsOurs++;
 			} else  {
@@ -66,7 +66,6 @@ public class Ours extends Ennemi {
 	public void setOrientation(String orientation) {
 		this.orientation.set(orientation);
 	}
-
 
 
 }

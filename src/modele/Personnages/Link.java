@@ -5,13 +5,12 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import modele.Vivant;
 import modele.Arme;
 import modele.Collisions;
+import modele.Vivant;
 import modele.Objets.Roche;
 
-public class Joueur extends Vivant {
+public class Link extends Vivant {
 
 	private Arme arme;
 	private StringProperty orientationEpee;
@@ -20,7 +19,7 @@ public class Joueur extends Vivant {
 	private ObservableList<Arme> listeArmes;
 	private static int discussion = 0;
 
-	public Joueur(String nom, int ptVie, int posX, int posY,int vitesse,Arme arme) {
+	public Link(String nom, int ptVie, int posX, int posY,int vitesse,Arme arme) {
 		super(nom, ptVie, posX, posY);
 		this.orientation = new SimpleStringProperty();
 		this.orientationEpee = new SimpleStringProperty();
@@ -107,14 +106,14 @@ public class Joueur extends Vivant {
 						System.out.println(adversaire.getNom() + " : "+adversairePv);
 					} else {
 						if (adversaire == monde.getEnnemiOurs()) {
-							monde.getListePersonnages().remove(adversaire);
+							monde.supprimerPersoMap(adversaire);
+							monde.ajouterArmeMap(monde.getFleche());
 							monde.getFleche().setPosX(monde.getEnnemiOurs().getPosX());
 							monde.getFleche().setPosY(monde.getEnnemiOurs().getPosY());
-							monde.getListeArmes().add(monde.getFleche());
 							monde.setMessages(adversaire.getNom() + " est mort.\n"
 									+ "Vous avez gagné la flèche.");
 						} else {
-							monde.getListePersonnages().remove(adversaire);							
+							monde.supprimerPersoMap(adversaire);
 							monde.setMessages(adversaire.getNom() + " est mort.");
 						}
 					}
@@ -131,27 +130,29 @@ public class Joueur extends Vivant {
 		if (discussion == 0) {
 			monde.setMessages(getNom()+" : Bonjour Monsieur. Je cherche\nle coffre fort.\n"
 					+ " Sauriez-vous où il peut être ?");
-			discussion++;
 		} 
+		discussion++;
 		
 	}
 
 	public void pousserRoche(KeyCode key,Roche roche) {
 		int posX=roche.getPosX();
 		int posY=roche.getPosY();
-		int ajoutDistance=2;
+		final int DISTANCE = 2;
 		
-		switch(key) {
-		case UP: roche.setPosY(posY - ajoutDistance);
-		break;
-		case DOWN: roche.setPosY(posY + ajoutDistance);
-		break;
-		case LEFT: roche.setPosX(posX - ajoutDistance);
-		break;
-		case RIGHT: roche.setPosX(posX + ajoutDistance);
-		break;
-		default:
+		if(Collisions.collision(monde.getLink().getBounds(20, 28), monde.getRoche().zoneDetection())) {
+			switch(key) {
+			case UP: roche.setPosY(posY - DISTANCE);
 			break;
+			case DOWN: roche.setPosY(posY + DISTANCE);
+			break;
+			case LEFT: roche.setPosX(posX - DISTANCE);
+			break;
+			case RIGHT: roche.setPosX(posX + DISTANCE);
+			break;
+			default:
+				break;
+			}
 		}
 
 }
@@ -166,9 +167,17 @@ public class Joueur extends Vivant {
 	 * @param e
 	 * @param arme
 	 */
-	public void changerArmeJoueur(KeyEvent e) {
-		if (e.getCode() == KeyCode.Q) {
-			monde.setMessages("Changement d'arme.");
+	public void changerArmeJoueur() {
+		monde.setMessages("Changement d'arme.");
+		if (!getListeArmes().isEmpty()) {
+			for (Arme armeItem : listeArmes) {
+				if (!armeItem.equals(getArme())) {
+					setArme(armeItem);
+					break;
+				}
+			}
+		} else {
+			monde.setMessages("La liste d'armes est vide.");
 		}
 		
 	}
