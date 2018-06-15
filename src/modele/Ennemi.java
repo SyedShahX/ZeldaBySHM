@@ -1,7 +1,5 @@
 package modele;
 
-import modele.Agir;
-
 public abstract class Ennemi extends Vivant implements Agir{
 	
 	protected int ptAttaque;

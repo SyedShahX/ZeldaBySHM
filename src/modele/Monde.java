@@ -1,11 +1,11 @@
 package modele;
 
-import modele.Armes.Epee;
-import modele.Armes.Fleche;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import modele.Armes.Epee;
+import modele.Armes.Fleche;
 import modele.Objets.Roche;
 import modele.Objets.Tonneau;
 import modele.Personnages.Link;
@@ -41,7 +41,7 @@ public class Monde {
 		this.getEpee().setMonde(this);
 		this.getRoche().setMonde(this);
 		this.getGameLoop().setMonde(this);
-		ajouterPersoMap(ours,vieux);
+		ajouterPersoMap(ours,vieux,link);
 		ajouterObjetMap(tonneau,roche);
 	}
 	

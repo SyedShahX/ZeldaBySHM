@@ -2,15 +2,16 @@ package modele.Personnages;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import modele.Vivant;
 import modele.Agir;
 import modele.Collisions;
 import modele.Ennemi;
+import modele.Vivant;
 
 public class Ours extends Ennemi implements Agir{
 	
 	private StringProperty orientation;
 	private int tempsOurs;
+
 	private int tempsOursAttaque;
 	
 	public Ours(String nom, int ptVie, int posX, int posY,int ptAttaque) {
@@ -47,8 +48,7 @@ public class Ours extends Ennemi implements Agir{
 							this.setOrientation("gauche");
 				}
 				tempsOurs++;
-			} else  {
-					if(tempsOursAttaque % 90 == 0) {
+			} else if(tempsOursAttaque % 90 == 0) {
 						this.attaquer(monde.getLink());
 					}					
 					tempsOursAttaque++;
@@ -69,4 +69,12 @@ public class Ours extends Ennemi implements Agir{
 	}
 
 
+	public int getTempsOurs() {
+		return tempsOurs;
+	}
+	
+	
+	public int getTempsOursAttaque() {
+		return tempsOursAttaque;
+	}
 }

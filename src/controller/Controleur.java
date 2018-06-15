@@ -137,7 +137,7 @@ public class Controleur implements Initializable {
 	
 	public void lancer(KeyEvent e) {
 		if (e.getCode() == KeyCode.S) {
-//			gl.initAnimationFleche(100,100);
+//			monde.getGameLoop().initAnimation();
 //			gl.gameLoopFleche.play();
 		}
 	}
@@ -184,7 +184,7 @@ public class Controleur implements Initializable {
 	public void initializeMap() {
 		// Affichage de la map
 		Map1.map(map);
-		
+
 		// Ajout des points de vie sur la map
 		ptDeVie.getChildren().add(Images.ptDeVie1);
 		ptDeVie.getChildren().add(Images.ptDeVie2);
@@ -360,6 +360,7 @@ public class Controleur implements Initializable {
 		
 
 		// démarrage des différentes animations
+		
 		initializeMap();
 		monde.getGameLoop().initAnimation();
 		monde.getGameLoop().gameLoop.play();

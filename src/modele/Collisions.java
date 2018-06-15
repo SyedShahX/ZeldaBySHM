@@ -1,6 +1,7 @@
 package modele;
 
 import java.awt.Rectangle;
+
 import vue.Map1;
 
 public class Collisions {

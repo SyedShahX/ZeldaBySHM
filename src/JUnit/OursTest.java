@@ -1,5 +1,7 @@
 package JUnit;
 
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 import modele.Personnages.Ours;
@@ -13,16 +15,19 @@ public class OursTest {
 	}
 	
 	@Test
+	public void testPosition() {
+//		assertEquals()
+		
+	}
+	@Test
 	public void testCollision() {
 		
 	}
 	@Test
 	public void testChangementImage() {
-		
-	}
-	@Test
-	public void testPosition() {
-
+		int tempsAnimation = 190;
+		assertSame(ours.getOrientation(), tempsAnimation);
+		assertEquals(ours.getPosX(), tempsAnimation);
 	}
 
 }
