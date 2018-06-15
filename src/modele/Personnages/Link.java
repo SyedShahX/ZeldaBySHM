@@ -98,7 +98,7 @@ public class Link extends Vivant {
 			} else {
 				monde.setMessages("A l'attaque !");
 				if(Collisions.collision(getBounds(40,40),adversaire.getBounds(32,30))
-						&& getArme() != null) {
+						&& monde.getListePersonnages().contains(adversaire)) {
 					int adversairePv = adversaire.getPtVie();
 					if (adversairePv >= getArme().getPtAttaque()) {
 						adversairePv -= getArme().getPtAttaque();
@@ -107,11 +107,11 @@ public class Link extends Vivant {
 					} else {
 						if (adversaire == monde.getEnnemiOurs()) {
 							monde.supprimerPersoMap(adversaire);
-							monde.ajouterArmeMap(monde.getFleche());
 							monde.getFleche().setPosX(monde.getEnnemiOurs().getPosX());
 							monde.getFleche().setPosY(monde.getEnnemiOurs().getPosY());
 							monde.setMessages(adversaire.getNom() + " est mort.\n"
 									+ "Vous avez gagné la flèche.");
+							monde.getListeArmes().add(monde.getFleche());
 						} else {
 							monde.supprimerPersoMap(adversaire);
 							monde.setMessages(adversaire.getNom() + " est mort.");
