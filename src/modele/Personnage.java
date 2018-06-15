@@ -6,4 +6,6 @@ public abstract class Personnage extends ElementsMonde{
 		super(nom,posX,posY);
 	}
 	
+	public abstract void agir();
+	
 }

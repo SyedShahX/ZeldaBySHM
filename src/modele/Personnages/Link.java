@@ -300,4 +300,10 @@ public class Link extends Vivant {
 		return listeArmes;
 	}
 
+	@Override
+	public void agir() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

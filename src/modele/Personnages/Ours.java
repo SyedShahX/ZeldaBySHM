@@ -3,10 +3,11 @@ package modele.Personnages;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import modele.Vivant;
+import modele.Agir;
 import modele.Collisions;
 import modele.Ennemi;
 
-public class Ours extends Ennemi {
+public class Ours extends Ennemi implements Agir{
 	
 	private StringProperty orientation;
 	private int tempsOurs;

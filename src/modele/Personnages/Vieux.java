@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import modele.Agir;
+import modele.Collisions;
 import modele.Personnage;
 
 public class Vieux extends Personnage implements Agir{
@@ -38,18 +39,18 @@ public class Vieux extends Personnage implements Agir{
 	public void agir() {
 		
 		int tempsAnimation = 100;
-		
-		if (tempsVieux == tempsAnimation*2) {
-			tempsVieux = 0;
-		} else if (tempsVieux < tempsAnimation && tempsVieux % 5 == 0) {
-			setOrientation("droite");
-//			System.out.println("droite");
-		} else if (tempsVieux > tempsAnimation && tempsVieux % 5 == 0) {
-			setOrientation("gauche");
-//			System.out.println("gauche");
+		if(!Collisions.collision(this.getBounds(32, 20),monde.getLink().getBounds(32, 18))){
+			if (tempsVieux == tempsAnimation*2) {
+				tempsVieux = 0;
+			} else if (tempsVieux < tempsAnimation && tempsVieux % 5 == 0) {
+				setOrientation("droite");
+			} else if (tempsVieux > tempsAnimation && tempsVieux % 5 == 0) {
+				setOrientation("gauche");
+			}
+			tempsVieux++;
+		} else {
+			monde.getGameLoop().gameLoop.stop();
 		}
-		tempsVieux++;
-//		System.out.println("temps : "+tempsVieux);
 	}
 	
 	

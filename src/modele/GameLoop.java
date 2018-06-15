@@ -6,8 +6,18 @@ import javafx.util.Duration;
 
 public class GameLoop {
 	
-	Monde monde = new Monde();
+	Monde monde;
 	public Timeline gameLoop;
+	
+	public GameLoop() {
+		 this.monde = null;
+	}
+
+	
+	public void setMonde(Monde monde) {
+		this.monde = monde;
+		
+	}
 	
 	public void initAnimation() {
 		gameLoop = new Timeline();
@@ -15,11 +25,13 @@ public class GameLoop {
 		
 		KeyFrame kf = new KeyFrame(Duration.seconds(0.017), 
 				(e ->
-//				{for (Personnage perso : monde.getListePersonnages()) {
-//					perso.agir();
-//				}}
-					{monde.getEnnemiOurs().agir();
-					monde.getVieux().agir();}
+					{for (Personnage perso : monde.getListePersonnages()) {
+						perso.agir();
+					}}
+					/*System.out.println(monde.getEnnemiOurs().getPosX());
+					System.out.println(monde.getEnnemiOurs().getPosY());
+					*/
+//					monde.getVieux().agir();}
 				)
 		);
 		
@@ -36,4 +48,11 @@ public class GameLoop {
 		
 		gameLoop.getKeyFrames().add(kf);
 	}
+
+
+	public Monde getMonde() {
+		// TODO Auto-generated method stub
+		return this.monde;
+	}
+
 }

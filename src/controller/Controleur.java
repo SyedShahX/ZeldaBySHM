@@ -18,7 +18,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import modele.Arme;
 import modele.Collisions;
-import modele.GameLoop;
 import modele.Images;
 import modele.Monde;
 import modele.Objet;
@@ -38,14 +37,12 @@ public class Controleur implements Initializable {
 	@FXML HBox listeArmes;
 	@FXML Label messages;
     
-	private Monde monde = new Monde();
-	private GameLoop gl = new GameLoop();
-	private Images img = new Images();
+	Monde monde;
 	
-	private Map<Objet,ImageView> mapObjetImg = new HashMap<>();
-	private Map<Arme,ImageView> mapArmeImg = new HashMap<>();
-	private Map<Personnage,ImageView> mapPersoImg = new HashMap<>();
-	private Map<Arme,ImageView> mapListArmesLinkImg = new HashMap<>();
+	private Map<Objet,ImageView> mapObjetImg;
+	private Map<Arme,ImageView> mapArmeImg;
+	private Map<Personnage,ImageView> mapPersoImg;
+	private Map<Arme,ImageView> mapListArmesLinkImg;
 	
 	private static final String IMAGEGAUCHE = "gauche";
 	private static final String IMAGEDROITE = "droite";
@@ -54,16 +51,24 @@ public class Controleur implements Initializable {
 	
 	
 	public Controleur() {
+		
+		monde = new Monde();
+		System.out.println(monde.getGameLoop());
+		mapObjetImg = new HashMap<>();
+		mapArmeImg = new HashMap<>();
+		mapPersoImg = new HashMap<>();
+		mapListArmesLinkImg = new HashMap<>();
+		
 //	Association des éléments de la map avec leur ImageView correspondant
-		mapObjetImg.put(monde.getTonneau(), img.imgTonneau);
-		mapObjetImg.put(monde.getRoche(), img.imgRoche);
-		mapArmeImg.put(monde.getEpee(), img.imgEpee);
-		mapArmeImg.put(monde.getFleche(), img.imgFleche);
-		mapPersoImg.put(monde.getEnnemiOurs(), img.imgOurs);
-		mapPersoImg.put(monde.getLink(), img.imgLink);
-		mapPersoImg.put(monde.getVieux(), img.imgVieux);
-		mapListArmesLinkImg.put(monde.getEpee(), img.listeImgEpee);
-		mapListArmesLinkImg.put(monde.getFleche(), img.listeImgFleche);
+		mapObjetImg.put(monde.getTonneau(), Images.imgTonneau);
+		mapObjetImg.put(monde.getRoche(), Images.imgRoche);
+		mapArmeImg.put(monde.getEpee(), Images.imgEpee);
+		mapArmeImg.put(monde.getFleche(), Images.imgFleche);
+		mapPersoImg.put(monde.getEnnemiOurs(), Images.imgOurs);
+		mapPersoImg.put(monde.getLink(), Images.imgLink);
+		mapPersoImg.put(monde.getVieux(), Images.imgVieux);
+		mapListArmesLinkImg.put(monde.getEpee(), Images.listeImgEpee);
+		mapListArmesLinkImg.put(monde.getFleche(), Images.listeImgFleche);
 	}
 	
 	public void gererTouche(KeyEvent e) {
@@ -181,11 +186,11 @@ public class Controleur implements Initializable {
 		Map1.map(map);
 		
 		// Ajout des points de vie sur la map
-		ptDeVie.getChildren().add(img.ptDeVie1);
-		ptDeVie.getChildren().add(img.ptDeVie2);
-		ptDeVie.getChildren().add(img.ptDeVie3);
-		ptDeVie.getChildren().add(img.ptDeVie4);
-		ptDeVie.getChildren().add(img.ptDeVie5);
+		ptDeVie.getChildren().add(Images.ptDeVie1);
+		ptDeVie.getChildren().add(Images.ptDeVie2);
+		ptDeVie.getChildren().add(Images.ptDeVie3);
+		ptDeVie.getChildren().add(Images.ptDeVie4);
+		ptDeVie.getChildren().add(Images.ptDeVie5);
 		
 		// Affichage d'un message de bienvenue
 		monde.setMessages("Bienvenue !\n"
@@ -205,32 +210,32 @@ public class Controleur implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		// Bind entre l'image de Link et sa position x et y
-		img.imgLink.layoutXProperty().bind(monde.getLink().posXProperty());
-		img.imgLink.layoutYProperty().bind(monde.getLink().posYProperty());
+		Images.imgLink.layoutXProperty().bind(monde.getLink().posXProperty());
+		Images.imgLink.layoutYProperty().bind(monde.getLink().posYProperty());
 		
 		// Bind entre l'image du tonneau et sa position x et y
-		img.imgTonneau.layoutXProperty().bind(monde.getTonneau().posXProperty());
-		img.imgTonneau.layoutYProperty().bind(monde.getTonneau().posYProperty());
+		Images.imgTonneau.layoutXProperty().bind(monde.getTonneau().posXProperty());
+		Images.imgTonneau.layoutYProperty().bind(monde.getTonneau().posYProperty());
 		
 		// Bind entre l'image de l'épée et sa position x et y
-		img.imgEpee.layoutXProperty().bind(monde.getEpee().posXProperty());
-		img.imgEpee.layoutYProperty().bind(monde.getEpee().posYProperty());
+		Images.imgEpee.layoutXProperty().bind(monde.getEpee().posXProperty());
+		Images.imgEpee.layoutYProperty().bind(monde.getEpee().posYProperty());
 		
 		// Bind entre l'image de la flèche et sa position x et y
-		img.imgFleche.layoutXProperty().bind(monde.getFleche().posXProperty());
-		img.imgFleche.layoutYProperty().bind(monde.getFleche().posYProperty());
+		Images.imgFleche.layoutXProperty().bind(monde.getFleche().posXProperty());
+		Images.imgFleche.layoutYProperty().bind(monde.getFleche().posYProperty());
 		
 		//Bind entre l'image de la roche et sa position x et y
-		img.imgRoche.layoutXProperty().bind(monde.getRoche().posXProperty());
-		img.imgRoche.layoutYProperty().bind(monde.getRoche().posYProperty());
+		Images.imgRoche.layoutXProperty().bind(monde.getRoche().posXProperty());
+		Images.imgRoche.layoutYProperty().bind(monde.getRoche().posYProperty());
 		
 		// Bind entre l'image de ours et sa position x et y
-		img.imgOurs.layoutXProperty().bind(monde.getEnnemiOurs().posXProperty());
-		img.imgOurs.layoutYProperty().bind(monde.getEnnemiOurs().posYProperty());
+		Images.imgOurs.layoutXProperty().bind(monde.getEnnemiOurs().posXProperty());
+		Images.imgOurs.layoutYProperty().bind(monde.getEnnemiOurs().posYProperty());
 		
 		// Bind entre l'image du vieux et sa position x et y
-		img.imgVieux.layoutXProperty().bind(monde.getVieux().posXProperty());
-		img.imgVieux.layoutYProperty().bind(monde.getVieux().posYProperty());
+		Images.imgVieux.layoutXProperty().bind(monde.getVieux().posXProperty());
+		Images.imgVieux.layoutYProperty().bind(monde.getVieux().posYProperty());
 		
 		// Bind entre la camera et la position du joueur
 		paneCamera.layoutXProperty().bind(monde.getLink().posXProperty().negate().add(200));
@@ -356,23 +361,23 @@ public class Controleur implements Initializable {
 
 		// démarrage des différentes animations
 		initializeMap();
-		gl.initAnimation();
-		gl.gameLoop.play();
+		monde.getGameLoop().initAnimation();
+		monde.getGameLoop().gameLoop.play();
 
 	}
 
 
 	public void perdVie(int nouvelleValeur) {
 		if (nouvelleValeur < 80 && nouvelleValeur > 60) {
-			ptDeVie.getChildren().remove(img.ptDeVie1);
+			ptDeVie.getChildren().remove(Images.ptDeVie1);
 		} else if (nouvelleValeur <= 60 && nouvelleValeur > 40) {
-			ptDeVie.getChildren().remove(img.ptDeVie2);
+			ptDeVie.getChildren().remove(Images.ptDeVie2);
 		} else if (nouvelleValeur <= 40 && nouvelleValeur > 20) {
-			ptDeVie.getChildren().remove(img.ptDeVie3);
+			ptDeVie.getChildren().remove(Images.ptDeVie3);
 		} else if (nouvelleValeur <= 20 && nouvelleValeur > 0) {
-			ptDeVie.getChildren().remove(img.ptDeVie4);
+			ptDeVie.getChildren().remove(Images.ptDeVie4);
 		} else if (nouvelleValeur <= 0) {
-			ptDeVie.getChildren().remove(img.ptDeVie5);
+			ptDeVie.getChildren().remove(Images.ptDeVie5);
 			monde.setMessages("Game Over !");
 		}
 		
@@ -381,13 +386,13 @@ public class Controleur implements Initializable {
 	public void changerImageOurs(String nouvelleValeur) {
 		switch(nouvelleValeur) {
 		
-		case IMAGEHAUT :   img.imgOurs.setImage(img.imgOursHaut);
+		case IMAGEHAUT :   Images.imgOurs.setImage(Images.imgOursHaut);
 			break;
-		case IMAGEBAS :    img.imgOurs.setImage(img.imgOursBas);
+		case IMAGEBAS :    Images.imgOurs.setImage(Images.imgOursBas);
 			break;
-		case IMAGEDROITE : img.imgOurs.setImage(img.imgOursDroit);
+		case IMAGEDROITE : Images.imgOurs.setImage(Images.imgOursDroit);
 			break;
-		case IMAGEGAUCHE : img.imgOurs.setImage(img.imgOursGauche);
+		case IMAGEGAUCHE : Images.imgOurs.setImage(Images.imgOursGauche);
 			break;
 		}
 		
@@ -395,34 +400,34 @@ public class Controleur implements Initializable {
 
 	public void changerImageLink(String nouvelleValeur) {
 		switch(nouvelleValeur) {
-		case IMAGEHAUT :   img.imgLink.setImage(img.haut);
+		case IMAGEHAUT :   Images.imgLink.setImage(Images.haut);
 			break;
-		case IMAGEBAS :    img.imgLink.setImage(img.basdroit);
+		case IMAGEBAS :    Images.imgLink.setImage(Images.basdroit);
 			break;
-		case IMAGEDROITE : img.imgLink.setImage(img.droite);
+		case IMAGEDROITE : Images.imgLink.setImage(Images.droite);
 			break;
-		case IMAGEGAUCHE : img.imgLink.setImage(img.gauche);
+		case IMAGEGAUCHE : Images.imgLink.setImage(Images.gauche);
 			break;
 		}
 	}
 	
 	public void changerImageLinkEpee(String nouvelleValeur) {
 		switch(nouvelleValeur) {
-		case "gaucheEpee" : img.imgLink.setImage(img.gaucheEpee);
+		case "gaucheEpee" : Images.imgLink.setImage(Images.gaucheEpee);
 			break;
-		case "droiteEpee" : img.imgLink.setImage(img.droiteEpee);
+		case "droiteEpee" : Images.imgLink.setImage(Images.droiteEpee);
 			break;
-		case "basEpee" : img.imgLink.setImage(img.basEpee);
+		case "basEpee" : Images.imgLink.setImage(Images.basEpee);
 			break;
-		case "hautEpee" : img.imgLink.setImage(img.hautEpee);
+		case "hautEpee" : Images.imgLink.setImage(Images.hautEpee);
 			break;
 		}
 	}
 	public void changerImageVieux(String nouvelleValeur) {
 		switch(nouvelleValeur) {
-			case IMAGEGAUCHE : img.imgVieux.setImage(img.imgVieuxGauche);
+			case IMAGEGAUCHE : Images.imgVieux.setImage(Images.imgVieuxGauche);
 				break;
-			case IMAGEDROITE : img.imgVieux.setImage(img.imgVieuxDroite);
+			case IMAGEDROITE : Images.imgVieux.setImage(Images.imgVieuxDroite);
 				break;
 		
 		}

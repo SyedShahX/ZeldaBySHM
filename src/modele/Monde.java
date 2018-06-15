@@ -25,12 +25,14 @@ public class Monde {
 	Vieux vieux = new Vieux("Le viellard", 755, 703);
 	Roche roche = new Roche("roche",724,370);
 	private StringProperty messages;
+	private GameLoop gl;
 
 	public Monde() {
 		this.listeObstacles = FXCollections.observableArrayList();
 		this.listeArmes = FXCollections.observableArrayList();
 		this.listePersonnages = FXCollections.observableArrayList();
 		this.messages = new SimpleStringProperty();
+		gl = new GameLoop();
 		this.getVieux().setMonde(this);
 		this.getLink().setMonde(this);
 		this.getEnnemiOurs().setMonde(this);
@@ -38,7 +40,8 @@ public class Monde {
 		this.getFleche().setMonde(this);
 		this.getEpee().setMonde(this);
 		this.getRoche().setMonde(this);
-		ajouterPersoMap(link,ours,vieux);
+		this.getGameLoop().setMonde(this);
+		ajouterPersoMap(ours,vieux);
 		ajouterObjetMap(tonneau,roche);
 	}
 	
@@ -86,16 +89,10 @@ public class Monde {
 	public Roche getRoche() {
 		return this.roche;
 	}
-	
-	public Personnage getP(Personnage p ) {
-		Personnage personnage = null;
-		for (Personnage perso : getListePersonnages()) {
-			if (perso == p) {
-				personnage = perso;
-			}
-		}
-		return personnage;
+	public GameLoop getGameLoop() {
+		return this.gl;
 	}
+
 	
 //	GETTER LISTES OBSERVABLES
 	public ObservableList<Objet> getListeObstacles() {
