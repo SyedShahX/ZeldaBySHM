@@ -53,7 +53,6 @@ public class Ours extends Ennemi implements Agir{
 					}					
 					tempsOursAttaque++;
 			}
-	}
 	
 //	GETTER ET SETTER ORIENTATION
 	public StringProperty orientationProperty() {
