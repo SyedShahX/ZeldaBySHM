@@ -53,7 +53,6 @@ public class Controleur implements Initializable {
 	public Controleur() {
 		
 		monde = new Monde();
-		System.out.println(monde.getGameLoop());
 		mapObjetImg = new HashMap<>();
 		mapArmeImg = new HashMap<>();
 		mapPersoImg = new HashMap<>();
@@ -88,7 +87,6 @@ public class Controleur implements Initializable {
 		parler(e,monde.getLink().getBounds(30, 30), monde
 				.getVieux().rectangleDetection(60,20), monde);
 		changerArmeJoueur(e);
-		lancer(e);
 		pousserRoche(e, monde.getRoche());
 
 	}
@@ -118,13 +116,13 @@ public class Controleur implements Initializable {
 	public void pousserRoche(KeyEvent e,Roche roche) {
 			switch(e.getCode()) {
 			case UP:    monde.getLink().pousserRoche(KeyCode.UP,roche);
-			break;
+				break;
 			case DOWN: monde.getLink().pousserRoche(KeyCode.DOWN,roche);
-			break;
+				break;
 			case LEFT:  monde.getLink().pousserRoche(KeyCode.LEFT,roche);
-			break;
+				break;
 			case RIGHT: monde.getLink().pousserRoche(KeyCode.RIGHT,roche);
-			break;
+				break;
 			default:
 				break;
 		}
@@ -135,13 +133,6 @@ public class Controleur implements Initializable {
 			monde.getLink().attaquer(perso);	
 	}
 	
-	public void lancer(KeyEvent e) {
-		if (e.getCode() == KeyCode.S) {
-//			monde.getGameLoop().initAnimation();
-//			gl.gameLoopFleche.play();
-		}
-	}
-	
 	public void casserTonneau(KeyEvent e,Arme arme) {
 		if (e.getCode() == KeyCode.A) 
 			monde.getLink().casserTonneau(arme);			
@@ -149,16 +140,7 @@ public class Controleur implements Initializable {
 	}
 	
 	public void parler(KeyEvent e,Rectangle rect1,Rectangle rect2,Monde monde) {
-		if(Collisions.collision( rect1, rect2)) {
-//			gl.gameLoopVieux.stop();
-			monde.getLink().parler();
-		} if (e.getCode() == KeyCode.U &&
-			  Collisions.collision(rect1, rect2)) {
-//				gl.gameLoopVieux.stop();
-				monde.getVieux().parler();
-		} else {
-//			gl.gameLoopVieux.play();					
-		}
+		monde.getLink().parler(e,rect1,rect2,monde);
 	}
 	
 	public void recupererArme(KeyEvent e,Arme arme) {
@@ -204,8 +186,9 @@ public class Controleur implements Initializable {
 		for (Objet objet : monde.getListeObstacles()) {
 			paneElements.getChildren().add(mapObjetImg.get(objet));
 		}
+
 	}
-	
+		
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -244,19 +227,22 @@ public class Controleur implements Initializable {
 		// Bind entre le label et les messages
 		messages.textProperty().bind(monde.messagesProperty());
 
-		// Changement de la position de Link
+		// Changement de l'image de Link en fonction de sa position
 		monde.getLink().orientationProperty().addListener(
 				(obs,ancienneValeur,nouvelleValeur) -> 
 					changerImageLink(nouvelleValeur)
 		);
 		
-		// Changement de la position de l'Ours
+		// Changement de l'image de l'Ours en fonction de sa position
 		monde.getEnnemiOurs().orientationProperty().addListener(
 				(obs,ancienneValeur,nouvelleValeur) -> 
 					changerImageOurs(nouvelleValeur)
 		);
 		
-		// Changement de la position de Link avec une épée comme arme
+		/**
+		 *  Changement de l'image de Link en fonction de sa position
+		 *	avec une épée comme arme
+		 */
 		monde.getLink().orientationEpeeProperty().addListener(
 				(obs,ancienneValeur,nouvelleValeur) -> 
 					changerImageLinkEpee(nouvelleValeur)
@@ -266,6 +252,12 @@ public class Controleur implements Initializable {
 		monde.getVieux().orientationProperty().addListener(
 				(obs,ancienneValeur,nouvelleValeur) -> 
 					changerImageVieux(nouvelleValeur)
+		);
+		
+//		Changement de l'image de la flèche en fonction de sa position
+		monde.getFleche().orientationProperty().addListener(
+				(obs,ancienneValeur,nouvelleValeur) -> 
+					changerImageFleche(nouvelleValeur)
 		);
 		
 //		Perte de point de vie
@@ -359,11 +351,13 @@ public class Controleur implements Initializable {
 		
 		
 
-		// démarrage des différentes animations
-		
-		initializeMap();
-		monde.getGameLoop().initAnimation();
-		monde.getGameLoop().gameLoop.play();
+		try {
+			initializeMap();
+			monde.getGameLoop().initAnimation();
+			monde.getGameLoop().gameLoop.play();
+		} catch (Exception e) {
+			System.out.println("Erreur : "+e.getMessage());
+		}
 
 	}
 
@@ -431,6 +425,18 @@ public class Controleur implements Initializable {
 			case IMAGEDROITE : Images.imgVieux.setImage(Images.imgVieuxDroite);
 				break;
 		
+		}
+	}
+	public void changerImageFleche(String nouvelleValeur) {
+		switch(nouvelleValeur) {
+		case IMAGEHAUT :   Images.imgFleche.setImage(Images.imgFlecheHaut);
+		break;
+		case IMAGEBAS :    Images.imgFleche.setImage(Images.imgFlecheBas);
+		break;
+		case IMAGEDROITE : Images.imgFleche.setImage(Images.imgFlecheDroite);
+		break;
+		case IMAGEGAUCHE : Images.imgFleche.setImage(Images.imgFlecheGauche);
+		break;
 		}
 	}
 }

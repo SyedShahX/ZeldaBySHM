@@ -3,15 +3,15 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="App.Main" project="ZeldaBySHM-master_src" 
     file="/ZeldaBySHM-master_src/App/Main.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="167" width="281" x="-71" y="806"/>    
+    <position height="167" width="281" x="-694" y="1351"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="controller.Controleur" project="ZeldaBySHM-master_src" 
-    file="/ZeldaBySHM-master_src/controller/Controleur.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="controller.Controleur" project="ZeldaBySHM" 
+    file="/ZeldaBySHM/controller/Controleur.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="71" y="1409"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -19,98 +19,98 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="modele.Monde" project="ZeldaBySHM-master_src" 
-    file="/ZeldaBySHM-master_src/modele/Monde.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="584" y="1488"/>    
+  <class id="3" language="java" name="modele.Monde" project="ZeldaBySHM" 
+    file="/ZeldaBySHM/modele/Monde.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="581" y="1441"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="modele.ElementsMonde" project="ZeldaBySHM-master_src" 
-    file="/ZeldaBySHM-master_src/modele/ElementsMonde.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1066" y="1500"/>    
+  <class id="4" language="java" name="modele.ElementsMonde" project="ZeldaBySHM" 
+    file="/ZeldaBySHM/modele/ElementsMonde.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1063" y="1449"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="modele.Arme" project="ZeldaBySHM-master_src" 
-    file="/ZeldaBySHM-master_src/modele/Arme.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="133" width="220" x="471" y="2192"/>    
+  <class id="5" language="java" name="modele.Arme" project="ZeldaBySHM" 
+    file="/ZeldaBySHM/modele/Arme.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="133" width="220" x="771" y="2112"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="modele.Collisions" project="ZeldaBySHM-master_src" 
-    file="/ZeldaBySHM-master_src/modele/Collisions.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1752" y="1644"/>    
+  <class id="6" language="java" name="modele.Collisions" project="ZeldaBySHM" 
+    file="/ZeldaBySHM/modele/Collisions.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="338" y="2465"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="modele.Personnage" project="ZeldaBySHM-master_src" 
-    file="/ZeldaBySHM-master_src/modele/Personnage.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="129" width="202" x="874" y="2135"/>    
+  <class id="7" language="java" name="modele.Personnage" project="ZeldaBySHM" 
+    file="/ZeldaBySHM/modele/Personnage.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="129" width="202" x="1097" y="2106"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="8" language="java" name="modele.Agir" project="ZeldaBySHM-master_src" 
-    file="/ZeldaBySHM-master_src/modele/Agir.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="107" width="241" x="1637" y="1860"/>    
+  <interface id="8" language="java" name="modele.Agir" project="ZeldaBySHM" 
+    file="/ZeldaBySHM/modele/Agir.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="107" width="241" x="1537" y="2358"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="9" language="java" name="modele.Objet" project="ZeldaBySHM-master_src" 
-    file="/ZeldaBySHM-master_src/modele/Objet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="125" width="173" x="1297" y="2136"/>    
+  <class id="9" language="java" name="modele.Objet" project="ZeldaBySHM" 
+    file="/ZeldaBySHM/modele/Objet.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="125" width="173" x="1411" y="2102"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="modele.Vivant" project="ZeldaBySHM-master_src" 
-    file="/ZeldaBySHM-master_src/modele/Vivant.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="940" y="2434"/>    
+  <class id="10" language="java" name="modele.Vivant" project="ZeldaBySHM" 
+    file="/ZeldaBySHM/modele/Vivant.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1277" y="2416"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="vue.Map" project="ZeldaBySHM-master_src" 
-    file="/ZeldaBySHM-master_src/vue/Map.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1440" y="1008"/>    
+  <class id="11" language="java" name="vue.Map" project="ZeldaBySHM" 
+    file="/ZeldaBySHM/vue/Map.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="471" y="922"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="vue.Map1" project="ZeldaBySHM-master_src" 
-    file="/ZeldaBySHM-master_src/vue/Map1.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1440" y="1274"/>    
+  <class id="12" language="java" name="vue.Map1" project="ZeldaBySHM" 
+    file="/ZeldaBySHM/vue/Map1.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="177" y="878"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="modele.GameLoop" project="ZeldaBySHM-master_src" 
-    file="/ZeldaBySHM-master_src/modele/GameLoop.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="13" language="java" name="modele.GameLoop" project="ZeldaBySHM" 
+    file="/ZeldaBySHM/modele/GameLoop.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1170" y="968"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -118,94 +118,158 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <generalization id="14">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="7"/>  
-  </generalization>  
-  <generalization id="15">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="11"/>  
-  </generalization>  
-  <generalization id="16">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <generalization id="17">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <association id="18">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="19" name="monde"/>      
-      <multiplicity id="20" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="21">    
+  <association id="14">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="22" name="epee"/>      
-      <multiplicity id="23" minimum="0" maximum="1"/>    
+      <attribute id="15" name="listeArmes">        
+        <position height="0" width="0" x="300" y="-80"/>      
+      </attribute>      
+      <multiplicity id="16" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="300" y="-80"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="24">    
+  <association id="17">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="25" name="gl"/>      
-      <multiplicity id="26" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="27">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="28" name="listePersonnages"/>      
-      <multiplicity id="29" minimum="0" maximum="2147483647"/>    
+      <attribute id="18" name="listePersonnages">        
+        <position height="0" width="0" x="223" y="-29"/>      
+      </attribute>      
+      <multiplicity id="19" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="223" y="-29"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="30">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="31" name="monde"/>      
-      <multiplicity id="32" minimum="0" maximum="1"/>    
+  <dependency id="20">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="21">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <generalization id="22">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <dependency id="23">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <association id="24">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="25" name="monde">        
+        <position height="0" width="0" x="-3" y="-47"/>      
+      </attribute>      
+      <multiplicity id="26" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-3" y="-47"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="33">    
+  <association id="27">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="34" name="listeObstacles"/>      
-      <multiplicity id="35" minimum="0" maximum="2147483647"/>    
+      <attribute id="28" name="listeObstacles">        
+        <position height="0" width="0" x="114" y="-34"/>      
+      </attribute>      
+      <multiplicity id="29" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="114" y="-34"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="9" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="36">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="37" name="fleche"/>      
-      <multiplicity id="38" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="39">    
+  <dependency id="30">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <dependency id="31">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <generalization id="32">    
     <end type="SOURCE" refId="5"/>    
     <end type="TARGET" refId="4"/>  
   </generalization>  
+  <association id="33">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="34" name="monde">        
+        <position height="0" width="0" x="-3" y="-47"/>      
+      </attribute>      
+      <multiplicity id="35" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-3" y="-47"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="36">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <association id="37">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="38" name="gl">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="39" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <association id="40">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="41" name="listeArmes"/>      
-      <multiplicity id="42" minimum="0" maximum="2147483647"/>    
+      <attribute id="41" name="epee">        
+        <position height="0" width="0" x="300" y="-80"/>      
+      </attribute>      
+      <multiplicity id="42" minimum="0" maximum="1">        
+        <position height="0" width="0" x="300" y="-80"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="43">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="44" name="monde"/>      
-      <multiplicity id="45" minimum="0" maximum="1"/>    
+  <generalization id="43">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <generalization id="44">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <generalization id="45">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <association id="46">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="47" name="fleche">        
+        <position height="0" width="0" x="300" y="-80"/>      
+      </attribute>      
+      <multiplicity id="48" minimum="0" maximum="1">        
+        <position height="0" width="0" x="300" y="-80"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="49">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <association id="50">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="51" name="monde">        
+        <position height="0" width="0" x="-3" y="-47"/>      
+      </attribute>      
+      <multiplicity id="52" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-3" y="-47"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  

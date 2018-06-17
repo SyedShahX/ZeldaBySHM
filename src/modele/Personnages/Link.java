@@ -1,12 +1,16 @@
 package modele.Personnages;
 
+import java.awt.Rectangle;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import modele.Arme;
 import modele.Collisions;
+import modele.Monde;
 import modele.Vivant;
 import modele.Objets.Roche;
 
@@ -36,7 +40,7 @@ public class Link extends Vivant {
 		if(Collisions.collisionBuisson(getPosX(),getPosY())) {
 			setVitesse(3);
 		} else {
-			setVitesse(10);
+			setVitesse(13);
 		}
 		return getVitesse();
 	}
@@ -51,17 +55,12 @@ public class Link extends Vivant {
 		setPosY(positionY);
 	}
 	
-	/**
-	 * Déplacement de Link vers le haut, le bas , la gauche et la droite 
-	 * à une certaine vitesse. 
-	 * @param up
-	 */
-	public void seDeplacer(KeyCode up) {
+	public void seDeplacer(KeyCode touche) {
 		int posY = getPosY();
 		int posX = getPosX();
 		int ajoutDistance = reglerVitesse();
 		
-		switch(up) {
+		switch(touche) {
 		
 		case UP:    changerOrientation("hautEpee","haut");
 				    setPosY( posY - ajoutDistance);
@@ -79,59 +78,55 @@ public class Link extends Vivant {
 			break;
 		}
 	}
-
-	/**
-	 *  Le joueur attaque en appuyant sur la touche ESPACE.
-	 *  Il retire des points de vie à son adversaire s'il est armé 
-	 *  et s'il l'attaque.
-	 *  Si Link n'a pas d'arme, il ne peut attaquer et
-	 *  un message lui en informera.
-	 *  Si l'adversaire n'a plus de point de vie, il est retiré de la map
-	 *  et un message indiquera la mort de ce dernier.
-	 *
-	 * @param e
-	 * @param adversaire
-	 */
+	
 	public void attaquer(Vivant adversaire) {
-			if(getArme() == null) {
-				monde.setMessages("Vous ne pouvez attaquer sans armes...");
-			} else {
-				monde.setMessages("A l'attaque !");
-				if(Collisions.collision(getBounds(40,40),adversaire.getBounds(32,30))
-						&& monde.getListePersonnages().contains(adversaire)) {
-					int adversairePv = adversaire.getPtVie();
-					if (adversairePv >= getArme().getPtAttaque()) {
-						adversairePv -= getArme().getPtAttaque();
-						adversaire.setPtVie(adversairePv);
-						System.out.println(adversaire.getNom() + " : "+adversairePv);
-					} else {
-						if (adversaire == monde.getEnnemiOurs()) {
-							monde.supprimerPersoMap(adversaire);
-							monde.getFleche().setPosX(monde.getEnnemiOurs().getPosX());
-							monde.getFleche().setPosY(monde.getEnnemiOurs().getPosY());
-							monde.setMessages(adversaire.getNom() + " est mort.\n"
-									+ "Vous avez gagné la flèche.");
-							monde.getListeArmes().add(monde.getFleche());
-						} else {
-							monde.supprimerPersoMap(adversaire);
-							monde.setMessages(adversaire.getNom() + " est mort.");
-						}
-					}
-				}
-			}	
+		if(getArme() == null) {
+			monde.setMessages("Vous ne pouvez attaquer sans armes...");
+		} else {
+			monde.setMessages("A l'attaque !");
+			if (getArme() == monde.getEpee() && 
+				Collisions.collision(getBounds(40,40),adversaire.getBounds(32,30)) &&
+				monde.getListePersonnages().contains(adversaire)) {
+				enleverPointDeVie(adversaire);
+			} else if(getArme() == monde.getFleche()) {
+				monde.ajouterArmeMap(monde.getFleche());
+				monde.getFleche().setPosX(monde.getLink().getPosX());
+				monde.getFleche().setPosY(monde.getLink().getPosY());
+				monde.getGameLoop().initAnimationFleche(getOrientation(),adversaire);
+				monde.getGameLoop().gameLoopFleche.play();					
+			}
+		}	
 	}
 	
-	/**
-	 * Link demande au viellard le chemin vers le trésor qui lui répond.
-	 * Si Link revient vers lui, seul le viellard lui parlera. 
-	 * @param e 
-	 */
-	public void parler() {
-		if (discussion == 0) {
-			monde.setMessages(getNom()+" : Bonjour Monsieur. Je cherche\nle coffre fort.\n"
-					+ " Sauriez-vous où il peut être ?");
+	public void enleverPointDeVie(Vivant adversaire) {
+		int adversairePv = adversaire.getPtVie();
+		if (adversairePv >= getArme().getPtAttaque()) {
+			adversairePv -= getArme().getPtAttaque();
+			adversaire.setPtVie(adversairePv);
+		} else {
+			if (adversaire == monde.getEnnemiOurs()) {
+				monde.supprimerPersoMap(adversaire);
+				monde.getFleche().setPosX(monde.getEnnemiOurs().getPosX());
+				monde.getFleche().setPosY(monde.getEnnemiOurs().getPosY());
+				monde.setMessages(adversaire.getNom() + " est mort.\n"
+						+ "Vous avez gagné la flèche.");
+				monde.getListeArmes().add(monde.getFleche());
+			} else {
+				monde.supprimerPersoMap(adversaire);
+				monde.setMessages(adversaire.getNom() + " est mort.");
+			}
+		}
+	}
+	
+	public void parler(KeyEvent e,Rectangle rect1,Rectangle rect2,Monde monde) {
+		if(Collisions.collision( rect1, rect2) && discussion == 0) {
+				monde.setMessages(getNom()+" : Bonjour Monsieur. Je cherche\nle coffre fort.\n"
+						+ " Sauriez-vous où il peut être ?");
+			discussion++;
+		} else if (e.getCode() == KeyCode.U &&
+				   Collisions.collision(rect1, rect2)) {
+			monde.getVieux().parler();
 		} 
-		discussion++;
 		
 	}
 
@@ -154,19 +149,8 @@ public class Link extends Vivant {
 				break;
 			}
 		}
-
-}
-	
-	public void lancer() {
-		System.out.println("ok");
 	}
 	
-	/**
-	 * Changement d'arme lors de la saisie de la touche Q
-	 *  
-	 * @param e
-	 * @param arme
-	 */
 	public void changerArmeJoueur() {
 		monde.setMessages("Changement d'arme.");
 		if (!getListeArmes().isEmpty()) {
@@ -218,12 +202,6 @@ public class Link extends Vivant {
 		
 	}
 	
-	/**
-	 * Récupère une arme et l'ajoute dans la liste d'arme de Link.
-	 * 
-	 * @param e
-	 * @param arme
-	 */
 	public void recupererArme(Arme arme) {
 		if (monde.getListeArmes().contains(arme) &&
 			Collisions.collision(getBounds(28, 28), arme.getBounds(30, 30))) {
@@ -288,8 +266,8 @@ public class Link extends Vivant {
 		return this.orientation;
 	}
 
-	public StringProperty getOrientation() {
-		return orientation;
+	public String getOrientation() {
+		return this.orientation.get();
 	}
 
 	public void setOrientation(String orientation) {
@@ -299,11 +277,4 @@ public class Link extends Vivant {
 	public ObservableList<Arme> getListeArmes() {
 		return listeArmes;
 	}
-
-	@Override
-	public void agir() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

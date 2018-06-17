@@ -26,7 +26,6 @@ public class Ours extends Ennemi implements Agir{
 			if (adversairePv > 0) {
 				adversairePv -= getPtAttaque();
 				adversaire.setPtVie(adversairePv);
-				System.out.println(adversaire.getNom() + " : "+adversairePv);
 			} else {
 				monde.supprimerPersoMap(adversaire);
 			}

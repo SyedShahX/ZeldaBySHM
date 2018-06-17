@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.2.2" icons="true" automaticImage="PNG" generate-combined-fragments="true">  
+  <object id="1" language="java" name="modele.Personnages.Link" project="ZeldaBySHM" 
+    file="/ZeldaBySHM/src/modele/Personnages/Link.java" binary="false" label="link" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="110" y="0"/>    
+    <execution id="2">      
+      <position height="72" width="100" x="5" y="110"/>    
+    </execution>    
+    <execution id="5">      
+      <position height="120" width="100" x="5" y="219"/>    
+    </execution>    
+    <execution id="8">      
+      <position height="153" width="100" x="5" y="376"/>    
+    </execution>    
+    <execution id="11">      
+      <position height="24" width="7" x="120" y="457"/>    
+    </execution>    
+    <execution id="12">      
+      <position height="24" width="7" x="120" y="267"/>    
+    </execution>  
+  </object>  
+  <object id="13" language="java" name="modele.Objets.Tonneau" project="ZeldaBySHM" 
+    file="/ZeldaBySHM/src/modele/Objets/Tonneau.java" binary="false" label="tonneau" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="231" y="0"/>    
+    <execution id="4">      
+      <position height="24" width="74" x="109" y="134"/>    
+    </execution>  
+  </object>  
+  <object id="14" language="java" name="modele.Armes.Epee" project="ZeldaBySHM" 
+    file="/ZeldaBySHM/src/modele/Armes/Epee.java" binary="false" label="epee" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="325" y="0"/>    
+    <execution id="7">      
+      <position height="72" width="71" x="187" y="243"/>    
+    </execution>  
+  </object>  
+  <object id="16" language="java" name="modele.Personnages.Vieux" project="ZeldaBySHM" 
+    file="/ZeldaBySHM/src/modele/Personnages/Vieux.java" binary="false" label="vieux" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>    
+    <execution id="10">      
+      <position height="105" width="100" x="262" y="400"/>    
+    </execution>  
+  </object>  
+  <object id="18" language="java" name="modele.Personnages.Ours" project="ZeldaBySHM" 
+    file="/ZeldaBySHM/src/modele/Personnages/Ours.java" binary="false" label="ours" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="630" y="0"/>  
+  </object>  
+  <message id="3" operation="casserTonneau(modele.Arme):void" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="6" operation="recupererArme(modele.Arme):void" asynchronous="false" x="65" y="217">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="7"/>  
+  </message>  
+  <message id="9" operation="parler():void" asynchronous="false">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="10"/>  
+  </message>  
+  <message id="15" asynchronous="true">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="12"/>  
+  </message>  
+  <message id="17" operation="parler():void" asynchronous="true">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="11"/>  
+  </message>
+</sequence-diagram>

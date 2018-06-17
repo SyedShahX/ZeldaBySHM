@@ -1,6 +1,6 @@
 package modele;
 
-public class Arme extends ElementsMonde{
+public abstract class Arme extends ElementsMonde{
 	
 	protected int ptAttaque;
 

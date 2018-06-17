@@ -1,33 +1,32 @@
 package JUnit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import modele.Personnages.Ours;
+import modele.Monde;
 
 public class OursTest {
 
-	Ours ours;
+	Monde monde;
 	
 	public OursTest() {
-		ours = new Ours("l'Ours tueur",200,1221,415,10);
+		monde = new Monde();
 	}
 	
-//	@Test
-//	public void testPosition() {
-////		assertEquals()
-//		
-//	}
-//	@Test
-//	public void testCollision() {
-//		
-//	}
-//	@Test
-//	public void testChangementImage() {
-//		int tempsAnimation = 190;
+	@Test
+	public void testPosition() {
+		
+	}
+	@Test
+	public void testCollision() {
+//		assertEquals(monde.getEnnemiOurs().attaquer(monde.getLink()), Collisions.collision(monde.getEnnemiOurs().getBounds(32, 20),monde.getLink().getBounds(32, 18)));
+	}
+	@Test
+	public void testChangementImage() {
+		int tempsAnimation = 190;
 //		assertSame(ours.getOrientation(), tempsAnimation);
-//		assertEquals(ours.getPosX(), tempsAnimation);
-//	}
+		assertTrue("supérieur a 0", tempsAnimation > 0);
+	}
 
 }

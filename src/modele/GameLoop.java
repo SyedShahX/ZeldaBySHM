@@ -8,6 +8,7 @@ public class GameLoop {
 	
 	Monde monde;
 	public Timeline gameLoop;
+	public Timeline gameLoopFleche;
 	
 	public GameLoop() {
 		 this.monde = null;
@@ -23,36 +24,30 @@ public class GameLoop {
 		gameLoop = new Timeline();
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
 		
-		KeyFrame kf = new KeyFrame(Duration.seconds(0.017), 
+		
+		
+		KeyFrame animation = new KeyFrame(Duration.seconds(0.017), 
 				(e ->
-					{for (Personnage perso : monde.getListePersonnages()) {
-						perso.agir();
-					}}
-					/*System.out.println(monde.getEnnemiOurs().getPosX());
-					System.out.println(monde.getEnnemiOurs().getPosY());
-					*/
-//					monde.getVieux().agir();}
+					{
+						 monde.getEnnemiOurs().agir();
+						 monde.getVieux().agir();
+					 }
 				)
 		);
 		
-//		KeyFrame animationVieux = new KeyFrame(Duration.seconds(0.05), 
-//				(e ->
-//				)
-//		);
 		
-//		KeyFrame animationFleche = new KeyFrame(Duration.seconds(0.05), 
-//				(e ->
-//					monde.getFleche().agir()
-//				)
-//		);
-		
-		gameLoop.getKeyFrames().add(kf);
+		gameLoop.getKeyFrames().add(animation);
 	}
-
-
-	public Monde getMonde() {
-		// TODO Auto-generated method stub
-		return this.monde;
+	
+	public void initAnimationFleche(String orientation,Vivant adversaire) {
+		gameLoopFleche = new Timeline();
+		gameLoopFleche.setCycleCount(Timeline.INDEFINITE);
+		KeyFrame animationFleche = new KeyFrame(Duration.seconds(0.010), 
+				(e ->
+					monde.getFleche().agir(orientation,adversaire)
+				)
+		);
+		gameLoopFleche.getKeyFrames().add(animationFleche);
 	}
 
 }

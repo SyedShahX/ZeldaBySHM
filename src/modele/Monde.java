@@ -19,8 +19,8 @@ public class Monde {
 	private ObservableList<Personnage> listePersonnages;
 	Link link = new Link("Link", 100, 320, 1020,20,null);
 	Tonneau tonneau = new Tonneau("tonneau",1475,964);
-	Arme epee = new Epee("l'épée", 30, 70, 1475, 964);
-	Arme fleche = new Fleche("la flèche", 50,0,0);
+	Epee epee = new Epee("l'épée", 30, 70, 1475, 964);
+	Fleche fleche = new Fleche("la flèche", 50,0,0);
 	Ours ours = new Ours("l'Ours tueur",200,1221,415,10);
 	Vieux vieux = new Vieux("Le viellard", 755, 703);
 	Roche roche = new Roche("roche",724,370);
@@ -74,10 +74,10 @@ public class Monde {
 	public Tonneau getTonneau() {
 		return this.tonneau;
 	}
-	public Arme getEpee() {
+	public Epee getEpee() {
 		return this.epee;
 	}
-	public Arme getFleche() {
+	public Fleche getFleche() {
 		return this.fleche;
 	}
 	public Ours getEnnemiOurs() {

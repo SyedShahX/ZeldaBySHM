@@ -23,14 +23,13 @@ public class Vieux extends Personnage implements Agir{
 	}
 	
 	public void parler() {
-		if(monde.getLink().getArme() == monde.getEpee()) {
-				monde.setMessages(getNom() + " : Tu as "+monde.getEpee().getNom()+ " !\nTu peux aller\ncombattre le grand méchant\nours tueur !"
-					+ " À l'attaque !");
-				
-		} else {
+		if(monde.getLink().getArme() == null) {
 			monde.setMessages(getNom() + " : Ne continue pas ce\nchemin si tu n'es pas armé !"
-					+ " Tu y\ntrouveras un méchant ours tueur ! Il\nte faut une "+monde.getEpee().getNom()+ "."
+					+ " Tu y\ntrouveras un méchant ours tueur ! Il\nte faut une arme."
 					+ "Si tu souhaite\ncontinuer sur ce chemin,\nà tes risques et périls !");
+		} else {
+			monde.setMessages(getNom() + " : Tu as "+monde.getLink().getArme().getNom()+ " !\nTu peux aller\ncombattre le grand méchant\nours tueur !"
+					+ " À l'attaque !");
 		}
 		
 	}

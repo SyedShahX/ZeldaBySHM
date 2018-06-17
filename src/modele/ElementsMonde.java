@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public abstract class ElementsMonde {
+public class ElementsMonde {
 	
 	protected Monde monde;
 	protected String nom;

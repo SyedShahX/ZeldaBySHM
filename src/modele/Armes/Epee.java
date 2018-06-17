@@ -11,14 +11,11 @@ public class Epee extends Arme{
 		this.pvArme=pvArme;
 	}
 	
-
-//	Getter et Setter pvArme
 	public int getPvArme() {
 		return pvArme;
 	}
 	public void setPvArme(int pvArme) {
 		this.pvArme = pvArme;
-	}
-	
+	}	
 
 }

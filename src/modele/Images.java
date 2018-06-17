@@ -10,12 +10,10 @@ public class Images {
 	public static ImageView imgRoche = new ImageView("assets/images/roche.png");
 
 //	ImageView Armes	
-	public static ImageView imgEpee = new ImageView("assets/images/ImagesArmes/epee.png");
-	public static ImageView imgFleche = new ImageView("assets/images/ImagesArmes/flecheBas.png");
 
 //  ImageView liste Armes
 	public static ImageView listeImgEpee = new ImageView("assets/images/ImagesListeArmes/listeArmesEpee.png");
-	public static ImageView listeImgFleche = new ImageView("assets/images/ImagesArmes/flecheBas.png");
+	public static ImageView listeImgFleche = new ImageView("assets/images/ImagesListeArmes/listeArmesFleche.png");
 
 //	Images déplacements Link
 	public static ImageView imgLink = new ImageView("assets/images/ImagesLink/joueur.png");
@@ -25,11 +23,18 @@ public class Images {
 	public static Image droite = new Image("assets/images/ImagesLink/droite.png");
 	
 //	Images Link Epee
+	public static ImageView imgEpee = new ImageView("assets/images/ImagesArmes/epee.png");
 	public static Image droiteEpee = new Image("assets/images/ImagesLink/droiteEpee.png");
 	public static Image gaucheEpee = new Image("assets/images/ImagesLink/gaucheEpee.png");
 	public static Image basEpee = new Image("assets/images/ImagesLink/basEpee.png");
 	public static Image hautEpee = new Image("assets/images/ImagesLink/hautEpee.png");
 	
+//	Images Link Flèche
+	public static ImageView imgFleche = new ImageView("assets/images/ImagesArmes/flecheBas.png");
+	public static Image imgFlecheBas = new Image("assets/images/ImagesArmes/flecheBas.png");
+	public static Image imgFlecheHaut = new Image("assets/images/ImagesArmes/flecheHaut.png");
+	public static Image imgFlecheDroite = new Image("assets/images/ImagesArmes/flecheDroite.png");
+	public static Image imgFlecheGauche = new Image("assets/images/ImagesArmes/flecheGauche.png");
 //	Images Déplacements Ours
 	public static ImageView imgOurs = new ImageView("assets/images/ImageEnnemis/oursGrisGauche.png");
 	public static Image imgOursDroit = new Image("assets/images/ImageEnnemis/oursGrisDroite.png");
