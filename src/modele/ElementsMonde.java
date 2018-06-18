@@ -25,6 +25,11 @@ public class ElementsMonde {
 		return new Rectangle(getPosX()-7,getPosY(),width,height);
 	}
 	
+	public void setPositionFixe(int positionX,int positionY) {
+		setPosX(positionX); 
+		setPosY(positionY);
+	}
+	
 	public void setMonde(Monde monde) {
 		this.monde = monde;
 	}
@@ -46,7 +51,7 @@ public class ElementsMonde {
 	}
 
 	public void setPosX(int posX) {
-		this.posX.set(posX);
+		this.posX.setValue(posX);
 	}
 
 	public IntegerProperty posYProperty() {
@@ -58,6 +63,6 @@ public class ElementsMonde {
 	}
 
 	public void setPosY(int posY) {
-		this.posY.set(posY);
+		this.posY.setValue(posY);
 	}
 }

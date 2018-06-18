@@ -18,6 +18,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import modele.Arme;
 import modele.Collisions;
+import modele.ElementsMonde;
 import modele.Images;
 import modele.Monde;
 import modele.Objet;
@@ -71,15 +72,22 @@ public class Controleur implements Initializable {
 	}
 	
 	public void gererTouche(KeyEvent e) {
-		int posY = monde.getLink().getPosY();
-		int posX = monde.getLink().getPosX();
+		int posYL = monde.getLink().getPosY();
+		int posXL = monde.getLink().getPosX();
+		int posYR = monde.getRoche().getPosY();
+		int posXR = monde.getRoche().getPosX();
 		
 		deplacements(e);
-		collisionObstacleMap(posX,posY,monde);
-		collisionObjet(monde.getTonneau(), posX, posY,monde);
-		collisionObjet(monde.getRoche(), posX, posY,monde);
-		collisionPerso(monde.getEnnemiOurs(), posX, posY,monde);
-		collisionPerso(monde.getVieux(), posX, posY,monde);
+		collisionObstacleMap(posXL,posYL,monde.getLink());
+		collisionObstacleMap(posXR,posYR,monde.getRoche());
+		collisionObjet(monde.getTonneau(), posXL, posYL,monde,monde.getLink());
+		collisionObjet(monde.getTonneau(), posXR, posYR,monde,monde.getRoche());
+		collisionObjet(monde.getRoche(), posXL, posYL,monde,monde.getLink());
+//		collisionObjet(monde.getRoche(), posXR, posYR,monde,monde.getRoche());
+		collisionPerso(monde.getEnnemiOurs(), posXL, posYL,monde,monde.getLink());
+		collisionPerso(monde.getEnnemiOurs(), posXR, posYR,monde,monde.getRoche());
+		collisionPerso(monde.getVieux(), posXL, posYL,monde,monde.getLink());
+		collisionPerso(monde.getVieux(), posXR, posYR,monde,monde.getRoche());
 		casserTonneau(e,monde.getEpee());
 		recupererArme(e,monde.getEpee());
 		recupererArme(e,monde.getFleche());
@@ -88,6 +96,7 @@ public class Controleur implements Initializable {
 				.getVieux().rectangleDetection(60,20), monde);
 		changerArmeJoueur(e);
 		pousserRoche(e, monde.getRoche());
+		System.out.println("Y Link : " + monde.getLink().getPosY() + ",X Link :" + monde.getLink().getPosX() + " et Y Roche : " + posYR + ",X Roche :" + posXR );
 
 	}
 	
@@ -149,17 +158,17 @@ public class Controleur implements Initializable {
 		
 	}
 	
-	public void collisionObstacleMap(int positionX,int positionY,Monde monde) {
-		Collisions.collisionMap(positionX, positionY, monde);
+	public void collisionObstacleMap(int positionX,int positionY,ElementsMonde element) {
+		Collisions.collisionMap(positionX, positionY, element);
 	} 
 	
 	
-	public void collisionObjet(Objet obj,int positionX,int positionY,Monde monde) {
-		Collisions.collisionObjet(obj,positionX,positionY,monde);
+	public void collisionObjet(Objet obj,int positionX,int positionY,Monde monde,ElementsMonde element) {
+		Collisions.collisionObjet(obj,positionX,positionY,monde, element);
 	} 
 	
-	public void collisionPerso(Personnage perso,int positionX,int positionY,Monde monde) {
-		Collisions.collisionPerso(perso, positionX, positionY, monde);
+	public void collisionPerso(Personnage perso,int positionX,int positionY,Monde monde,ElementsMonde element) {
+		Collisions.collisionPerso(perso, positionX, positionY, monde,element);
 	}
 
 	

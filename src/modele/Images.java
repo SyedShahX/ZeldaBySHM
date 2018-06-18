@@ -6,8 +6,8 @@ public class Images {
 	
 
 //	ImageView Objets
-	public static ImageView imgTonneau = new ImageView("assets/images/tonneau.png");
-	public static ImageView imgRoche = new ImageView("assets/images/roche.png");
+	public static ImageView imgTonneau = new ImageView("assets/images/ImagesMap/tonneau.png");
+	public static ImageView imgRoche = new ImageView("assets/images/ImagesMap/rocherPoussable.png");
 
 //	ImageView Armes	
 
@@ -49,7 +49,7 @@ public class Images {
 
 //	Image ptDeVie
 	
-	public static final String LIENPOINTDEVIE = "assets/images/ptDeVie.png";
+	public static final String LIENPOINTDEVIE = "assets/images/ImagesMap/ptDeVie.png";
 	public static ImageView ptDeVie1 = new ImageView(LIENPOINTDEVIE);
 	public static ImageView ptDeVie2 = new ImageView(LIENPOINTDEVIE);
 	public static ImageView ptDeVie3 = new ImageView(LIENPOINTDEVIE);

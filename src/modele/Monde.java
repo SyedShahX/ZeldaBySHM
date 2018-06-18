@@ -23,7 +23,7 @@ public class Monde {
 	Fleche fleche = new Fleche("la flèche", 50,0,0);
 	Ours ours = new Ours("l'Ours tueur",200,1221,415,10);
 	Vieux vieux = new Vieux("Le viellard", 755, 703);
-	Roche roche = new Roche("roche",724,370);
+	Roche roche = new Roche("roche",671,955);
 	private StringProperty messages;
 	private GameLoop gl;
 

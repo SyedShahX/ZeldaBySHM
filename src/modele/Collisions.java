@@ -36,24 +36,24 @@ public class Collisions {
 		return rect.intersects(rec2.getBounds());
 	}
 	
-	public static void collisionMap(int positionX,int positionY,Monde monde) {
-		if (collisionObstacleMap(monde.getLink().getPosX(), monde.getLink().getPosY())) {
-			monde.getLink().setPositionFixe(positionX,positionY);
+	public static void collisionMap(int positionX,int positionY,ElementsMonde element) {
+		if (collisionObstacleMap(element.getPosX(), element.getPosY())) {
+			element.setPositionFixe(positionX,positionY);
 		}
 			
 	} 
-	public static void collisionObjet(Objet obj,int positionX,int positionY,Monde monde) {
+	public static void collisionObjet(Objet obj,int positionX,int positionY,Monde monde,ElementsMonde element) {
 		if (monde.getListeObstacles().contains(obj) &&
-			Collisions.collision(monde.getLink().getBounds(28,28),obj.getBounds(15,15))) {
-				monde.getLink().setPositionFixe(positionX,positionY);
+			Collisions.collision(element.getBounds(28,28),obj.getBounds(15,15))) {
+				element.setPositionFixe(positionX,positionY);
 			}
 			
 	}
 	
-	public static boolean collisionPerso(Personnage perso,int positionX,int positionY,Monde monde) {
+	public static boolean collisionPerso(Personnage perso,int positionX,int positionY,Monde monde,ElementsMonde element) {
 		if (monde.getListePersonnages().contains(perso) && 
-			Collisions.collision(monde.getLink().getBounds(28,28),perso.getBounds(30,30))) {
-				monde.getLink().setPositionFixe(positionX,positionY);
+			Collisions.collision(element.getBounds(30,30),perso.getBounds(30,30))) {
+			element.setPositionFixe(positionX,positionY);
 				return true;
 		}
 		return false;	

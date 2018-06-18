@@ -50,10 +50,6 @@ public class Link extends Vivant {
 	 * @param positionX
 	 * @param positionY
 	 */
-	public void setPositionFixe(int positionX,int positionY) {
-		setPosX(positionX); 
-		setPosY(positionY);
-	}
 	
 	public void seDeplacer(KeyCode touche) {
 		int posY = getPosY();

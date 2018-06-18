@@ -10,6 +10,6 @@ public class Roche extends Objet {
 		super(nom,positionX,positionY);
 	}
 	public Rectangle zoneDetection() {
-		return new Rectangle(getPosX()-40,getPosY()-10,60,40);
+		return new Rectangle(getPosX()-40,getPosY()-10,65,40);
 	}
-}
+}   
