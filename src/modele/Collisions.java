@@ -7,7 +7,7 @@ import vue.Map1;
 public class Collisions {
 
 	public static boolean collisionObstacleMap(int posX,int posY) {
-		Rectangle joueur = new Rectangle(posX,posY,20,25);
+		Rectangle element = new Rectangle(posX,posY,20,25);
 		int[][] tab = Map1.getTab();
 		for (int i = 0; i < tab.length; i++) {
 			for (int j = 0; j < tab[i].length; j++) {
@@ -17,7 +17,7 @@ public class Collisions {
 					int iPx = i*32;
 					int jPx = j*32;
 					Rectangle obstacleMap = new Rectangle(jPx,iPx,20,25);
-					if (collision(joueur, obstacleMap)) {
+					if (collision(element, obstacleMap)) {
 						return true;
 					}
 				}

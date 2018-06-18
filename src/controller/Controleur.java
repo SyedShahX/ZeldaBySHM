@@ -24,7 +24,6 @@ import modele.Monde;
 import modele.Objet;
 import modele.Personnage;
 import modele.Vivant;
-import modele.Objets.Roche;
 import vue.Map1;
 
 public class Controleur implements Initializable {
@@ -72,22 +71,20 @@ public class Controleur implements Initializable {
 	}
 	
 	public void gererTouche(KeyEvent e) {
-		int posYL = monde.getLink().getPosY();
-		int posXL = monde.getLink().getPosX();
-		int posYR = monde.getRoche().getPosY();
-		int posXR = monde.getRoche().getPosX();
-		
+		int posXLink = monde.getLink().getPosX();
+		int posYLink = monde.getLink().getPosY();
+		int posXRoche = monde.getRoche().getPosX();
+		int posYRoche = monde.getRoche().getPosY();
+
 		deplacements(e);
-		collisionObstacleMap(posXL,posYL,monde.getLink());
-		collisionObstacleMap(posXR,posYR,monde.getRoche());
-		collisionObjet(monde.getTonneau(), posXL, posYL,monde,monde.getLink());
-		collisionObjet(monde.getTonneau(), posXR, posYR,monde,monde.getRoche());
-		collisionObjet(monde.getRoche(), posXL, posYL,monde,monde.getLink());
-//		collisionObjet(monde.getRoche(), posXR, posYR,monde,monde.getRoche());
-		collisionPerso(monde.getEnnemiOurs(), posXL, posYL,monde,monde.getLink());
-		collisionPerso(monde.getEnnemiOurs(), posXR, posYR,monde,monde.getRoche());
-		collisionPerso(monde.getVieux(), posXL, posYL,monde,monde.getLink());
-		collisionPerso(monde.getVieux(), posXR, posYR,monde,monde.getRoche());
+		collisionObstacleMap(posXLink,posYLink,monde.getLink());
+		collisionObjet(monde.getTonneau(), posXLink, posYLink,monde,monde.getLink());
+		collisionObjet(monde.getTonneau(), posXRoche, posYRoche,monde,monde.getRoche());
+		collisionObjet(monde.getRoche(), posXLink, posYLink,monde,monde.getLink());
+		collisionPerso(monde.getEnnemiOurs(), posXLink, posYLink,monde,monde.getLink());
+		collisionPerso(monde.getEnnemiOurs(), posXRoche, posYRoche,monde,monde.getRoche());
+		collisionPerso(monde.getVieux(), posXLink, posYLink,monde,monde.getLink());
+		collisionPerso(monde.getVieux(), posXRoche, posYRoche,monde,monde.getRoche());
 		casserTonneau(e,monde.getEpee());
 		recupererArme(e,monde.getEpee());
 		recupererArme(e,monde.getFleche());
@@ -95,9 +92,7 @@ public class Controleur implements Initializable {
 		parler(e,monde.getLink().getBounds(30, 30), monde
 				.getVieux().rectangleDetection(60,20), monde);
 		changerArmeJoueur(e);
-		pousserRoche(e, monde.getRoche());
-		System.out.println("Y Link : " + monde.getLink().getPosY() + ",X Link :" + monde.getLink().getPosX() + " et Y Roche : " + posYR + ",X Roche :" + posXR );
-
+		pousserRoche(e);
 	}
 	
 	public void changerArmeJoueur(KeyEvent e) {
@@ -122,15 +117,15 @@ public class Controleur implements Initializable {
 		}
 	}
 	
-	public void pousserRoche(KeyEvent e,Roche roche) {
+	public void pousserRoche(KeyEvent e) {
 			switch(e.getCode()) {
-			case UP:    monde.getLink().pousserRoche(KeyCode.UP,roche);
+			case UP:    monde.getLink().pousserRoche(KeyCode.UP);
 				break;
-			case DOWN: monde.getLink().pousserRoche(KeyCode.DOWN,roche);
+			case DOWN: monde.getLink().pousserRoche(KeyCode.DOWN);
 				break;
-			case LEFT:  monde.getLink().pousserRoche(KeyCode.LEFT,roche);
+			case LEFT:  monde.getLink().pousserRoche(KeyCode.LEFT);
 				break;
-			case RIGHT: monde.getLink().pousserRoche(KeyCode.RIGHT,roche);
+			case RIGHT: monde.getLink().pousserRoche(KeyCode.RIGHT);
 				break;
 			default:
 				break;
@@ -150,6 +145,10 @@ public class Controleur implements Initializable {
 	
 	public void parler(KeyEvent e,Rectangle rect1,Rectangle rect2,Monde monde) {
 		monde.getLink().parler(e,rect1,rect2,monde);
+		if (e.getCode() == KeyCode.U &&
+				   Collisions.collision(rect1, rect2)) {
+			monde.getVieux().parler();
+		} 
 	}
 	
 	public void recupererArme(KeyEvent e,Arme arme) {

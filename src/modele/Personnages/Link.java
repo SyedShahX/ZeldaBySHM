@@ -12,7 +12,6 @@ import modele.Arme;
 import modele.Collisions;
 import modele.Monde;
 import modele.Vivant;
-import modele.Objets.Roche;
 
 public class Link extends Vivant {
 
@@ -119,27 +118,26 @@ public class Link extends Vivant {
 				monde.setMessages(getNom()+" : Bonjour Monsieur. Je cherche\nle coffre fort.\n"
 						+ " Sauriez-vous où il peut être ?");
 			discussion++;
-		} else if (e.getCode() == KeyCode.U &&
-				   Collisions.collision(rect1, rect2)) {
-			monde.getVieux().parler();
-		} 
+		}
 		
 	}
 
-	public void pousserRoche(KeyCode key,Roche roche) {
-		int posX=roche.getPosX();
-		int posY=roche.getPosY();
+	public void pousserRoche(KeyCode key) {
+		int posX=monde.getRoche().getPosX();
+		int posY=monde.getRoche().getPosY();
 		final int DISTANCE = 2;
 		
-		if(Collisions.collision(monde.getLink().getBounds(20, 28), monde.getRoche().zoneDetection())) {
+		if (Collisions.collisionObstacleMap(posX, posY)) {
+			monde.getRoche().setPositionFixe(posX, posY);
+		} else if(Collisions.collision(monde.getLink().getBounds(20, 28), monde.getRoche().zoneDetection())) {
 			switch(key) {
-			case UP: roche.setPosY(posY - DISTANCE);
+			case UP: monde.getRoche().setPosY(posY - DISTANCE);
 			break;
-			case DOWN: roche.setPosY(posY + DISTANCE);
+			case DOWN: monde.getRoche().setPosY(posY + DISTANCE);
 			break;
-			case LEFT: roche.setPosX(posX - DISTANCE);
+			case LEFT: monde.getRoche().setPosX(posX - DISTANCE);
 			break;
-			case RIGHT: roche.setPosX(posX + DISTANCE);
+			case RIGHT: monde.getRoche().setPosX(posX + DISTANCE);
 			break;
 			default:
 				break;
